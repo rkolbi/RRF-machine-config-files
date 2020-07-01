@@ -9,13 +9,13 @@
   
 **!! What do those hardware changes mean for your config?**  
 1) Extruder and X/Y microstepping resolution.  
--This config uses (0.9 XY & BGM):  
-M350 X16 Y16 E16 Z16 I1                 ; Microstepping with interpolation  
-M92 X200.00 Y200.00 Z400.00 E415.00     ; Steps per mm   
+-This config uses 0.9 stepper motors on X/Y & Bondtech Mosquito Extruder:  
+M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
+M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm   
 -For the default/stock hardware it should be:  
-M350 X16 Y16 Z16 I1                 ; Microstepping with interpolation  
-M350 E32 I0                         ; Microstepping without interpolation  
-M92 X100.00 Y100.00 Z400.00 E280.00     ; Steps per mm  
+M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
+M350 E32 I0 ; Microstepping without interpolation  
+M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
 
 2) Stallguard sensetivity.  
 As I'm using 0.9 X/Y stepper you most likely need to adjust your stallguard sensetivity. Look for the "M915" gcode.  
