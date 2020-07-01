@@ -7,7 +7,7 @@
 - 0.9 steppers for X and Y axis  
 - Duet WiFi (see Duet2.pdf wiring guide)  
   
-**What do those hardware changes mean for your config?**  
+**!! What do those hardware changes mean for your config?**  
 - Extruder and X/Y microstepping resolution!  
 -This config uses:  
 M350 X16 Y16 E16 Z16 I1                 ; Microstepping with interpolation  
@@ -17,17 +17,17 @@ M350 X16 Y16 Z16 I1                 ; Microstepping with interpolation
 M350 E32 I0                         ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00     ; Steps per mm  
 
-- Stallguard sensetivity!  
+**!! Stallguard sensetivity**  
 As I'm using 0.9 X/Y stepper you most likely need to adjust your stallguard sensetivity. Look for the "M915" gcode.  
 A good explanation on how to calibrate stallguard: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing
 
-**Mandatory changes to your start gcode (Slicer) to use the autoload feature you may also find in the stock Prusa MK3s firmware:**  
+**!! Mandatory changes to your start gcode (Slicer) to use the autoload feature you may also find in the stock Prusa MK3s firmware:**  
 ; Prime Filament Sensor for Runout detection  
 M581 P1 T2 S-1 R0 ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
 M950 J1 C"nil" ; free input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor active  
 
-**Use the included Macros to unload the filament!**
+**!!Use the included Macros to unload the filament!**
 - "Unload Filament"  
 - "Unload Mid Print Filament"  
 
