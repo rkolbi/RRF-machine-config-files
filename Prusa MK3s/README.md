@@ -31,7 +31,7 @@ M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor active
 1) "Unload Filament"  
 2) "Unload Mid Print Filament"  
 
-Why? Several reasons, at the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler. 
+Why? Several reasons, at the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler.  
 Use the "Unload Filament" macro when the printer is not printing and the "Unload Mid Print Filament" macro when you change your filament during a print (e.g. to change the colour).
 
 **Additional notes**  
