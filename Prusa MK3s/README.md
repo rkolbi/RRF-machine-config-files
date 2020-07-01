@@ -30,16 +30,15 @@ M950 J1 C"nil" ; free input 1 e0 Filament Sensor
 M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor active  
 
 **Use the included Macros to unload the filament!**  
-There are two Macros included to unload filament  
 1) "Unload Filament"  
 2) "Unload Mid Print Filament"  
 
-Why? Several reasons; At the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler. 
+Why? Several reasons, at the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler. 
 Use the "Unload Filament" macro when the printer is not printing and the "Unload Mid Print Filament" macro when you change your filament during a print (e.g. to change the colour).
 
 **Additional notes**  
--The confg is set up to use two independent Z motors. Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws. 
--The PINDA thermistor is connected to thermistor E1. What about the "PINDA temperature calibration feature". You may read my posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccurcy isn't linear with rising temperatures. 
+-The confg is set up to use two independent Z motors. Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
+-The PINDA thermistor is connected to thermistor E1. What about the "PINDA temperature calibration feature". You may read my posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccurcy isn't linear with rising temperatures.  
 -I always use "G32" to home my axis or "Home all". This means I did not 
 
 **Example start gcode for Prusa Slicer**  
