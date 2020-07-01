@@ -16,7 +16,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm
 M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
 M350 E32 I0 ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
-*Before shifting over to duet, run an M503 in Marlin and save the output for reference.*  
+*!Before shifting over to duet, run an M503 in Marlin and save the output for reference.*  
 
 2) Stallguard sensitivity.  
 As I'm using 0.9 X/Y stepper you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
