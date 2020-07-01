@@ -8,7 +8,7 @@
 - Duet WiFi ([Duet-MK3s Wiring Guide Here](Duet-MK3s.pdf))  
   
 **!! What do those hardware changes mean for your config?**  
-1) Extruder and X/Y microstepping resolution! Unless you have the same exact setup as referenced above, you will have to change the steps per mm. The current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Do additionally pay attention to the microstepping assigned to the axis as that can change your steps per mm. More about this can be read at: https://www.linearmotiontips.com/microstepping-basics/ & https://blog.prusaprinters.org/calculator_3416/  
+1) Extruder and X/Y microstepping resolution located in the 'config.g' file! Unless you have the same exact setup as referenced above, you will have to change the steps per mm. The current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Do additionally pay attention to the microstepping assigned to the axis as that can change your steps per mm. More about this can be read at: https://www.linearmotiontips.com/microstepping-basics/ & https://blog.prusaprinters.org/calculator_3416/  
 -This config uses 0.9 stepper motors on X/Y & Bondtech Mosquito Extruder:  
 M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
 M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm  
@@ -16,7 +16,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm
 M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
 M350 E32 I0 ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
-
+**Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'Config' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'Macro' folder over to your sd-card's 'macro' folder.*
 
 2) Stallguard sensitivity.  
 As I'm using 0.9 X/Y stepper you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
