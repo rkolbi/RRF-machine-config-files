@@ -33,12 +33,12 @@ M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor active
 Why? Several reasons, at the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler.  
 Use the "Unload Filament" macro when the printer is not printing and the "Unload Mid Print Filament" macro when you change your filament during a print (e.g. to change the colour).
 
-**Additional notes**  
+**Additional notes:**  
 -The confg is set up to use two independent Z motors. Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
 -The PINDA thermistor is connected to thermistor E1. What about the "PINDA temperature calibration feature". You may read my posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccurcy isn't linear with rising temperatures.  
 -I always use "G32" to home my axis or "Home all". This means I did not 
 
-**Example start gcode for Prusa Slicer**  
+**Example start gcode for Prusa Slicer:**  
 ; Prime Filament Sensor for Runout  
 M581 P1 T2 S-1 R0                   ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
 M950 J1 C"nil"                      ; Input 1 e0 Filament Sensor  
