@@ -17,20 +17,19 @@ M350 X16 Y16 Z16 I1                 ; Microstepping with interpolation
 M350 E32 I0                         ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00     ; Steps per mm  
 
-2) Stallguard sensetivity. 
+2) Stallguard sensetivity.  
 As I'm using 0.9 X/Y stepper you most likely need to adjust your stallguard sensetivity. Look for the "M915" gcode.  
 A good explanation on how to calibrate stallguard: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing
 
-3) Mandatory changes to your start gcode (Slicer) to use the autoload feature you may also find in the stock Prusa MK3s firmware.  
+3) Mandatory changes to your start gcode (Slicer) to use the autoload feature you may also find in the stock Prusa MK3s firmware.    
 ; Prime Filament Sensor for Runout detection  
 M581 P1 T2 S-1 R0 ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
 M950 J1 C"nil" ; free input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor active  
 
-4) Use the included Macros to unload the filament!
+4) Use the included Macros to unload the filament.  
 "Unload Filament"  
 "Unload Mid Print Filament"  
-
 Why? Several reasons, at the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler.  
 Use the "Unload Filament" macro when the printer is not printing and the "Unload Mid Print Filament" macro when you change your filament during a print (e.g. to change the colour).
 
