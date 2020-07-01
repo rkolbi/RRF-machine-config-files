@@ -6,7 +6,7 @@
 - Bondtech Mosquito Extruder  
 - Bear frame  
 - 0.9 steppers for X and Y axis  
-- Duet WiFi  
+- Duet WiFi (see Duet2.pdf wiring guide)  
   
 **What do those hardware changes mean for your config?**  
 
