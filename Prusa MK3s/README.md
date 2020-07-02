@@ -70,4 +70,4 @@ G92 E0.0
 
 
 
-**I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages to understand what those gcodes in the config mean and do!*
+**I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages (https://duet3d.dozuki.com) to understand what those gcodes in the config mean and do!*
