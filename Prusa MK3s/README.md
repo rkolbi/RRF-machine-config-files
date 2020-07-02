@@ -3,13 +3,18 @@
 
 **Hardware changes from stock Prusa MK3s:**  
 - Bondtech Mosquito Extruder  
+
 - Bear frame  
+
 - 0.9 steppers for X and Y axis  
+
 - Duet WiFi ([Duet-MK3s Wiring Guide Here](Duet-MK3s.pdf))  
+  
   
 
 **!! What do those hardware changes mean for your config?**  
-1) Extruder and X/Y microstepping resolution located in the 'config.g' file! Unless you have the same exact setup as referenced above, you will have to change the steps per mm. The current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Do additionally pay attention to the microstepping assigned to the axis as that can change your steps per mm. More about this can be read at: https://www.linearmotiontips.com/microstepping-basics/ & https://blog.prusaprinters.org/calculator_3416/  
+1) Extruder and X/Y microstepping resolution located in the 'config.g' file! Unless you have the same exact setup as referenced above, you will have to change the steps per mm. The current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Do additionally pay attention to the microstepping assigned to the axis as that can change your steps per mm. More about this can be read here: https://www.linearmotiontips.com/microstepping-basics/ and here: https://blog.prusaprinters.org/calculator_3416/.  
+
 -This config uses 0.9 stepper motors on X/Y & Bondtech Mosquito Extruder:  
 M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
 M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm  
@@ -18,7 +23,7 @@ M350 X16 Y16 Z16 I1 ; Microstepping with interpolation
 M350 E32 I0 ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
 
-**Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. More can be read about sd-card here:https://duet3d.dozuki.com/Wiki/SD_Card, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros.*  
+Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. More can be read about sd-card here:https://duet3d.dozuki.com/Wiki/SD_Card, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros.*  
 
 2) Stallguard sensitivity.  
 As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
@@ -36,10 +41,14 @@ M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor active
 Why? Several reasons, at the moment it is not possible (at least not to my knowledge) to use runout detection and filament autoload features at the same time. What we may need is conditional gcode for that to be simpler.  
 Use the "Unload Filament" macro when the printer is not printing and the "Unload Mid Print Filament" macro when you change your filament during a print (e.g. to change the colour).
 
+
+
 **Additional notes:**  
 -The confg is set up to use two independent Z motors. Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
 -The PINDA thermistor is connected to thermistor E1. What about the "PINDA temperature calibration feature". You may read my (@Argo) posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
--I always use "G32" to home my axis or "Home all". This means I did not 
+-I always use "G32" to home my axis or "Home all".
+
+
 
 **Example start gcode for Prusa Slicer:**  
 ; Prime Filament Sensor for Runout  
@@ -61,5 +70,7 @@ G1 Z0.2 E8                          ; Purge Bubble
 G1 X60.0 E9.0  F1000.0              ; intro line  
 G1 X100.0 E12.5  F1000.0            ; intro line  
 G92 E0.0  
+
+
 
 **I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages to understand what those gcodes in the config mean and do!*
