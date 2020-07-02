@@ -16,7 +16,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm
 M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
 M350 E32 I0 ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
-**Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'Config' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'Macro' folder over to your sd-card's 'macro' folder.*
+**Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder.*
 
 2) Stallguard sensitivity.  
 As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
