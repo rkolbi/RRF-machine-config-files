@@ -50,23 +50,22 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 
 **Example start gcode for Prusa Slicer:**  
 ; Prime Filament Sensor for Runout  
-M581 P1 T2 S-1 R0                   ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
-M950 J1 C"nil"                      ; Input 1 e0 Filament Sensor  
-M591 D0 P2 C"e0stop" S1             ; Filament Runout Sensor  
-M83                                 ; extruder relative mode  
+M581 P1 T2 S-1 R0 ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
+M950 J1 C"nil" ; Input 1 e0 Filament Sensor  
+M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor  
+M83 ; extruder relative mode  
 M140 S[first_layer_bed_temperature] ; set bed temp  
-M109 S165                           ; Set extruder temp 165C before bed level  
+M109 S165 ; Set extruder temp 165C before bed level  
 M190 S[first_layer_bed_temperature] ; wait for bed temp  
-;G28 W  
-G32                                 ; Levels Z Tilt and probes Z=0  
-G29 S0                              ; mesh bed leveling  
+G32 ; Levels Z Tilt and probes Z=0  
+G29 S0 ; mesh bed leveling  
 G1 X0 Y0 Z2 F2000  
-M109 S[first_layer_temperature]     ; wait for extruder temp  
-G1 X10 Y-7 Z0.3 F1000.0             ; go outside print area  
+M109 S[first_layer_temperature] ; wait for extruder temp  
+G1 X10 Y-7 Z0.3 F1000.0 ; go outside print area  
 G92 E0.0  
-G1 Z0.2 E8                          ; Purge Bubble  
-G1 X60.0 E9.0  F1000.0              ; intro line  
-G1 X100.0 E12.5  F1000.0            ; intro line  
+G1 Z0.2 E8 ; Purge Bubble  
+G1 X60.0 E9.0  F1000.0 ; intro line  
+G1 X100.0 E12.5  F1000.0 ; intro line  
 G92 E0.0  
 
 
