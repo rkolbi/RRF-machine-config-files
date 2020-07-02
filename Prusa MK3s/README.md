@@ -19,7 +19,7 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 **Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'Config' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'Macro' folder over to your sd-card's 'macro' folder.*
 
 2) Stallguard sensitivity.  
-As I'm using 0.9 X/Y stepper you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
+As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
 A good explanation on how to calibrate stallguard: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing
 
 3) Mandatory changes to your start gcode (Slicer) to use the autoload feature you may also find in the stock Prusa MK3s firmware.    
@@ -36,7 +36,7 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 
 **Additional notes:**  
 -The confg is set up to use two independent Z motors. Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
--The PINDA thermistor is connected to thermistor E1. What about the "PINDA temperature calibration feature". You may read my posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
+-The PINDA thermistor is connected to thermistor E1. What about the "PINDA temperature calibration feature". You may read my (@Argo) posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
 -I always use "G32" to home my axis or "Home all". This means I did not 
 
 **Example start gcode for Prusa Slicer:**  
