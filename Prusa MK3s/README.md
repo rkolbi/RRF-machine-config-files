@@ -14,19 +14,19 @@
 
 ## **!? What do those hardware changes mean for your config?**  
 1) **Extruder and X/Y microstepping resolution and steps/mm.**  
-Unless you have the same exact setup as referenced above, you will have to change the microstepping resolution and the steps/mm located in the 'config.g' file. Your current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per mm. More about this can be read here: https://www.linearmotiontips.com/microstepping-basics/ and here: https://blog.prusaprinters.org/calculator_3416/.  
-<br>-This config uses 0.9 stepper motors on X/Y & Bondtech Mosquito Extruder:  
+Unless you have the same exact setup as referenced above, you will have to change the microstepping resolution and the steps/mm located in the 'config.g' file. Your current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per mm. _More about this can be read here: https://www.linearmotiontips.com/microstepping-basics/ and here: https://blog.prusaprinters.org/calculator3416/._  
+<br>-The provided config.g is configured for 0.9 stepper motors on X/Y & Bondtech Mosquito Extruder:  
 M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
 M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm  
 <br>-For the default/stock hardware it should be:  
 M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
 M350 E32 I0 ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
-<br>!! Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SD_Card, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros.  
+<br>!!Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
 
 2) **Stallguard sensitivity.**  
 As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode.  
-A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing
+_A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stalldetectionandsensorlesshoming_
 
 3) **Mandatory changes to your start gcode (Slicer).**  
  To use the autoload feature you may also find in the stock Prusa MK3s firmware.    
