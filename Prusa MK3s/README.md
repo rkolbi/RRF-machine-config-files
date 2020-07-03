@@ -70,6 +70,6 @@ G1 X60.0 E9.0  F1000.0 ; intro line
 G1 X100.0 E12.5  F1000.0 ; intro line  
 G92 E0.0  
 
-
+<br><br>
 
 **I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages (https://duet3d.dozuki.com) to understand what those gcodes in the config mean and do!*
