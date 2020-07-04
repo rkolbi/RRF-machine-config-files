@@ -15,10 +15,10 @@
 ## **!? What do those hardware changes mean for your config?**  
 1) **Extruder and X/Y microstepping resolution and steps/mm.**  
 Unless you have the same exact setup as referenced above, you will have to change the microstepping resolution and the steps/mm located in the 'config.g' file. Your current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per mm. _More about this can be read here: https://www.linearmotiontips.com/microstepping-basics/ and here: https://blog.prusaprinters.org/calculator3416/._  
-<br>-The provided config.g is configured for 0.9 stepper motors on X/Y & Bondtech Mosquito Extruder:  
+<br>-The provided config.g is set for 0.9 stepper motors on X/Y and a Bondtech Mosquito Extruder:  
 M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
 M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm  
-<br>-For the default/stock hardware it should be:  
+<br>-An example stepper motor configuration for the stock hardware:  
 M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
 M350 E32 I0 ; Microstepping without interpolation  
 M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
@@ -74,3 +74,8 @@ G92 E0.0
 <br><br>
 
 **I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages (https://duet3d.dozuki.com) to understand what those gcodes in the config mean and do!*
+
+```gcode
++ this text is highlighted in green
+- this text is highlighted in red
+```
