@@ -52,7 +52,7 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 <br><br>
 
 ## **Example start gcode for Prusa Slicer:**  
-; Prime Filament Sensor for Runout  
+```gcode; Prime Filament Sensor for Runout  
 M581 P1 T2 S-1 R0 ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
 M950 J1 C"nil" ; Input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor  
@@ -70,12 +70,8 @@ G1 Z0.2 E8 ; Purge Bubble
 G1 X60.0 E9.0  F1000.0 ; intro line  
 G1 X100.0 E12.5  F1000.0 ; intro line  
 G92 E0.0  
-
+```
 <br><br>
 
 **I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages (https://duet3d.dozuki.com) to understand what those gcodes in the config mean and do!*
 
-```gcode
-+ this text is highlighted in green
-- this text is highlighted in red
-```
