@@ -25,7 +25,7 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 <br>!!Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
 
 2) **Stallguard sensitivity.**  
-As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. :small_orange_diamond:Look for the "M915" gcode in the config.g file.  
+As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode in the config.g file.  
 _A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stalldetectionandsensorlesshoming_
 
 3) **Mandatory changes to your start gcode (Slicer).**  
