@@ -12,7 +12,7 @@
   
   <br><br>
 
-## **:interrobang:What do those hardware changes mean for your config:question:**  
+## **:interrobang:What do those hardware changes mean for your config?**  
 1) **:wrench:Extruder and X/Y microstepping resolution and steps/mm.**  
 Unless you have the same exact setup as referenced above, you will have to change the microstepping resolution and the steps/mm located in the 'config.g' file. Your current machine’s configuration can be obtained by issuing a M503 command in the terminal of pronterface or any other terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per mm. _More about this can be read here: https://www.linearmotiontips.com/microstepping-basics/ and here: https://blog.prusaprinters.org/calculator3416/._  
 <br>-The provided config.g is set for 0.9 stepper motors on X/Y and a Bondtech Mosquito Extruder:  
