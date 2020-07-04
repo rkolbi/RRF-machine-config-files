@@ -52,7 +52,7 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 <br><br>
 
 ## **Example start gcode for Prusa Slicer:**  
-```gcode; Prime Filament Sensor for Runout  
+```g-code; Prime Filament Sensor for Runout  
 M581 P1 T2 S-1 R0 ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
 M950 J1 C"nil" ; Input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor  
