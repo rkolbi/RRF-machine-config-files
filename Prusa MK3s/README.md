@@ -26,7 +26,7 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 
 2) **:wrench:Stallguard sensitivity.**  
 As the config.g file is for using 0.9 X/Y steppers, you most likely need to adjust your stallguard sensitivity. Look for the "M915" gcode in the config.g file.  
-_A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stalldetectionandsensorlesshoming_
+_A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing_
 
 3) **:bulb:Mandatory changes to your start gcode (Slicer).**  
  To use the autoload feature you may also find in the stock Prusa MK3s firmware.    
