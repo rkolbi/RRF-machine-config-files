@@ -1,8 +1,10 @@
 ; stop.g
-; called when a print is cancelled after a pause.
+; called when a print is canceled after a pause.
 
-;M83            ; relative extruder moves
-;G1 E-3 F3000  ; retract 3mm of filament
-;G91            ; relative positioning
-;G1 Z10 F360     ; lift Z by 10mm
-;G90            ; absolute positioning
+M83
+M104 S0 ; turn off temperature
+M140 S0 ; turn off heatbed
+M107 ; turn off fan
+G1 F1000.0 ; set feed rate
+G1 E-2 ; retract
+M18 YXE

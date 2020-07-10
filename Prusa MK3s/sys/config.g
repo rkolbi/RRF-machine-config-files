@@ -1,5 +1,5 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
-; Last update 07JULY2020
+; Last update 10JULY2020
 
 ; General preferences
 G90												; send absolute coordinates...
@@ -27,7 +27,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00         	; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1      	; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00   	; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00    	; Set accelerations (mm/s^2)
-M906 X620.00 Y620.00 Z560.00 E650.00 I10    	; Set motor currents (mA) and motor idle factor in percent
+M906 X620.00 Y620.00 Z560.00 E700.00 I10    	; Set motor currents (mA) and motor idle factor in percent
 M84 S30                                     	; Set idle timeout
 
 
@@ -54,7 +54,7 @@ M308 S2 P"e1_temp" A"PINDA" Y"thermistor" T100000 B3950
 ;G31 P1000 X23 Y5 Z1.285 						; Textured Sheet Offset
 G31 P1000 X23 Y5 Z0.64 						    ; Textured Sheet (The king) Offset MICRO SWISS NOZZLE
 
-M557 X24:221 Y10:195 P9                     	; Define mesh grid
+M557 X25:235 Y10:195 P9                     	; Define mesh grid
 
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
@@ -84,9 +84,15 @@ M308 S2 Y"drivers" A"DRIVERS"					; Case fan - configure sensor 2 as temperature
 M308 S3 Y"mcu-temp" A"MCU"						; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100							; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H2:3 L0.15 X1 B0.3 T40:70				; Case fan - set fan 2 value
-
+M912 P0 S-7.5									; MCU Temp calibration - default reads 7.5c higher than ambient
 
 ; Tools
 M563 P0 D0 H1 F0                            	; Define tool 0
 G10 P0 X0 Y0 Z0                             	; Set tool 0 axis offsets
 G10 P0 R0 S0                                	; Set initial tool 0 active and standby temperatures to 0C
+
+; Relase X, Y, and E axis
+M18 YXE
+
+
+
