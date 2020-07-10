@@ -45,8 +45,7 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 ## **Additional notes:**  
 **:bulb:The confg is set up to use two independent Z motors.** Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
 
-**:bulb:The PINDA thermistor is connected to thermistor E1.** What about the "PINDA temperature calibration feature". You may read my (@Argo) posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
--I always use "G32" to home my axis or "Home all".
+**:bulb:The PINDA thermistor is connected to thermistor E1.** What about the "PINDA temperature calibration feature".  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
 
 <br><br>
 
