@@ -25,7 +25,7 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 <br>:warning:Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
 
 2) **:wrench:Sensorless Homing / Stallguard sensitivity.**  
-As the configuration files are for using 0.9 X/Y steppers, you most likely need to adjust your stallguard and sensorless homing. For stallguard sensitivity, look for the "M915" gcode in the config.g file. A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing_
+As the configuration files are for using 0.9 X/Y steppers, you most likely need to adjust your stallguard and sensorless homing. For stallguard sensitivity, look for the "M915" gcode in the config.g file. A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
 
 3) **:bulb:Mandatory changes to your start gcode (Slicer).**  
  To use the autoload feature you may also find in the stock Prusa MK3s firmware.    
@@ -45,7 +45,7 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 ## **Additional notes:**  
 **:bulb:The confg is set up to use two independent Z motors.** Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
 
-**:bulb:The PINDA thermistor is connected to thermistor E1.** What about the "PINDA temperature calibration feature".  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132   TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
+**:bulb:The PINDA thermistor is connected to thermistor E1.** What about the "PINDA temperature calibration feature".  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.  TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
 
 <br><br>
 
@@ -98,5 +98,5 @@ M84 XYE; disable motors
 
 <br>
 
-**It is highly recommend to read through the very detailed Duet Wiki pages at https://duet3d.dozuki.com. RepRapFirmware supported G-code reference can be found here https://duet3d.dozuki.com/Wiki/Gcode#main*
+**It is highly recommend to read through the very detailed Duet Wiki pages at https://duet3d.dozuki.com. RepRapFirmware supported G-code reference can be found here https://duet3d.dozuki.com/Wiki/Gcode#main.*
 
