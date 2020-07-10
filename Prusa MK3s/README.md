@@ -1,14 +1,18 @@
-# Prusa MK3s config - Duet 2 WiFi - RepRap Firmware 3.11
+# Prusa MK3s - Duet 2 WiFi - RRF 3.11
 
+## Prusa MK3s - Duet 2 WiFi wiring guide [PDF](Duet-MK3s.pdf)    
 
-## **Hardware changes from stock Prusa MK3s:**  
+<br>
+
+## **Hardware changes from stock Prusa MK3s:**
+
 - Bondtech Mosquito Extruder  
 
 - Bear frame  
 
 - 0.9 steppers for X and Y axis  
 
-- Duet WiFi ([Duet-MK3s Wiring Guide Here](Duet-MK3s.pdf))  
+- Duet WiFi  
   
   <br><br>
 
