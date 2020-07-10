@@ -51,26 +51,53 @@ Use the "Unload Filament" macro when the printer is not printing and the "Unload
 <br><br>
 
 ## **Example start gcode for Prusa Slicer:**  
-```g-code; Prime Filament Sensor for Runout  
+```g-code
+;Start G-Code
+
 M581 P1 T2 S-1 R0 ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
 M950 J1 C"nil" ; Input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1 ; Filament Runout Sensor  
-M83 ; extruder relative mode  
-M140 S[first_layer_bed_temperature] ; set bed temp  
-M109 S165 ; Set extruder temp 165C before bed level  
-M190 S[first_layer_bed_temperature] ; wait for bed temp  
-G32 ; Levels Z Tilt and probes Z=0  
-G29 S0 ; mesh bed leveling  
-G1 X0 Y0 Z2 F2000  
-M109 S[first_layer_temperature] ; wait for extruder temp  
-G1 X10 Y-7 Z0.3 F1000.0 ; go outside print area  
-G92 E0.0  
-G1 Z0.2 E8 ; Purge Bubble  
-G1 X60.0 E9.0  F1000.0 ; intro line  
-G1 X100.0 E12.5  F1000.0 ; intro line  
-G92 E0.0  
+G90; Use absolute positioning
+
+G28; home
+G1 X100 Y100 F3000; place probe about center to heat stabilized pinda
+
+; Heat Bed to [first_layer_bed_temperature] / Nozzle to 150
+M140 S[first_layer_bed_temperature] ; set bed temp
+M104 S150 ; set nozzle temp
+M190 S[first_layer_bed_temperature] ; wait for bed temp
+M109 S150 ; wait for extruder temp
+
+G32 ; Level R/L Z-axis
+G29 ; Level Bed
+
+G1 X0 Z0.6 Y-3.0 F3000.0 ;
+M104 S[first_layer_temperature] ; set extruder final temp
+M109 S[first_layer_temperature] ; wait for extruder final temp
+
+G92 E0.0
+G1 Z0.2 X200.0 E30.0 F1000.0 ; intro line
+G92 E0.0
 ```
 <br>
 
-**I tried to be as thorough as possible. I highly recommend to read through the very detailed Duet Wiki pages (https://duet3d.dozuki.com) to understand what those gcodes in the config mean and do!*
+## **Example end gcode for Prusa Slicer:**  
+
+```g-code
+;End G-Code
+
+M221 S100
+M104 S0 ; turn off temperature
+M140 S0 ; turn off heatbed
+M107 ; turn off fan
+G1 F1000.0 ; set feed rate
+G1 E-2 ; retract
+G1 X20 Y200 Z205 F3000; home X axis
+
+M84 XYE; disable motors
+```
+
+<br>
+
+**It is highly recommend to read through the very detailed Duet Wiki pages at https://duet3d.dozuki.com. RepRapFirmware supported G-code reference can be found here https://duet3d.dozuki.com/Wiki/Gcode#main*
 
