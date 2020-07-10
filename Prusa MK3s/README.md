@@ -12,6 +12,8 @@
 
 - Duet WiFi  
   
+- PanelDue 5i  
+  
   <br><br>
 
 ## **:interrobang:What do those hardware changes mean for your config?**  
