@@ -8,9 +8,7 @@
 
 - Bondtech Mosquito Extruder  
 
-- Bear frame  
-
-- 0.9 steppers for X and Y axis  
+- 0.9 steppers for X and Y axis (17HM15-0904S @ omc-stepperonline.com) 	
 
 - Duet WiFi  
   
