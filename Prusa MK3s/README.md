@@ -101,5 +101,59 @@ M84 XYE                             ; unlock motors
 
 <br>
 
+<br>
+
+## **Example start gcode for ideaMaker Slicer:**  
+
+```g-code
+; ideaMaker Start G-Code
+
+M581 P1 T2 S-1 R0                   ; Filament Sensor P1 triggers Trigger2.g always (R0)  TRIGGER OFF  
+M950 J1 C"nil"                      ; Input 1 e0 Filament Sensor  
+M591 D0 P2 C"e0stop" S1             ; Filament Runout Sensor  
+G90                                 ; Absolute Positioning
+M83                                 ; extruder relative mode
+G28                                 ; home
+G1 X100 Y100 F3000                  ; home X axis
+
+M140 S{temperature_heatbed}         ; set bed temp
+M104 S150                           ; set extruder temp
+M190 S{temperature_heatbed}         ; wait for bed temp
+
+G32                                 ; Level R/L Z-axis
+G29                                 ; Level Bed
+
+G1 X0 Z0.6 Y-3.0 F3000.0
+M104 S{temperature_extruder1}       ; set extruder
+M109 S{temperature_extruder1}       ; wait for extruder temp
+
+G92 E0.0
+G1 Z0.2 X100.0 E30.0 F1000.0        ; intro line
+G92 E0.0
+                                
+M572 D0 S0.11                       ; set pressure advance
+```
+
+<br>
+
+## **Example end gcode for ideaMaker Slicer:**  
+
+```g-code
+; ideaMaker End G-Code
+  
+M221 S100
+M104 S0                             ; turn off temperature
+M140 S0                             ; turn off heatbed
+M107                                ; turn off fan
+
+M221 S100                           ; reset extrusuon to 100 percent
+G1 F1000.0                          ; set feed rate
+G1 E-2                              ; retract
+G1 X20 Y200 Z205 F3000              ; home X axis
+M84 XYE                             ; unlock motors
+```
+
+<br>
+
 **It is highly recommend to read through the very detailed Duet Wiki pages at https://duet3d.dozuki.com. RepRapFirmware supported G-code reference can be found here https://duet3d.dozuki.com/Wiki/Gcode#main.*
 
