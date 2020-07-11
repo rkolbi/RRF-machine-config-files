@@ -88,16 +88,16 @@ G92 E0.0
 
 ```g-code
 ;End G-Code
+  
+M104 S0                             ; turn off hotend
+M140 S0                             ; turn off heatbed
+M107                                ; turn off fan
 
-M104 S0                ; turn off hotend
-M140 S0                ; turn off heatbed
-M107                   ; turn off fan
-
-M221 S100              ; reset extrusuon to 100 percent
-G1 F1000.0             ; set feed rate
-G1 E-2                 ; retract
-G1 X20 Y200 Z205 F3000 ; home X axis
-M84 XYE                ; unlock motors
+M221 S100                           ; reset extrusuon to 100 percent
+G1 F1000.0                          ; set feed rate
+G1 E-2                              ; retract
+G1 X20 Y200 Z205 F3000              ; home X axis
+M84 XYE                             ; unlock motors
 ```
 
 <br>
