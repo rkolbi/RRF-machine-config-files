@@ -65,9 +65,8 @@ G90                                 ; Use absolute positioning
 G28                                 ; home
 G1 X100 Y100 F3000                  ; place probe about center to stabilized pinda
 
-; Heat Bed to first layer temp / Nozzle to 150
-M140 S[first_layer_bed_temperature] ; set bed temp
-M104 S150                           ; set nozzle temp
+M140 S[first_layer_bed_temperature] ; set bed temp to first layer temp
+M104 S150                           ; set nozzle temp to 150c
 M190 S[first_layer_bed_temperature] ; wait for bed temp
 M109 S150                           ; wait for extruder temp
 
