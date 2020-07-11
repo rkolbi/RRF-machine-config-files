@@ -81,8 +81,6 @@ G92 E0.0
 G1 Z0.2 X200.0 E30.0 F1000.0        ; purge line
 G92 E0.0
 ```
-<br>
-
 ## **Example end gcode for Prusa Slicer:**  
 
 ```g-code
@@ -133,8 +131,6 @@ G92 E0.0
                                 
 M572 D0 S0.11                       ; set pressure advance
 ```
-
-<br>
 
 ## **Example end gcode for ideaMaker Slicer:**  
 
