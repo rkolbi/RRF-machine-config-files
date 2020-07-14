@@ -1,5 +1,5 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
-; Last update 10JULY2020
+; Last update 14JULY2020
 
 ; General preferences
 G90                                              ; send absolute coordinates...
@@ -18,7 +18,7 @@ M575 P1 S1 B38400                                ; enable support for PanelDue
 M569 P0 S1                                       ; Drive 0 goes forwards: X Axis
 M569 P1 S1                                       ; Drive 1 goes forwards: Y Axis
 M569 P2 S1                                       ; Drive 2 goes forwards: Z Axis
-M569 P3 S0                                       ; Drive 3 goes backwards: E Axis
+M569 P3 S0                                       ; Drive 3 goes backwards: E Axis (Bondtech BMGm)
 M569 P4 S1                                       ; Drive 4 goes forwards: Z Axis (at E1)
 
 ; Micrpstepping and Speed
@@ -27,9 +27,9 @@ M92 X200.00 Y200.00 Z400.00 E415.00              ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1          ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00        ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00         ; Set accelerations (mm/s^2)
-M906 X620.00 Y620.00 Z560.00 E700.00 I10         ; Set motor currents (mA) and motor idle factor in percent
+;M906 X620.00 Y620.00 Z560.00 E700.00 I10        ; Set motor currents (mA) and motor idle factor in percent - prusa stock motors
+M906 X1340.00 Y1600.00 Z600.00 E700.00 I10       ; Set motor currents (mA) and motor idle factor in percent
 M84 S30                                          ; Set idle timeout
-
 
 ; Motor remapping for dual Z and axis Limits
 M584 X0 Y1 Z2:4 E3                               ; two Z motors connected to driver outputs Z and E1
@@ -43,18 +43,19 @@ M574 Y1 S3                                       ; Set endstops controlled by mo
 
 ; Stallgaurd Sensitivy
 M915 X S3 F0 H400 R1                             ; Set X axis Sensitivity
-M915 Y S3 F0 H400 R1                             ; Set y axis Sensitivity
+M915 Y S3 F0 H400 R1                             ; Set Y axis Sensitivity
 
 ; Z-Probe PINDA
 M574 Z1 S2                                       ; Set endstops controlled by probe
 M558 P5 C"^zprobe.in" I1 H0.7 F1000 T6000 A20 S0.005 ; PINDA
 M308 S2 P"e1_temp" A"PINDA" Y"thermistor" T100000 B3950
-;G31 P1000 X23 Y5 Z0.985                         ; PEI Sheet Offset C0.0010 S20 H2	
-;G31 P1000 X23 Y5 Z0.440                         ; PEI Sheet Offset MICRO SWISS NOZZLE	
-;G31 P1000 X23 Y5 Z1.285                         ; Textured Sheet Offset
-G31 P1000 X23 Y5 Z0.64                           ; Textured Sheet (The king) Offset MICRO SWISS NOZZLE
+M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
-M557 X25:235 Y10:195 P9                          ; Define mesh grid
+; Z-Offsets - Once done with babystepping place your final here for ease of use, then uncomment the one your currently using  
+;G31 P1000 X23 Y5 Z0.985                         ; PEI Sheet (Prusa) Offset Spool3D Tungsten Carbide
+;G31 P1000 X23 Y5 Z0.440                         ; PEI Sheet (Prusa) Offset MICRO SWISS NOZZLE	
+;G31 P1000 X23 Y5 Z1.285                         ; Textured Sheet (Prusa) Offset MICRO SWISS NOZZLE
+G31 P1000 X23 Y5 Z0.64                           ; Textured Sheet (thekkiinngg) Offset MICRO SWISS NOZZLE
 
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
@@ -68,7 +69,8 @@ M950 J1 C"e0stop"                                ; Input 1 e0 Filament Sensor
 M581 P1 T2 S0 R0                                 ; Filament Sensor P1 triggers Trigger2.g always (R0)
 
 ; HotEnd Heaters and Thermistor HotEnd           
-M308 S1 P"e0_temp" Y"thermistor" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd
+;M308 S1 P"e0_temp" Y"thermistor" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd - use this for stock prusa thermistor
+M308 S1 P"e0_temp" Y"pt1000" A"Extruder Temp"    ; Swapped original prusa thermistor for PT1000
 M950 H1 C"e0heat" T1                             ; Create HotEnd Heater
 M307 H1 A415.2 C182.2 D3.2 S1.00 V24.0 B0        ; Hotend PID Calibration
 M143 H1 S285                                     ; Set temperature limit for heater 1 to 285C HotEnd
