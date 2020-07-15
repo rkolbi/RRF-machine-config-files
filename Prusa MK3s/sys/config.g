@@ -1,5 +1,5 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
-; Last update 14JULY2020
+; Last update 10JULY2020
 
 ; General preferences
 G90                                              ; send absolute coordinates...
@@ -10,8 +10,8 @@ M550 P"ZMK3-BMGm"                                ; set printer name
 M551 P"3D"                                       ; set password
 M552 S1                                          ; enable network
 M586 P0 S1                                       ; enable HTTP
-M586 P1 S1                                       ; enable FTP
-M586 P2 S0                                       ; disable Telnet
+M586 P1 S0                                       ; disabled FTP
+M586 P2 S0                                       ; disabled Telnet
 M575 P1 S1 B38400                                ; enable support for PanelDue
 
 ; Drive Mappings S0 = backwards, S1 = forwards
@@ -28,7 +28,7 @@ M566 X480.00 Y480.00 Z24.00 E1500.00 P1          ; Set maximum instantaneous spe
 M203 X12000.00 Y12000.00 Z750.00 E1500.00        ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00         ; Set accelerations (mm/s^2)
 ;M906 X620.00 Y620.00 Z560.00 E700.00 I10        ; Set motor currents (mA) and motor idle factor in percent - prusa stock motors
-M906 X1340.00 Y1600.00 Z600.00 E700.00 I10       ; Set motor currents (mA) and motor idle factor in percent
+M906 X1340.00 Y1600.00 Z800.00 E700.00 I10       ; Set motor currents (mA) and motor idle factor in percent
 M84 S30                                          ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
@@ -47,7 +47,7 @@ M915 Y S3 F0 H400 R1                             ; Set Y axis Sensitivity
 
 ; Z-Probe PINDA
 M574 Z1 S2                                       ; Set endstops controlled by probe
-M558 P5 C"^zprobe.in" I1 H0.7 F1000 T6000 A20 S0.005 ; PINDA
+M558 P5 C"^zprobe.in" I1 H0.7 F800 T6000 A20 S0.005 ; PINDA
 M308 S2 P"e1_temp" A"PINDA" Y"thermistor" T100000 B3950
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
@@ -64,9 +64,9 @@ M307 H0 A146.6 C407.6 D8.4 S1.00 V24.0 B0        ; Bed PID Calibration
 M140 H0                                          ; Bed uses Heater 0
 M143 H0 S120                                     ; Set temperature limit for heater 0 to 120C Bed
 
-; Filament Sensor Port and Loading Feature ON
-M950 J1 C"e0stop"                                ; Input 1 e0 Filament Sensor 
-M581 P1 T2 S0 R0                                 ; Filament Sensor P1 triggers Trigger2.g always (R0)
+; Filament Sensor
+M950 J1 C"nil"                                   ; Input 1 e0 Filament Sensor  
+M591 D0 P2 C"e0stop" S1                          ; Filament Runout Sensor  
 
 ; HotEnd Heaters and Thermistor HotEnd           
 ;M308 S1 P"e0_temp" Y"thermistor" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd - use this for stock prusa thermistor
@@ -86,7 +86,7 @@ M308 S2 Y"drivers" A"DRIVERS"                    ; Case fan - configure sensor 2
 M308 S3 Y"mcu-temp" A"MCU"                       ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100                             ; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H2:3 L0.15 X1 B0.3 T40:70                ; Case fan - set fan 2 value
-M912 P0 S-7.5                                    ; MCU Temp calibration - default reads 7.5c higher than ambient
+M912 P0 S-5.5                                    ; MCU Temp calibration - default reads 7.5c higher than ambient
 
 ; Tools
 M563 P0 D0 H1 F0                                 ; Define tool 0

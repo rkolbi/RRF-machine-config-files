@@ -1,0 +1,4 @@
+M117 "Heating extruder for PETg"
+T0 
+M104 S230                           
+M109 S230                           

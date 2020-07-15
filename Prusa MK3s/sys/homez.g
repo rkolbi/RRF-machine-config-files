@@ -1,3 +1,4 @@
+M913 Z70
 G91                                                ; relative positioning
 G1 H0 Z3 F6000                                     ; lift Z relative to current position
 G90                                                ; absolute positioning
@@ -9,3 +10,4 @@ G30                                                ; home Z by probing the bed
 ;G91                                                ; relative positioning
 ;G1 H0 Z5 F100                                      ; lift Z relative to current position
 ;G90                                                ; absolute positioning
+M913 Z100
