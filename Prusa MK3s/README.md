@@ -32,9 +32,9 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 As the configuration files are for using 0.9 X/Y steppers, you most likely need to adjust your stallguard and sensorless homing. For stallguard sensitivity, look for the "M915" gcode in the config.g file. A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
 
  3) **:bulb:Use the included Macros to unload the filament.**  
-"Set Filament Type" - This macro sets what type of filament you are using. This information will be used by the macro "Heat Nozzle" as well as the macro "Filament Handling"  
-"Filament Handling" - For any and all filamnet unloading / loading / changing use this macro. This macro will load, unload, and change filament base on weather is detects filament is current loaded or not, and if a print is in progress or not.
-"Heat Nozzle" is created and changed by the opertion of "Set Filament Type" macro. If you select it, the hotend will heat to the set filament type temperature.
+**"Set Filament Type"** - This macro sets what type of filament you are using. This information will be used by the macro "Heat Nozzle" as well as the macro "Filament Handling"  
+**"Filament Handling"** - For any and all filamnet unloading / loading / changing use this macro. This macro will load, unload, and change filament base on weather is detects filament is current loaded or not, and if a print is in progress or not.  
+**"Heat Nozzle"** is created and changed by the opertion of "Set Filament Type" macro. If you select it, the hotend will heat to the set filament type temperature.
 
 <br><br>
 
