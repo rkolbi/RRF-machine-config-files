@@ -36,7 +36,7 @@ As the configuration files are for using 0.9 X/Y steppers, you most likely need 
 **"Filament Handling"** - For any and all filamnet unloading / loading / changing use this macro. This macro will load, unload, and change filament base on weather is detects filament is current loaded or not, and if a print is in progress or not. Please note that since the logic functions look at the current status of the filament sensor, if your printer is currently empty and you intend on loading filament, please do not place filament in the extruder until requested to do so by the macro. Else the macro will think filament is loaded and that you want to unload instead of load.  
 **"Heat Nozzle"** is created and changed by the opertion of "Set Filament Type" macro and can be selected on its own and is also used / required by the "Filament Handling" macro. If you select it, the hotend will heat to the set filament type temperature.  
 
-![]()
+![](/Users/me/Desktop/Start-screen.jpg)
 
 <br><br>
 
