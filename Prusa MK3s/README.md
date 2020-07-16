@@ -41,9 +41,9 @@ As the given configuration files were authored while using 0.9 degree stepper mo
 <br><br>
 
 ## **Additional notes:**  
-**:bulb:Electrically independent Z motors** It is meaning that each of the two Z-axis stepper motors has its own dedicated stepper driver and can be independently operated by the duet board, allowing the precise alignment of the gantry. Use the G32 command to issue the alignment routine.  
+**:bulb:Electrically independent Z motors**: It is meaning that each of the two Z-axis stepper motors has its own dedicated stepper driver and can be independently operated by the duet board, allowing the precise alignment of the gantry. Use the G32 command to issue the alignment routine.  
 
-**:bulb:PINDA v2** Pinda version 2 is upgraded from the previous version in that it now has an integrated thermistor, which this configuration electrically ties to thermistor E1 on the duet.  Pinda temperature compensation has to be mitigated via g-code macro but will be handled via integrated function within the duet firmware shortly.  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.    
+**:bulb:PINDA v2**: Pinda version 2 is upgraded from the previous version in that it now has an integrated thermistor, which this configuration electrically ties to thermistor E1 on the duet.  Pinda temperature compensation has to be mitigated via g-code macro but will be handled via integrated function within the duet firmware shortly.  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.    
 
 <br><br>
 
