@@ -29,7 +29,7 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 <br>:warning:Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
 
 2) **:wrench:Sensorless Homing / Stallguard sensitivity.**  
-As the configuration files are for using 0.9 X/Y steppers, you most likely need to adjust your stallguard and sensorless homing. For stallguard sensitivity, look for the "M915" gcode in the config.g file. A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
+As the given configuration files were authored while using 0.9 degree stepper motors on the X and Y axis, you may need to adjust your stallguard sensitivity and sensorless homing. For stallguard sensitivity, look for the "M915" in the config.g file. A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
 
  3) **:bulb:Use the included Macros to unload the filament.**  
 **"Set Filament Type"** - This macro asks what type filament you are going to use; PLA, PETg, ABS, or PC. Based on the selection, this macro rewrites the "Heat Nozzle" macro to heat the nozzle for the selected filament type.  *Note: This macro only has to be executed once for the given filament type change as it's settings are nonvolatile, regardless of reset or power off.*   
@@ -41,9 +41,9 @@ As the configuration files are for using 0.9 X/Y steppers, you most likely need 
 <br><br>
 
 ## **Additional notes:**  
-**:bulb:The confg is set up to use two independent Z motors.** Meaning, the right Z motor is connected to the E1 stepper driver. Use the "G32" gcode to level both lead screws.  
+**:bulb:Electrically independent Z motors.** It is meaning that each of the two Z-axis stepper motors has its own dedicated stepper driver and can be independently operated by the duet board, allowing the precise alignment of the gantry. Use the G32 command to issue the alignment routine.  
 
-**:bulb:The PINDA thermistor is connected to thermistor E1.** What about the "PINDA temperature calibration feature".  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.  TL:DR -> right now it's not possible without conditional gcode. Prusa uses a temperature table as the PINDA inaccuracy isn't linear with rising temperatures.  
+**:bulb:PINDA v2** Pinda version 2 is upgraded from the previous version in that it now has an integrated thermistor, which this configuration electrically ties to thermistor E1 on the duet.  Pinda temperature compensation has to be mitigated via g-code macro but will be handled via integrated function within the duet firmware shortly.  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.    
 
 <br><br>
 
