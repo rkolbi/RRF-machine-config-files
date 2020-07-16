@@ -33,12 +33,12 @@ As the configuration files are for using 0.9 X/Y steppers, you most likely need 
 
  3) **:bulb:Use the included Macros to unload the filament.**  
 **"Set Filament Type"** - This macro asks what type filament you are going to use; PLA, PETg, ABS, or PC. Based on the selection, this macro rewrites the "Heat Nozzle" macro to heat the nozzle for the selected filament type.
-*Note: This macro only has to be executed once for the given filament type change as it's settings are nonvolatile, regardless to reset or power off.*  
-**"Filament Handling"** - For any filament unloading, loading, and changing regardless of the printer's state, printing or not, use this macro. This macro will load, unload, and change filament based on two conditions; whether it detects filament is currently loaded or not, and if a print is in progress or not.  
-*Note: The logic function in the macro retrieves the current status of the filament sensor to base the perceived desired action to enact. If your printer's filament is currently empty and you intend to load filament, please do not place it into the extruder until requested to do so by the macro. Else the macro will determine that filament is loaded and that you want to unload instead of load.*  
+*Note: This macro only has to be executed once for the given filament type change as it's settings are nonvolatile, regardless to reset or power off.*   
+**"Filament Handling"** - For any filament unloading, loading, and changing regardless of the printer's state, printing or not, use this macro. This macro will load, unload, and change filament based on two conditions; whether it detects filament is currently loaded or not, and if a print is in progress or not.   
+*Note: The logic function in the macro retrieves the current status of the filament sensor to base the perceived desired action to enact. If your printer's filament is currently empty and you intend to load filament, please do not place it into the extruder until requested to do so by the macro. Else the macro will determine that filament is loaded and that you want to unload instead of load.*   
 **"Heat Nozzle"** is created by the "Set Filament Type" macro and can be selected to heat the hotend to the set temperature for the last chosen filament type. The "Filament Handling" macro runs this macro to perform the heating of the hotend to carry out the filament handling, whether it be loading, unloading, or changing.
 
-![Start Screen Graphic](Start-screen.jpg)
+![Start Screen](Start-screen.jpg)
 
 <br><br>
 
