@@ -1,5 +1,4 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
-; Last update 10JULY2020
 
 ; General preferences
 G90                                              ; send absolute coordinates...
