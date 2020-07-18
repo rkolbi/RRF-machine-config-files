@@ -1,5 +1,5 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
-; Last update 16JULY2020
+; Last update 10JULY2020
 
 ; General preferences
 G90                                              ; send absolute coordinates...
@@ -47,7 +47,7 @@ M915 Y S3 F0 H400 R1                             ; Set Y axis Sensitivity
 ; Z-Probe PINDA
 M574 Z1 S2                                       ; Set endstops controlled by probe
 M558 P5 C"^zprobe.in" I1 H0.7 F400 T8000 A20 S0.003 ; PINDA
-M308 S2 P"e1_temp" A"PINDA" Y"thermistor" T100000 B3950
+M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
 ; Z-Offsets - Once done with babystepping place your final here for ease of use, then uncomment the one your currently using  
@@ -57,7 +57,7 @@ M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 G31 P1000 X23 Y5 Z0.64                           ; Textured Sheet (thekkiinngg) Offset MICRO SWISS NOZZLE
 
 ; Heatbed Heaters and Thermistor Bed 
-M308 S0 P"bed_temp" Y"thermistor" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
+M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
 M950 H0 C"bedheat" T0                            ; Creates Bed Heater
 M307 H0 A56.4 C230.5 D4.4 S1.00 V24.0 B0         ; Bed PID Calibration
 M140 H0                                          ; Bed uses Heater 0
@@ -68,7 +68,7 @@ M950 J1 C"nil"                                   ; Input 1 e0 Filament Sensor
 M591 D0 P2 C"e0stop" S1                          ; Filament Runout Sensor  
 
 ; HotEnd Heaters and Thermistor HotEnd           
-M308 S1 P"e0_temp" Y"pt1000" A"Extruder Temp"    ; Swapped original prusa thermistor for PT1000
+M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"         ; Swapped original prusa thermistor for PT1000
 M950 H1 C"e0heat" T1                             ; Create HotEnd Heater
 M307 H1 A320.1 C127.6 D4.0 S1.00 V24.1 B0        ; Hotend PID Calibration
 M143 H1 S285                                     ; Set temperature limit for heater 1 to 285C HotEnd
@@ -80,8 +80,8 @@ M106 P1 T45 S255 H1                              ; HOTEND Fan Settings
 M950 F0 C"Fan0" Q250                             ; Creates PARTS COOLING FAN
 M106 P0 H-1                                      ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned off PARTS COOLING FAN
 ; The following lines are for auto case fan control, attached to 'fan2' header on duet board
-M308 S4 Y"drivers" A"TMC2660"                    ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
-M308 S3 Y"mcu-temp" A"MCU"                       ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
+M308 S4 Y"drivers" A"Drivers"                    ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
+M308 S3 Y"mcu-temp" A"Duet2Wifi"                       ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100                             ; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H4:3 L0.15 X1 B0.3 T40:70                ; Case fan - set fan 2 value
 M912 P0 S-5.5                                    ; MCU Temp calibration - default reads 7.5c higher than ambient
