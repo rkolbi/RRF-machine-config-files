@@ -64,9 +64,9 @@ M307 H0 A146.6 C407.6 D8.4 S1.00 V24.0 B0        ; Bed PID Calibration
 M140 H0                                          ; Bed uses Heater 0
 M143 H0 S120                                     ; Set temperature limit for heater 0 to 120C Bed
 
-; Filament Sensor Port and Loading Feature ON
-;M950 J1 C"e0stop"                               ; Input 1 e0 Filament Sensor 
-;M581 P1 T2 S0 R0                                ; Filament Sensor P1 triggers Trigger2.g always (R0)
+; Filament Sensor
+M950 J1 C"e0stop"                               ; Input 1 e0 Filament Sensor 
+M581 P1 T2 S0 R0                                ; Filament Sensor P1 triggers Trigger2.g always (R0)
 
 M950 J1 C"nil"                                   ; Input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1                          ; Filament Runout Sensor  
