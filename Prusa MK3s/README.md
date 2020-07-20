@@ -17,8 +17,8 @@
   <br><br>
 
 ## **:interrobang:What do those hardware changes mean for your config?**  
-1) **:wrench:Extruder, X, and Y microstepping resolution and steps/mm.**  
-Unless you have the same setup as referenced above, you may have to change the microstepping resolution and the steps per millimeter located in the 'config.g' file. To retrieve your current machine's configuration, issue a M503 command in the terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per millimeter. _More about this can be read here: https://www.linearmotiontips.com/microstepping-basics/ and here: https://blog.prusaprinters.org/calculator3416/._  
+1) **:wrench:Motors, microstepping resolution, and steps/mm.**  
+Unless you have the same setup as referenced above, you may have to change the microstepping resolution and the steps per millimeter located in the 'config.g' file. To retrieve your current machine's configuration, issue a M503 command in the terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per millimeter. _More about this can be read here: https://duet3d.dozuki.com/Wiki/Choosing_and_connecting_stepper_motors, here: https://www.linearmotiontips.com/microstepping-basics/, and here: https://blog.prusaprinters.org/calculator3416/._  
 <br>-The provided config.g is set for 0.9 stepper motors on X/Y and a Bondtech Mosquito Extruder:  
 M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
 M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm  
@@ -29,7 +29,8 @@ M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm
 <br>:warning:Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
 
 2) **:wrench:Sensorless Homing / Stallguard sensitivity.**  
-As the given configuration files were authored while using 0.9 degree stepper motors on the X and Y axis, you may need to adjust your stallguard sensitivity and sensorless homing. For stallguard sensitivity, look for the "M915" in the config.g file. A good explanation on how to calibrate stallguard can be read here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
+The TMC2660 drivers used on the Duet WiFi, Duet Ethernet and the TMC5160 drivers used on the Duet 3 support the stallGuardTM feature. This feature allows the driver to detect motor stalls under some circumstances. Stall detection may be useful for detecting when a motor has skipped steps due to the nozzle hitting an obstruction, and for homing the printer without using endstop switches.  
+As the given configuration files were authored while using 0.9 degree stepper motors on the X and Y axis, you may need to adjust your stallguard sensitivity and sensorless homing. For stallguard sensitivity, look for the "M915" in the config.g file. Please read the full documentation here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
 
  3) **:bulb:Use the included Macros for filament handling.**  
 **"Set Filament Type"** asks what type filament you are going to use; PLA, PETg, ABS, or PC. Based on the selection, this macro rewrites the "Heat Nozzle" macro to heat the nozzle for the selected filament type.  *Note: This macro only has to be executed once for the given filament type change as it's settings are nonvolatile, regardless of reset or power off.*   
@@ -41,7 +42,7 @@ As the given configuration files were authored while using 0.9 degree stepper mo
 <br><br>
 
 ## **Additional notes:**  
-**:bulb:Electrically independent Z motors**: It is meaning that each of the two Z-axis stepper motors has its own dedicated stepper driver and can be independently operated by the duet board, allowing the precise alignment of the gantry. Use the G32 command to issue the alignment routine.  
+**:bulb:Electrically independent Z motors**: On printers, such as MK3, which uses two Z motors to raise/lower the bed or gantry, you can have the firmware probe the bed and adjust the motors individually to eliminate tilt.  The auto calibration uses a least squares algorithm that minimises the sum of the height errors. The deviation before and expected deviation after calibration is reported. Run G32 to initiate the process. Read the full documentation here: https://duet3d.dozuki.com/Wiki/Bed_levelling_using_multiple_independent_Z_motors  
 
 **:bulb:PINDA v2**: Pinda version 2 is upgraded from the previous version in that it now has an integrated thermistor, which this configuration electrically ties to thermistor E1 on the duet.  Pinda temperature compensation has to be mitigated via g-code macro but will be handled via integrated function within the duet firmware shortly.  Read @Argo posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.    
 
