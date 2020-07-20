@@ -1,4 +1,6 @@
-; Configuration file for MK3s Duet WiFi (firmware version 3)
+; Configuration file for MK3s Duet WiFi, firmware version 3.11
+; Go to https://github.com/rkolbi/RRF-machine-config-files/blob/master/Prusa%20MK3s/Duet-MK3s.pdf
+; for corresponding wiring information.
 
 ; General preferences
 G90                                              ; send absolute coordinates...
@@ -20,7 +22,15 @@ M569 P2 S1                                       ; Drive 2 goes forwards: Z Axis
 M569 P3 S0                                       ; Drive 3 goes backwards: E Axis (Bondtech BMGm)
 M569 P4 S1                                       ; Drive 4 goes forwards: Z Axis (at E1)
 
-; Micrpstepping and Speed
+; Motor Configuration
+; !!! For stock motors, use the following as a starting point:
+; M906 X620.00 Y620.00 Z560.00 E650.00 I10.      ; Set motor currents (mA) and motor idle factor in percent
+; M350 X16 Y16 Z16 I1                            ; Microstepping with interpolation 
+; M350 E32 I0                                    ; Microstepping without interpolation 
+; M92 X100.00 Y100.00 Z400.00 E280.00            ; Steps per mm
+; !!! Also note that you should edit the homex.g,homey.g,homez.g,homeall.g files and increase current to 50 on X and Y, 100 on Z.
+; !!! M913 X20 Y20 Z60   --->   M913 X50 Y50 Z100
+;
 M350 X16 Y16 E16 Z16 I1                          ; Configure microstepping with interpolation
 M92 X200.00 Y200.00 Z400.00 E415.00              ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1          ; Set maximum instantaneous speed changes (mm/min)
