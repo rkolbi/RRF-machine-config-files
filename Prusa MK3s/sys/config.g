@@ -1,4 +1,5 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
+; Last update 10JULY2020
 
 ; General preferences
 G90                                              ; send absolute coordinates...
@@ -63,7 +64,6 @@ M140 H0                                          ; Bed uses Heater 0
 M143 H0 S120                                     ; Set temperature limit for heater 0 to 120C Bed
 
 ; Filament Sensor
-M950 J1 C"nil"                                   ; Input 1 e0 Filament Sensor  
 M591 D0 P2 C"e0stop" S1                          ; Filament Runout Sensor  
 
 ; HotEnd Heaters and Thermistor HotEnd           
