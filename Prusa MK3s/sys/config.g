@@ -1,5 +1,4 @@
 ; Configuration file for MK3s Duet WiFi (firmware version 3)
-; Last update 10JULY2020
 
 ; General preferences
 G90                                              ; send absolute coordinates...
@@ -44,10 +43,12 @@ M574 Y1 S3                                       ; Set endstops controlled by mo
 M915 X S3 F0 H400 R1                             ; Set X axis Sensitivity
 M915 Y S3 F0 H400 R1                             ; Set Y axis Sensitivity
 
-; Z-Probe PINDA
+; Z-Probe Settings
+;M558 P9 C"^zprobe.in" H5 F200 T3000             ; USE FOR BL_TOUCH! Connected to Z probe IN pin
+;M950 S0 C"exp.heater3"                          ; USE FOR BL_TOUCH! Create servo/gpio 0 on heater 3 pin on expansion 
 M574 Z1 S2                                       ; Set endstops controlled by probe
-M558 P5 C"^zprobe.in" I1 H0.7 F400 T8000 A20 S0.003 ; PINDA
-M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950
+M558 P5 C"^zprobe.in" I1 H0.7 F400 T8000 A20 S0.003             ; USE FOR PINDA!
+M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950      ; USE FOR PINDA!
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
 ; Z-Offsets - Once done with babystepping place your final here for ease of use, then uncomment the one your currently using  
