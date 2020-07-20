@@ -77,8 +77,9 @@ M143 H0 S120                                     ; Set temperature limit for hea
 ; Filament Sensor
 M591 D0 P2 C"e0stop" S1                          ; Filament Runout Sensor  
 
-; HotEnd Heaters and Thermistor HotEnd           
-M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"         ; Swapped original prusa thermistor for PT1000
+; HotEnd Heaters and Thermistor HotEnd
+; !!! Use this line for stock thermisotr: M308 S1 P"e0_temp" Y"thermistor" A"Nozzle" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd
+M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"         ; Set extruder thermistor for PT1000
 M950 H1 C"e0heat" T1                             ; Create HotEnd Heater
 M307 H1 A320.1 C127.6 D4.0 S1.00 V24.1 B0        ; Hotend PID Calibration
 M143 H1 S285                                     ; Set temperature limit for heater 1 to 285C HotEnd
