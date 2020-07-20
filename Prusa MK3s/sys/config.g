@@ -3,17 +3,17 @@
 ; for corresponding wiring information.
 
 ; General preferences
-G90                                              ; send absolute coordinates...
-M83                                              ; ...but relative extruder moves
-M550 P"ZMK3-BMGm"                                ; set printer name
+G90                                              ; Send absolute coordinates
+M83                                              ; Relative extruder moves
+M550 P"ZMK3-BMGm"                                ; Set printer name
 
 ; Network
-M551 P"3D"                                       ; set password
-M552 S1                                          ; enable network
-M586 P0 S1                                       ; enable HTTP
-M586 P1 S0                                       ; disabled FTP
-M586 P2 S0                                       ; disabled Telnet
-M575 P1 S1 B38400                                ; enable support for PanelDue
+M551 P"3D"                                       ; Set password
+M552 S1                                          ; Enable network
+M586 P0 S1                                       ; Enable HTTP
+M586 P1 S0                                       ; Disabled FTP
+M586 P2 S0                                       ; Disabled Telnet
+M575 P1 S1 B38400                                ; Enable support for PanelDue
 
 ; Drive Mappings S0 = backwards, S1 = forwards
 M569 P0 S1                                       ; Drive 0 goes forwards: X Axis
@@ -90,8 +90,10 @@ M106 P1 T45 S255 H1                              ; HOTEND Fan Settings
 M950 F0 C"Fan0" Q250                             ; Creates PARTS COOLING FAN
 M106 P0 H-1                                      ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned off PARTS COOLING FAN
 ; The following lines are for auto case fan control, attached to 'fan2' header on duet board
-M308 S4 Y"drivers" A"Drivers"                    ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
-M308 S3 Y"mcu-temp" A"Duet2Wifi"                       ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
+M308 S4 Y"drivers" A"TMC2660"                    ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
+                                                 ; !!! Reports 0C when there is no warning, 100C if any driver reports over-temperature
+                                                 ; !!! warning , and 150C if any driver reports over temperature shutdown
+M308 S3 Y"mcu-temp" A"Duet2Wifi"                 ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100                             ; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H4:3 L0.15 X1 B0.3 T40:70                ; Case fan - set fan 2 value
 M912 P0 S-5.5                                    ; MCU Temp calibration - default reads 7.5c higher than ambient
@@ -102,4 +104,4 @@ G10 P0 X0 Y0 Z0                                  ; Set tool 0 axis offsets
 G10 P0 R0 S0                                     ; Set initial tool 0 active and standby temperatures to 0C
 
 ; Relase X, Y, and E axis
-M18 YXE                                          ; unlock X, Y, and E axis
+M18 YXE                                          ; Unlock X, Y, and E axis
