@@ -26,7 +26,6 @@ The TMC2660 drivers used on the Duet WiFi, Duet Ethernet and the TMC5160 drivers
 As the given configuration files were authored while using 0.9 degree stepper motors on the X and Y axis, you may need to adjust your stallguard sensitivity and sensorless homing. For stallguard sensitivity, look for the "M915" in the config.g file. Please read the full documentation here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
 
  3) **:bulb:Use the included Macros for filament handling.**  
-
 To make filament loading, unloading, and changing the most straightforward and simplistic possible evolution, I have made a set of macro that are readily accessible from the PanelDue.
 
 **"Set Filament Type"** asks what type filament you are going to use; PLA, PETg, ABS, or PC. Based on the selection, this macro rewrites the "Heat Nozzle" macro to heat the nozzle for the selected filament type.  *Note: This macro only has to be executed once for the given filament type change as it's settings are nonvolatile, regardless of reset or power off.*   
