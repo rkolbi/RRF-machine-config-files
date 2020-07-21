@@ -9,4 +9,6 @@ G1 H0 Y5 F1000                                     ; move slowly away
 G1 H1 Y-215 F3000                                  ; move quickly to Y endstop 
 
 G1 H0 Y5 F1000                                     ; move slowly away 
-G1 H1 Y-215 F3000                                  ; move quickly to Y endstop, second check 
+G1 H1 Y-215 F3000                                  ; move quickly to Y endstop, second check
+
+G1 Z-3 F800 H2                                     ; place Z back to starting position
