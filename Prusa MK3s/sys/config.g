@@ -30,7 +30,6 @@ M569 P4 S1                                       ; Drive 4 goes forwards: Z Axis
 ; M92 X100.00 Y100.00 Z400.00 E280.00            ; Steps per mm
 ; !!! Also note that you should edit the homex.g,homey.g,homez.g,homeall.g files and increase current to 50 on X and Y, 100 on Z.
 ; !!! M913 X20 Y20 Z60   --->   M913 X50 Y50 Z100
-;
 M350 X16 Y16 E16 Z16 I1                          ; Configure microstepping with interpolation
 M92 X200.00 Y200.00 Z400.00 E415.00              ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1          ; Set maximum instantaneous speed changes (mm/min)
@@ -54,17 +53,19 @@ M915 X S3 F0 H400 R1                             ; Set X axis Sensitivity
 M915 Y S3 F0 H400 R1                             ; Set Y axis Sensitivity
 
 ; Z-Probe Settings
-;M558 P9 C"^zprobe.in" H5 F200 T3000             ; USE FOR BL_TOUCH! Connected to Z probe IN pin
-;M950 S0 C"exp.heater3"                          ; USE FOR BL_TOUCH! Create servo/gpio 0 on heater 3 pin on expansion 
+; BL-Touch settings follow, make sure sys/ includes deployprobe.g & retractprobe.g files.
+; See wiring information for corresponding terminations.
+; M558 P9 C"^zprobe.in" H5 F200 T3000            ; USE FOR BL_TOUCH! Connected to Z probe IN pin
+; M950 S0 C"exp.heater3"                         ; USE FOR BL_TOUCH! Create servo/gpio 0 on heater 3 pin on expansion 
 M574 Z1 S2                                       ; Set endstops controlled by probe
 M558 P5 C"^zprobe.in" I1 H0.7 F400 T8000 A20 S0.003             ; USE FOR PINDA!
 M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950      ; USE FOR PINDA!
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
 ; Z-Offsets - Once done with babystepping place your final here for ease of use, then uncomment the one your currently using  
-;G31 P1000 X23 Y5 Z0.985                         ; PEI Sheet (Prusa) Offset Spool3D Tungsten Carbide
-;G31 P1000 X23 Y5 Z0.440                         ; PEI Sheet (Prusa) Offset MICRO SWISS NOZZLE	
-;G31 P1000 X23 Y5 Z1.285                         ; Textured Sheet (Prusa) Offset MICRO SWISS NOZZLE
+; G31 P1000 X23 Y5 Z0.985                        ; PEI Sheet (Prusa) Offset Spool3D Tungsten Carbide
+; G31 P1000 X23 Y5 Z0.440                        ; PEI Sheet (Prusa) Offset MICRO SWISS NOZZLE	
+; G31 P1000 X23 Y5 Z1.285                        ; Textured Sheet (Prusa) Offset MICRO SWISS NOZZLE
 G31 P1000 X23 Y5 Z0.64                           ; Textured Sheet (thekkiinngg) Offset MICRO SWISS NOZZLE
 
 ; Heatbed Heaters and Thermistor Bed 
