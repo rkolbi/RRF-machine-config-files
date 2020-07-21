@@ -18,21 +18,18 @@
 
 ## **:interrobang:What do those hardware changes mean for your config?**  
 1) **:wrench:Motors, microstepping resolution, and steps/mm.**  
-Unless you have the same setup as referenced above, you may have to change the microstepping resolution and the steps per millimeter located in the 'config.g' file. To retrieve your current machine's configuration, issue a M503 command in the terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per millimeter. _More about this can be read here: https://duet3d.dozuki.com/Wiki/Choosing_and_connecting_stepper_motors, here: https://www.linearmotiontips.com/microstepping-basics/, and here: https://blog.prusaprinters.org/calculator3416/._  
-<br>-The provided config.g is set for 0.9 stepper motors on X/Y and a Bondtech Mosquito Extruder:  
-M350 X16 Y16 E16 Z16 I1 ; Microstepping with interpolation  
-M92 X200.00 Y200.00 Z400.00 E415.00 ; Steps per mm  
-<br>-An example stepper motor configuration for the stock hardware:  
-M350 X16 Y16 Z16 I1 ; Microstepping with interpolation  
-M350 E32 I0 ; Microstepping without interpolation  
-M92 X100.00 Y100.00 Z400.00 E280.00 ; Steps per mm  
-<br>:warning:Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
+Unless you have the same setup as referenced above, you may have to change the microstepping resolution and the steps per millimeter located in the 'config.g' file. To retrieve your current machine's configuration, issue a M503 command in the terminal connected to the running printer. Pay attention to the microstepping assigned to the axis as that can change your steps per millimeter. Read through the /sys/config.g file comments and make the applicable changes as needed.  _More about this can be read here: https://duet3d.dozuki.com/Wiki/Choosing_and_connecting_stepper_motors, here: https://www.linearmotiontips.com/microstepping-basics/, and here: https://blog.prusaprinters.org/calculator3416/._  
+<br>
+:warning:Once you have changed/verified the motor settings, review the networking top portion of the file. When completed, copy all the files located in the 'sys' directory over to your sd-card's 'sys' folder. Additionally, copy the files located in the 'macros' folder over to your sd-card's 'macros' folder. _More can be read about sd-card here: https://duet3d.dozuki.com/Wiki/SDCard, more can be read about macros here: https://duet3d.dozuki.com/Wiki/Macros._  
 
 2) **:wrench:Sensorless Homing / Stallguard sensitivity.**  
 The TMC2660 drivers used on the Duet WiFi, Duet Ethernet and the TMC5160 drivers used on the Duet 3 support the stallGuardTM feature. This feature allows the driver to detect motor stalls under some circumstances. Stall detection may be useful for detecting when a motor has skipped steps due to the nozzle hitting an obstruction, and for homing the printer without using endstop switches.  
 As the given configuration files were authored while using 0.9 degree stepper motors on the X and Y axis, you may need to adjust your stallguard sensitivity and sensorless homing. For stallguard sensitivity, look for the "M915" in the config.g file. Please read the full documentation here: https://duet3d.dozuki.com/Wiki/Stall_detection_and_sensorless_homing.
 
  3) **:bulb:Use the included Macros for filament handling.**  
+
+To make filament loading, unloading, and changing the most straightforward and simplistic possible evolution, I have made a set of macro that are readily accessible from the PanelDue.
+
 **"Set Filament Type"** asks what type filament you are going to use; PLA, PETg, ABS, or PC. Based on the selection, this macro rewrites the "Heat Nozzle" macro to heat the nozzle for the selected filament type.  *Note: This macro only has to be executed once for the given filament type change as it's settings are nonvolatile, regardless of reset or power off.*   
 **"Filament Handling"** is for any filament unloading, loading, and changing regardless of the printer's state, printing or not. This macro will load, unload, and change filament based on two conditions; whether it detects filament is currently loaded or not, and if a print is in progress or not.  *Note: The logic function in the macro retrieves the current status of the filament sensor to base the perceived desired action to enact. If your printer's filament is currently empty and you intend to load filament, please do not place it into the extruder until requested to do so by the macro. Else the macro will determine that filament is loaded and that you desire to unload filament, instead of load.*   
 **"Heat Nozzle"** is created by the "Set Filament Type" macro and can be selected to heat the hotend to the set temperature for the last chosen filament type. The "Filament Handling" macro runs this macro to perform the heating of the hotend to carry out the filament handling, whether it be loading, unloading, or changing.
