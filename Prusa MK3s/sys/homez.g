@@ -1,3 +1,6 @@
+;M280 P0 S160                                      ; BLTouch, alarm release
+;G4 P100                                           ; BLTouch, delay for release command
+
 M913 Z70
 G91                                                ; relative positioning
 M913 X20 Y20 Z60                                   ; set X Y Z motors to X% of their normal current

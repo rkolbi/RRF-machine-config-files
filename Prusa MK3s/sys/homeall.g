@@ -1,3 +1,6 @@
+;M280 P0 S160                                      ; BLTouch, alarm release
+;G4 P100                                           ; BLTouch, delay for release command
+
 M915 X S2 F0 H400 R0                               ; Set X axis Sensitivity
 M915 Y S2 F0 H400 R0                               ; Set y axis Sensitivity
 M913 X20 Y20 Z60                                   ; set X Y Z motors to X% of their normal current
