@@ -11,10 +11,9 @@ if state.status != "processing"
       M291 P"Retracting filament..." T5 ; Display another message
       G1 E-150 F5000 ; Retract filament
       M400 ; Wait for the moves to finish
-      M292 ; Hide the message
+      T0 M702
       M84 E0 ; Turn off extruder
       G10 S0 ; Turn off the heater
-      M291 P"Press OK to begin filament LOADING, else press CANCEL to exit." R"Filament Handling" S3
       M98 P"0:/macros/Filament Handling"; run again
 
    else
@@ -24,12 +23,13 @@ if state.status != "processing"
       M98 P"0:/macros/Heat Nozzle"; heat nozzle to predetermined temp
       M291 P"Ready for filament loading. Insert filament and press OK." R"Filament Handling" S2
       M291 P"Feeding filament..." T5 ; Display new message
-      G1 E150 F600 ; Feed 150mm of filament at 600mm/min
+      G1 E150 F450 ; Feed 150mm of filament at 600mm/min
       G1 E20 F100 ; Feed 20mm of filament at 100mm/min
       G4 P1000 ; Wait one second
       G1 E-1 F1800 ; Retract 10mm of filament at 1800mm/min
       M400 ; Wait for moves to complete
-      M292 ; Hide the message
+      M98 P"0:/sys/filaset"
+      M400 ; Wait for moves to complete
       M84 E0 ; Turn off extruder
       G10 S0 ; Turn off the heater
 
