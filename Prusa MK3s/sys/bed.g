@@ -1,8 +1,13 @@
 ; bed.g
 ; called to perform automatic bed compensation via G32
+; 4 Passes performed. Reccomend 2 passes as minimum.
 
 M561                                             ; clear any bed transform
 G28 W                                            ; home
+
+G30 P0 X25 Y100 Z-99999                          ; probe near a leadscrew, half way along Y axis
+G30 P1 X235 Y100 Z-99999 S2                      ; probe near a leadscrew and calibrate 2 motors
+G90                                              ; back to absolute mode
 
 G30 P0 X25 Y100 Z-99999                          ; probe near a leadscrew, half way along Y axis
 G30 P1 X235 Y100 Z-99999 S2                      ; probe near a leadscrew and calibrate 2 motors
