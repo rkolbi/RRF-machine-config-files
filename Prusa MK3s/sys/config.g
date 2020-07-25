@@ -105,6 +105,7 @@ M912 P0 S-5.5                                    ; MCU Temp calibration - defaul
 M563 P0 D0 H1 F0                                 ; Define tool 0
 G10 P0 X0 Y0 Z0                                  ; Set tool 0 axis offsets
 G10 P0 R0 S0                                     ; Set initial tool 0 active and standby temperatures to 0C
+T0                                               ; Set Tool 0 active
 
 ; Relase X, Y, and E axis
 M18 YXE                                          ; Unlock X, Y, and E axis
