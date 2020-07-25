@@ -63,7 +63,7 @@ M558 P5 C"^zprobe.in" I1 H0.7 F400 T8000 A20 S0.003             ; Prusa PindaV2
 M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950      ; Prusa PindaV2
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
-; Z-Offsets - Once done with babystepping place your final here for ease of use, then uncomment the one your currently using  
+; Z-Offsets - Read here: https://duet3d.dozuki.com/Wiki/Test_and_calibrate_the_Z_probe   
 ; G31 P1000 X23 Y5 Z0.985                        ; PEI Sheet (Prusa) Offset Spool3D Tungsten Carbide
 ; G31 P1000 X23 Y5 Z0.440                        ; PEI Sheet (Prusa) Offset MICRO SWISS NOZZLE	
 ; G31 P1000 X23 Y5 Z1.285                        ; Textured Sheet (Prusa) Offset MICRO SWISS NOZZLE
