@@ -40,6 +40,8 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 **:bulb:PINDA v2**: Pinda version 2 is upgraded from the previous version in that it now has an integrated thermistor, which this configuration electrically ties to thermistor E1 on the duet.  Pinda temperature compensation has to be mitigated via g-code macro but will be handled via integrated function within the duet firmware shortly.  *Read @Argo's posting in the Duet forums: https://forum.duet3d.com/topic/16972/pinda-2-probe-with-temperature-compensation?_=1593546022132.*    
 
+**:bulb:BLTouch v3.1**: The config.g has comment sections for using this probe and the wiring guide covers the electrical installation of the BLTouch v3.1 in the last few pages. *Read the full documentation here: https://duet3d.dozuki.com/Wiki/Connecting_a_Z_probe*      
+
 <br><br>
 
 ## **Example start gcode for Prusa Slicer:**  
