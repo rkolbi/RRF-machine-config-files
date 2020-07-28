@@ -1,6 +1,6 @@
-M915 X S2 F0 H400 R0                               ; Set X axis Sensitivity
-M915 Y S2 F0 H400 R0                               ; Set y axis Sensitivity
-M913 X20 Y20 Z60                                   ; set X Y Z motors to X% of their normal current
+M98 P"current-sense-homing.g"                      ; Current and Sensitivity for homing routines
+
+
 
 G91                                                ; relative positioning
 
@@ -12,3 +12,7 @@ G1 H0 Y5 F1000                                     ; move slowly away
 G1 H1 Y-215 F3000                                  ; move quickly to Y endstop, second check
 
 G1 Z-3 F800 H2                                     ; place Z back to starting position
+
+
+
+M98 P"current-sense-normal.g"                      ; Current and Sensitivity for normal routine
