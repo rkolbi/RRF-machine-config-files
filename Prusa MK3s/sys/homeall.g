@@ -32,9 +32,8 @@ G1 X15 Y15 F6000                                   ; go to first probe point
 G30                                                ; home Z by probing the bed
 
 
-G91                                                ; relative positioning
-G1 H0 Z3 F400                                      ; lift Z relative to current position
 G90                                                ; absolute positioning
+G1 H0 Z5 F400                                      ; lift Z relative to current position
 
 
 
