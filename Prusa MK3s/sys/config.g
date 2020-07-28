@@ -50,8 +50,7 @@ M574 X1 S3                                       ; Set endstops controlled by mo
 M574 Y1 S3                                       ; Set endstops controlled by motor load detection
 
 ; Stallgaurd Sensitivy
-M915 X S3 F0 H400 R1                             ; Set X axis Sensitivity
-M915 Y S3 F0 H400 R1                             ; Set Y axis Sensitivity
+M98 P"current-sense-normal.g"                    ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings
 ; BL-Touch settings follow, make sure sys/ includes deployprobe.g & retractprobe.g files.
