@@ -28,7 +28,7 @@ M569 P4 S1                                       ; Drive 4 goes forwards: Z Axis
 ; M350 X16 Y16 Z16 I1                            ; Microstepping with interpolation 
 ; M350 E32 I0                                    ; Microstepping without interpolation 
 ; M92 X100.00 Y100.00 Z400.00 E280.00            ; Steps per mm
-; !!! Also note that you should edit the homex.g,homey.g,homez.g,homeall.g files and increase current to 50 on X and Y, 100 on Z.
+; !!! Also note that you should edit the current-sense-homing.g file and increase current to 50 on X and Y, 100 on Z.
 ; !!! M913 X20 Y20 Z60   --->   M913 X50 Y50 Z100
 ;
 M350 X16 Y16 E16 Z16 I1                          ; Configure microstepping with interpolation
