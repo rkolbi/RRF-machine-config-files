@@ -7,7 +7,7 @@ G28                                                       ; Home
 G30 P0 X25 Y100 Z-99999                                   ; Probe near a leadscrew, half way along Y axis
 G30 P1 X235 Y100 Z-99999 S2                               ; Probe near a leadscrew and calibrate 2 motors
 
-while move.calibration.initial.deviation >= 0.01	; perform additional tramming if previous deviation was over 0.01mm
+while move.calibration.initial.deviation >= 0.01          ; perform additional tramming if previous deviation was over 0.01mm
  
    if iterations = 5                                      ; Perform 5 checks
       abort "!!!Failed to achieve < 0.01 deviation within 5 movements. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
