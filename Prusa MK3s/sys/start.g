@@ -1,4 +1,5 @@
 ; Executed before each print
+M300 S3000 P200 G4 P500 M300 S1000 P300
 ;M280 P0 S160                       ; BLTouch, alarm release
 ;G4 P100                            ; BLTouch, delay for release command
 M220 S100                           ; Set speed factor back to 100% in case it was changed
