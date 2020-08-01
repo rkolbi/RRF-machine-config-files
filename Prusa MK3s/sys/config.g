@@ -52,21 +52,26 @@ M574 Y1 S3                                       ; Set endstops controlled by mo
 ; Stallgaurd Sensitivy
 M98 P"current-sense-normal.g"                    ; Current and Sensitivity for normal routine
 
-; Z-Probe Settings
-; BL-Touch settings follow, make sure sys/ includes deployprobe.g & retractprobe.g files.
-; See wiring information for corresponding terminations.
-; M558 P9 C"^zprobe.in" H5 F200 T5000            ; BLTouch, connected to Z probe IN pin
-; M950 S0 C"exp.heater3"                         ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
+; Z-Probe Settings for BLTouch
+M558 P9 C"^zprobe.in" H5 F600 T5000              ; BLTouch, connected to Z probe IN pin
+M950 S0 C"exp.heater3"                           ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
+G31 P1000 X23 Y5 Z1.30                           ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                       ; Set endstops controlled by probe
-M558 P5 C"^zprobe.in" I1 H1 F1000 T6000 A20 S0.005              ; Prusa PindaV2
-M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950      ; Prusa PindaV2
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
+; Z-Probe Setting for PINDA v2
+; 1 - If using PindaV2, Remove above M558 & M950 lines, replace with the following M558 & M308 line
+; 2 - Uncomment one of the Z-Offsets below, follow the wiki guide steps to get the proper Z-offset for your printer
+; 3 - Comment out the 2 BLTouch lines in the homez and homeall files
+; 
+; M558 P5 C"^zprobe.in" I1 H1 F1000 T6000 A20 S0.005              ; Prusa PindaV2
+; M308 S2 P"e1_temp" A"Pinda V2" Y"thermistor" T100000 B3950      ; Prusa PindaV2
+;
 ; Z-Offsets - Read here: https://duet3d.dozuki.com/Wiki/Test_and_calibrate_the_Z_probe   
 ; G31 P1000 X23 Y5 Z0.985                        ; PEI Sheet (Prusa) Offset Spool3D Tungsten Carbide
 ; G31 P1000 X23 Y5 Z0.440                        ; PEI Sheet (Prusa) Offset MICRO SWISS NOZZLE	
 ; G31 P1000 X23 Y5 Z1.285                        ; Textured Sheet (Prusa) Offset MICRO SWISS NOZZLE
-G31 P1000 X23 Y5 Z0.64                           ; Textured Sheet (thekkiinngg) Offset MICRO SWISS NOZZLE
+; G31 P1000 X23 Y5 Z0.64                         ; Textured Sheet (thekkiinngg) Offset MICRO SWISS NOZZLE
 
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed

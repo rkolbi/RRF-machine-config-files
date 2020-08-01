@@ -1,9 +1,9 @@
 M98 P"current-sense-homing.g"                      ; Current and Sensitivity for homing routines
 
 
-
-;M280 P0 S160                                      ; BLTouch, alarm release
-;G4 P100                                           ; BLTouch, delay for release command
+; !!! If using Pinda, comment-out the following two lines
+M280 P0 S160                                       ; BLTouch, alarm release
+G4 P100                                            ; BLTouch, delay for release command
 
 G91                                                ; relative positioning
 G1 Z3 F800 H2                                      ; lift Z relative to current position
