@@ -36,7 +36,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00              ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1          ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00        ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00         ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z600.00 E700.00 I10       ; Set motor currents (mA) and motor idle factor in percent
+M906 X1340.00 Y1600.00 Z650.00 E650.00 I10       ; Set motor currents (mA) and motor idle factor in percent
 M84 S30                                          ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
@@ -55,7 +55,7 @@ M98 P"current-sense-normal.g"                    ; Current and Sensitivity for n
 ; Z-Probe Settings for BLTouch
 M558 P9 C"^zprobe.in" H5 F600 T5000              ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                           ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
-G31 P1000 X22.8 Y3.8 Z1.30                       ; BLTouch, Z offset with MICRO SWISS NOZZLE
+G31 P1000 X22.8 Y3.8 Z1.24                       ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                       ; Set endstops controlled by probe
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
@@ -76,7 +76,7 @@ M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
 M950 H0 C"bedheat" T0                            ; Creates Bed Heater
-M307 H0 A56.4 C230.5 D4.4 S1.00 V24.0 B0         ; Bed PID Calibration
+M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0        ; Bed PID Calibration - updated 01AUG2020
 M140 H0                                          ; Bed uses Heater 0
 M143 H0 S120                                     ; Set temperature limit for heater 0 to 120C Bed
 
@@ -87,7 +87,7 @@ M591 D0 P2 C"e0stop" S1                          ; Filament Runout Sensor
 ; !!! Use this line for stock thermisotr: M308 S1 P"e0_temp" Y"thermistor" A"Nozzle" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd
 M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"         ; Set extruder thermistor for PT1000
 M950 H1 C"e0heat" T1                             ; Create HotEnd Heater
-M307 H1 A320.1 C127.6 D4.0 S1.00 V24.1 B0        ; Hotend PID Calibration
+M307 H1 A444.4 C181.6 D3.9 S1.00 V24.1 B0        ; Hotend PID Calibration - updated 01AUG2020
 M143 H1 S285                                     ; Set temperature limit for heater 1 to 285C HotEnd
 M302 S185 R185
 
