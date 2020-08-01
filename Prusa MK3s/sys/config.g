@@ -55,7 +55,7 @@ M98 P"current-sense-normal.g"                    ; Current and Sensitivity for n
 ; Z-Probe Settings for BLTouch
 M558 P9 C"^zprobe.in" H5 F600 T5000              ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                           ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
-G31 P1000 X23 Y5 Z1.30                           ; BLTouch, Z offset with MICRO SWISS NOZZLE
+G31 P1000 X22.8 Y3.8 Z1.30                       ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                       ; Set endstops controlled by probe
 M557 X25:235 Y10:195 P9                          ; Define mesh grid for probing
 
