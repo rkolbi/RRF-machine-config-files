@@ -111,8 +111,8 @@ M0                                               ; Stop everything and run sys/s
 ; /sys/stop.g
 ; called when M0 (Stop) command is run (e.g. when a print from SD card is cancelled)
 M83                                              ; set extruder to relative mode
-M104 S0                                          ; turn off temperature
-M140 S0                                          ; turn off heatbed
+M104 S-273                                       ; turn off hotend
+M140 S-273                                       ; turn off heatbed
 M107                                             ; turn off fan
 G1 F1000.0                                       ; set feed rate
 G1 E-2                                           ; retract
