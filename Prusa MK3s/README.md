@@ -50,34 +50,6 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 <br><br>
 
-## **Example start gcode for Prusa Slicer:**  
-```g-code
-; PrusaSlicer Start G-Code:
-
-; Set nozzle and bed to the specific temperatures declared within this slicer
-M140 S[first_layer_bed_temperature]      ; set bed temp
-M104 S[first_layer_temperature]          ; set extruder temp
-M190 S[first_layer_bed_temperature]      ; wait for bed temp
-M109 S[first_layer_temperature]          ; wait for extruder temp
-
-; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
-M98 P"0:/sys/primeLine.g"                ; primeline macro
-
-; Set pressure advance
-M572 D0 S0.07                            ; set pressure advance
-```
-## **Example end gcode for Prusa Slicer:**  
-
-```g-code
-; PrusaSlicer End G-Code
-M400                                     ; Make sure all moves are complete
-M0                                       ; Stop everything and run sys/stop.g
-```
-
-<br>
-
-<br>
-
 ## **Example start gcode for ideaMaker Slicer:**  
 
 ```g-code
@@ -105,6 +77,67 @@ M0                                       ; Stop everything and run sys/stop.g
 ```
 
 <br>
+
+<br>
+
+## **Example start gcode for Simplify3D Slicer:**  
+
+```g-code
+; Simplify3D Start G-Code
+
+; Set nozzle and bed to the specific temperatures declared within this slicer
+M140 S[bed0_temperature]                         ; set bed temp
+M104 S[extruder0_temperature]                    ; set extruder temp
+M190 S[bed0_temperature]                         ; wait for bed temp
+M109 S[extruder0_temperature]                    ; wait for extruder temp
+
+; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+M98 P"0:/sys/primeLine.g"                        ; primeline macro
+
+; Set pressure advance
+M572 D0 S0.07                                    ; set pressure advance
+```
+
+## **Example end gcode for Simplify3D Slicer:**  
+
+```g-code
+; Simplify3D End G-Code
+M400                                             ; Make sure all moves are complete
+M0  
+```
+
+<br>
+
+<br>
+
+## **Example start gcode for Prusa Slicer:**  
+
+```g-code
+; PrusaSlicer Start G-Code:
+
+; Set nozzle and bed to the specific temperatures declared within this slicer
+M140 S[first_layer_bed_temperature]      ; set bed temp
+M104 S[first_layer_temperature]          ; set extruder temp
+M190 S[first_layer_bed_temperature]      ; wait for bed temp
+M109 S[first_layer_temperature]          ; wait for extruder temp
+
+; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+M98 P"0:/sys/primeLine.g"                ; primeline macro
+
+; Set pressure advance
+M572 D0 S0.07                            ; set pressure advance
+```
+## **Example end gcode for Prusa Slicer:**  
+
+```g-code
+; PrusaSlicer End G-Code
+M400                                     ; Make sure all moves are complete
+M0                                       ; Stop everything and run sys/stop.g
+```
+
+<br>
+
+
 
 **It is highly recommend to read through the very detailed Duet Wiki pages at https://duet3d.dozuki.com. RepRapFirmware supported G-code reference can be found here https://duet3d.dozuki.com/Wiki/Gcode#main.*
 
