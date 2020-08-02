@@ -1,3 +1,3 @@
 M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
 T0                          
-M109 S230
+M109 S230                           ; set temp to 230c and wait
