@@ -53,8 +53,7 @@ else
 
 M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
 T0 
-M104 S230                           
-M109 S230                           
+M109 S230                           ; set temp to 230c and wait                           
 ```
 **Set Filament Type**
 
@@ -70,8 +69,7 @@ if sensors.filamentMonitors[0].filamentPresent = false
   M28 "0:/macros/Heat Nozzle"
   M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T5
   T0 ; Activate Hotend
-  M104 S200                           ; set nozzle temp to 200c
-  M109 S200                           ; wait for extruder temp
+  M109 S200                           ; set temp to 200c and wait
   M29
   
   M28 "0:/sys/filaset"
@@ -86,8 +84,7 @@ if sensors.filamentMonitors[0].filamentPresent = false
   M28 "0:/macros/Heat Nozzle"
   M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
   T0 ; Activate Hotend
-  M104 S230                           ; set nozzle temp to 230c
-  M109 S230                           ; wait for extruder temp
+  M109 S230                           ; set temp to 230c and wait
   M29
   
   M28 "0:/sys/filaset"
@@ -102,8 +99,7 @@ if sensors.filamentMonitors[0].filamentPresent = false
   M28 "0:/macros/Heat Nozzle"
   M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T5
   T0 ; Activate Hotend
-  M104 S250                           ; set nozzle temp to 250c
-  M109 S250                           ; wait for extruder temp
+  M109 S250                           ; set temp to 250c and wait
   M29
   
   M28 "0:/sys/filaset"
@@ -118,8 +114,7 @@ if sensors.filamentMonitors[0].filamentPresent = false
   M28 "0:/macros/Heat Nozzle"
   M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T5
   T0 ; Activate Hotend
-  M104 S270                           ; set nozzle temp to 270c
-  M109 S270                           ; wait for extruder temp
+  M109 S270                           ; set temp to 270c and wait
   M29
   
   M28 "0:/sys/filaset"
