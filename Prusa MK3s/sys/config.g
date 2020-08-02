@@ -90,7 +90,7 @@ M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"                   ; Set extruder thermi
 M950 H1 C"e0heat" T1                                       ; Create HotEnd Heater
 M307 H1 A444.4 C181.6 D3.9 S1.00 V24.1 B0                  ; Hotend PID Calibration - updated 01AUG2020
 M143 H1 S285                                               ; Set temperature limit for heater 1 to 285C HotEnd
-M302 S185 R185
+M302 S190 R190                                             ; Allow cold extrudes, S-Minimum extrusion temperature, R-Minimum retraction temperature
 
 ; Fans
 M950 F1 C"Fan1" Q250                                       ; Creates HOTEND Fan
