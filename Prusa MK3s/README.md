@@ -68,8 +68,7 @@ M300 S1000 P200 G4 P500 M300 S3000 P300          ; play some tones
 M572 D0 S0.0                                     ; clear pressure advance 
 M140 S75                                         ; set bed temp
 M104 S150                                        ; set extruder temp
-M190 S75                                         ; wait for bed temp
-M109 S150                                        ; wait for extruder temp
+M116                                             ; wait for all temperatures
 G32                                              ; Level bed
 G29                                              ; Bed mesh
 G90                                              ; Absolute Positioning
@@ -87,8 +86,7 @@ G1 X0 Y0 Z2                                      ; Final position before slicer'
 ; Set nozzle and bed to the specific temperatures declared within this slicer
 M140 S{temperature_heatbed}                      ; set bed temp
 M104 S{temperature_extruder1}                    ; set extruder temp
-M190 S{temperature_heatbed}                      ; wait for bed temp
-M109 S{temperature_extruder1}                    ; wait for extruder temp
+M116                                             ; wait for all temperatures
 ; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                        ; primeline macro
 
@@ -142,8 +140,7 @@ M18 YXE                                          ; unlock X, Y, and E axis
 ; Set nozzle and bed to the specific temperatures declared within this slicer
 M140 S{temperature_heatbed}              ; set bed temp
 M104 S{temperature_extruder1}            ; set extruder temp
-M190 S{temperature_heatbed}              ; wait for bed temp
-M109 S{temperature_extruder1}            ; wait for extruder temp
+M116                                     ; wait for all temperatures
 
 ; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                ; primeline macro
@@ -172,8 +169,7 @@ M0                                       ; Stop everything and run sys/stop.g
 ; Set nozzle and bed to the specific temperatures declared within this slicer
 M140 S[bed0_temperature]                         ; set bed temp
 M104 S[extruder0_temperature]                    ; set extruder temp
-M190 S[bed0_temperature]                         ; wait for bed temp
-M109 S[extruder0_temperature]                    ; wait for extruder temp
+M116                                             ; wait for all temperatures
 
 ; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                        ; primeline macro
@@ -202,8 +198,7 @@ M0
 ; Set nozzle and bed to the specific temperatures declared within this slicer
 M140 S[first_layer_bed_temperature]      ; set bed temp
 M104 S[first_layer_temperature]          ; set extruder temp
-M190 S[first_layer_bed_temperature]      ; wait for bed temp
-M109 S[first_layer_temperature]          ; wait for extruder temp
+M116                                     ; wait for all temperatures
 
 ; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                ; primeline macro
