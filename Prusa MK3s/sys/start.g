@@ -3,7 +3,7 @@
 
 ;M280 P0 S160                                    ; BLTouch, alarm release
 ;G4 P100                                         ; BLTouch, delay for release command
-
+M572 D0 S0.0                                     ; clear pressure advance
 M703                                             ; Execute loaded filement's config.g
 G28                                              ; Home all
 G1 Z100                                          ; Last chance to check nozzle cleanliness
