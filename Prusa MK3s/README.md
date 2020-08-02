@@ -41,7 +41,7 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 <br>4) **:bulb:Sliced object flow events.**   
 When initiating a print, the following sequence of events occur in this order.  
-**1 - "/sys/start.g"** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types. From this codes, the fillament's config.g is called.  
+**1 - "/sys/start.g"** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types. From this codeset, the fillament's config.g is called.  
 **2 - "/filaments/PETG/config.g"** is the second codeset that picks off where the generic "start.g" code ended. As written, this example refers to the PETG "config.g" file, located in the "filaments" directory. This codeset contains the gcode commands that are particular to the system's loaded filament type - set by use of the macro discussed above or from within DWC.  
 **3 - "Slicer's Start GCode"** is the last bit of codeset to be executed before the object's sliced gcode starts.    
 **4 - The part's actual gcode** made by the slicer.
