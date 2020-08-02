@@ -2,7 +2,7 @@
 ; called when a print from SD card is paused
 
 if sensors.filamentMonitors[0].filamentPresent = false
-   G1 E-3 F3000                                            ; retract 6mm of filament
+   G1 E-3 F3000                                            ; if filament has run out, retract 6mm of filament
 
 M83                                                        ; relative extruder moves
 G1 E-3 F3000                                               ; retract 3mm of filament
