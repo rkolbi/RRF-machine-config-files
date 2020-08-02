@@ -46,45 +46,26 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 ## **Example start gcode for Prusa Slicer:**  
 ```g-code
-;Start G-Code
+; PrusaSlicer Start G-Code:
 
-G90                                 ; Use absolute positioning
-G28                                 ; home
-G1 X100 Y100 F3000                  ; place probe about center to stabilized pinda
+; Set nozzle and bed to the specific temperatures declared within this slicer
+M140 S[first_layer_bed_temperature]      ; set bed temp
+M104 S[first_layer_temperature]          ; set extruder temp
+M190 S[first_layer_bed_temperature]      ; wait for bed temp
+M109 S[first_layer_temperature]          ; wait for extruder temp
 
-M140 S[first_layer_bed_temperature] ; set bed temp to first layer temp
-M104 S150                           ; set nozzle temp to 150c
-M190 S[first_layer_bed_temperature] ; wait for bed temp
-M109 S150                           ; wait for extruder temp
+; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+M98 P"0:/sys/primeLine.g"                ; primeline macro
 
-G32                                 ; Level R/L Z-axis
-G29                                 ; Level Bed
-
-G1 X0 Z0.6 Y-3.0 F3000.0            ; place probe at home position
-M104 S[first_layer_temperature]     ; set extruder final temp
-M109 S[first_layer_temperature]     ; wait for extruder final temp
-
-G92 E0.0
-G1 Z0.2 X200.0 E30.0 F1000.0        ; purge line
-G92 E0.0
-
-; pressure advance can be either here or in filament gcode
-; M572 D0 S0.11                       ; set pressure advance
+; Set pressure advance
+M572 D0 S0.07                            ; set pressure advance
 ```
 ## **Example end gcode for Prusa Slicer:**  
 
 ```g-code
-;End G-Code
-  
-M104 S0                             ; turn off hotend
-M140 S0                             ; turn off heatbed
-M107                                ; turn off fan
-
-M221 S100                           ; reset extrusuon to 100 percent
-G1 F1000.0                          ; set feed rate
-G1 E-2                              ; retract
-G1 X20 Y200 Z205 F3000              ; home X axis
-M84 XYE                             ; unlock motors
+; PrusaSlicer End G-Code
+M400                                     ; Make sure all moves are complete
+M0                                       ; Stop everything and run sys/stop.g
 ```
 
 <br>
@@ -96,43 +77,25 @@ M84 XYE                             ; unlock motors
 ```g-code
 ; ideaMaker Start G-Code
 
-G90                                 ; Absolute Positioning
-M83                                 ; extruder relative mode
-G28                                 ; home
-G1 X100 Y100 F3000                  ; home X axis
+; Set nozzle and bed to the specific temperatures declared within this slicer
+M140 S{temperature_heatbed}              ; set bed temp
+M104 S{temperature_extruder1}            ; set extruder temp
+M190 S{temperature_heatbed}              ; wait for bed temp
+M109 S{temperature_extruder1}            ; wait for extruder temp
 
-M140 S{temperature_heatbed}         ; set bed temp
-M104 S150                           ; set extruder temp
-M190 S{temperature_heatbed}         ; wait for bed temp
+; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+M98 P"0:/sys/primeLine.g"                ; primeline macro
 
-G32                                 ; Level R/L Z-axis
-G29                                 ; Level Bed
-
-G1 X0 Z0.6 Y-3.0 F3000.0
-M104 S{temperature_extruder1}       ; set extruder
-M109 S{temperature_extruder1}       ; wait for extruder temp
-
-G92 E0.0
-G1 Z0.2 X100.0 E30.0 F1000.0        ; intro line
-G92 E0.0
-                                
-M572 D0 S0.11                       ; set pressure advance
+; Set pressure advance
+M572 D0 S0.07                            ; set pressure advance
 ```
 
 ## **Example end gcode for ideaMaker Slicer:**  
 
 ```g-code
 ; ideaMaker End G-Code
-  
-M104 S0                             ; turn off temperature
-M140 S0                             ; turn off heatbed
-M107                                ; turn off fan
-
-M221 S100                           ; reset extrusuon to 100 percent
-G1 F1000.0                          ; set feed rate
-G1 E-2                              ; retract
-G1 X20 Y200 Z205 F3000              ; home X axis
-M84 XYE                             ; unlock motors
+M400                                     ; Make sure all moves are complete
+M0                                       ; Stop everything and run sys/stop.g
 ```
 
 <br>
