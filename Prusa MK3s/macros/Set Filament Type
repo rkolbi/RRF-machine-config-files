@@ -1,3 +1,6 @@
+; 0:/macros/Set Filament Type
+; Macro used to set system's loaded filament type
+
 if sensors.filamentMonitors[0].filamentPresent = false  
 
   M291 P"Press OK to change filament type, else press CANCEL to exit." R"Filament Handling" S3

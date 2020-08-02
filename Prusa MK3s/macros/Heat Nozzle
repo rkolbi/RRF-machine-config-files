@@ -1,3 +1,6 @@
+; 0:/macros/Heat Nozzle
+; Macro used to heat hozzle to temperture set by "Set Filament Type" macro
+
 M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
 T0 
 M104 S230                           

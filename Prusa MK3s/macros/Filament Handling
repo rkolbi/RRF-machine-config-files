@@ -1,3 +1,6 @@
+; 0:/macros/Filament Handling
+; Macro used for all filament handling evolutions
+
 if state.status != "processing"
 
    ; Printer is not currently printing!
@@ -38,5 +41,3 @@ else
    M291 P"Press OK to begin filament CHANGE, else press CANCEL to exit." R"Filament Handling" S3
    M98 P"0:/sys/filament-change.g" ; call filament-change.g
    M24
-   
-   

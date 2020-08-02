@@ -1,15 +1,15 @@
-; stop.g
+; 0:/sys/stop.g
 ; called when M0 (Stop) is run (e.g. when a print from SD card is cancelled)
 
 M83
-M104 S0                                            ; turn off temperature
-M140 S0                                            ; turn off heatbed
-M107                                               ; turn off fan
-G1 F1000.0                                         ; set feed rate
-G1 E-2                                             ; retract
-G1 X110 Y200 Z205 F3000                            ; place nozzle center/top
-M400			                                   ; Clear queue
-M18 YXE                                            ; unlock X, Y, and E axis
+M104 S0                                                    ; turn off temperature
+M140 S0                                                    ; turn off heatbed
+M107                                                       ; turn off fan
+G1 F1000.0                                                 ; set feed rate
+G1 E-2                                                     ; retract
+G1 X110 Y200 Z205 F3000                                    ; place nozzle center/top
+M400			                                           ; Clear queue
+M18 YXE                                                    ; unlock X, Y, and E axis
 
 ; Play a triumphant tune to celebrate a successful print.
 G4 S1
@@ -30,4 +30,3 @@ G4 P151
 M300 P350 S3700
 G4 P351
 M400
-
