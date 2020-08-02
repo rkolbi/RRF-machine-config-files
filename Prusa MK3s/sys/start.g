@@ -9,7 +9,6 @@ G28                                              ; Home all
 
 ; if using BLTouch probe, use the following line:
 G1 Z100                                          ; Last chance to check nozzle cleanliness
-
 ; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
 ;G1 Z5 X100 Y100
 
