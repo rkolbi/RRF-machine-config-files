@@ -43,7 +43,7 @@ To make filament loading, unloading, and changing the most straightforward and s
 **"/sys/start.g"** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types.  
 **"/filaments/PETG/config.g"** is the second codeset that picks off where the generic "start.g" code ended. As written, this example refers to the PETG "config.g" file, located in the "filaments" directory. This codeset contains the gcode commands that are particular to the system's loaded filament type - set by use of the macro discussed above or from within DWC.  
 **"Slicer's Start GCode"** is the last bit of codeset to be executed before the object's sliced gcode starts.  
-**"Slicer's End GCode"** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls **"stop.g"**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily printed part retrieval.  
+**"Slicer's End GCode"** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls **"/sys/stop.g"**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily printed part retrieval.  
 Combining all of those together would yield the following:  
 
 
