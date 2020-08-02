@@ -10,7 +10,7 @@ G28                                              ; Home all
 ; if using BLTouch probe, use the following line:
 G1 Z100                                          ; Last chance to check nozzle cleanliness
 ; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
-;G1 Z5 X100 Y100
+;G1 Z5 X100 Y100                                 ; Place nozzle center of bed, 5mm up
 
 M220 S100                                        ; Set speed factor back to 100% in case it was changed
 M221 S100                                        ; Set extrusion factor back to 100% in case it was changed
