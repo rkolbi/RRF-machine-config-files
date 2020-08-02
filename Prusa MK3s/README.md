@@ -6,13 +6,19 @@
 
 ## **Hardware changes from stock Prusa MK3s:**
 
+*Note: The config.g file contains notes to facilitate easy adaptation to stock Prusa MK3s.*
+
 - Bondtech Mosquito Extruder  
 
-- 0.9 steppers for X and Y axis (17HM15-0904S @ omc-stepperonline.com) 	
+- 0.9 Stepper motors on X & Y axis (17HM15-0904S @ omc-stepperonline.com) 	
 
 - Duet WiFi  
   
 - PanelDue 5i  
+  
+- PT1000 hotend thermistor  
+  
+- BLTouch v3.1  
   
   <br><br>
 
