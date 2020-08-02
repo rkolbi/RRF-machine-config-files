@@ -159,7 +159,7 @@ T0                                                         ; Set Tool 0 active
 ; Relase X, Y, and E axis
 M18 YXE                                                    ; Unlock X, Y, and E axis
 ```
-**current-sense-homing.g **
+**current-sense-homing.g**
 
 ```
 ; 0:/sys/current-sense-homing.g
