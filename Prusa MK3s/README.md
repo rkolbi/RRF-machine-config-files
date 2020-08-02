@@ -47,9 +47,6 @@ When initiating a print, the following sequence of events occur in this order.
 **4 - The part's actual gcode** made by the slicer.  
 **5 - "Slicer's End GCode"** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls  
  **6 - "/sys/stop.g"**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily retrieve the printed part.  
-<br>Combining all of those together would yield the following:  
-
-
 
 <br><br>
 
