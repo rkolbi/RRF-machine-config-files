@@ -22,7 +22,8 @@ while move.calibration.initial.deviation >= 0.002          ; perform additional 
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
 G1 H2 Z8 F2600                                             ; Raise head 8mm to ensure it is above the Z probe trigger height
 G1 X104 Y100 F6000                                         ; Put head over the centre of the bed, or wherever you want to probe
-G30 ```
+G30
+```
 ** cancel.g **
 ```
 ; 0:/sys/cancel.g
@@ -34,7 +35,8 @@ M140 S0                                                    ; turn off heatbed
 M107                                                       ; turn off fan
 G1 F1000.0                                                 ; set feed rate
 G1 E-2                                                     ; retract
-M18 YXE                                                    ; unlock X, Y, E axis```
+M18 YXE                                                    ; unlock X, Y, E axis
+```
 ** config.g **
 ```
 ; 0:/sys/config.g
@@ -152,7 +154,8 @@ G10 P0 R0 S0                                               ; Set initial tool 0 
 T0                                                         ; Set Tool 0 active
 
 ; Relase X, Y, and E axis
-M18 YXE                                                    ; Unlock X, Y, and E axis```
+M18 YXE                                                    ; Unlock X, Y, and E axis
+```
 ** current-sense-homing.g **
 ```
 ; 0:/sys/current-sense-homing.g
@@ -160,7 +163,8 @@ M18 YXE                                                    ; Unlock X, Y, and E 
 
 M915 X S2 F0 H400 R0                                       ; Set X axis Sensitivity
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
-M913 X20 Y20 Z60                                           ; set X Y Z motors to X% of their normal current```
+M913 X20 Y20 Z60                                           ; set X Y Z motors to X% of their normal current
+```
 ** current-sense-normal.g **
 ```
 ; 0:/sys/current-sense-normal.g
@@ -168,16 +172,19 @@ M913 X20 Y20 Z60                                           ; set X Y Z motors to
 
 M913 X100 Y100 Z100                                        ; set X Y Z motors to 100% of their normal current
 M915 X S3 F0 H200 R0                                       ; Set X axis Sensitivity
-M915 Y S3 F0 H200 R0                                       ; Set y axis Sensitivity```
+M915 Y S3 F0 H200 R0                                       ; Set y axis Sensitivity
+```
 ** deployprobe.g **
 ```
 ; 0:/sys/deployprobe.g
 ; called to deploy a physical Z probe
 
-M280 P0 S10                                                ; deploy BLTouch```
+M280 P0 S10                                                ; deploy BLTouch
+```
 ** dwc2settings.json **
 ```
-{"main":{"language":"en","lastHostname":"10.0.1.124","darkTheme":false,"useBinaryPrefix":true,"disableAutoComplete":false,"settingsStorageLocal":false,"settingsSaveDelay":2000,"cacheStorageLocal":true,"cacheSaveDelay":4000,"notifications":{"errorsPersistent":false,"timeout":5000},"webcam":{"url":"","updateInterval":5000,"liveUrl":"","useFix":false,"embedded":false,"rotation":0,"flip":"none"}},"machine":{"ajaxRetries":2,"updateInterval":250,"extendedUpdateEvery":20,"fileTransferRetryThreshold":358400,"crcUploads":true,"pingInterval":2000,"babystepAmount":0.05,"codes":[],"displayedExtraTemperatures":[2,3,4],"displayedExtruders":[0,1],"displayedFans":[-1,0],"moveSteps":{"X":[100,50,10,1,0.1],"Y":[100,50,10,1,0.1],"Z":[50,25,5,0.5,0.05],"default":[100,50,10,1,0.1]},"moveFeedrate":6000,"extruderAmounts":[100,50,20,10,5,1],"extruderFeedrates":[60,30,15,5,1],"temperatures":{"tool":{"active":[250,235,220,205,195,160,120,100,0],"standby":[210,180,160,140,0]},"bed":{"active":[110,100,90,70,65,60,0],"standby":[40,30,0]},"chamber":[]},"spindleRPM":[]}}```
+{"main":{"language":"en","lastHostname":"10.0.1.124","darkTheme":false,"useBinaryPrefix":true,"disableAutoComplete":false,"settingsStorageLocal":false,"settingsSaveDelay":2000,"cacheStorageLocal":true,"cacheSaveDelay":4000,"notifications":{"errorsPersistent":false,"timeout":5000},"webcam":{"url":"","updateInterval":5000,"liveUrl":"","useFix":false,"embedded":false,"rotation":0,"flip":"none"}},"machine":{"ajaxRetries":2,"updateInterval":250,"extendedUpdateEvery":20,"fileTransferRetryThreshold":358400,"crcUploads":true,"pingInterval":2000,"babystepAmount":0.05,"codes":[],"displayedExtraTemperatures":[2,3,4],"displayedExtruders":[0,1],"displayedFans":[-1,0],"moveSteps":{"X":[100,50,10,1,0.1],"Y":[100,50,10,1,0.1],"Z":[50,25,5,0.5,0.05],"default":[100,50,10,1,0.1]},"moveFeedrate":6000,"extruderAmounts":[100,50,20,10,5,1],"extruderFeedrates":[60,30,15,5,1],"temperatures":{"tool":{"active":[250,235,220,205,195,160,120,100,0],"standby":[210,180,160,140,0]},"bed":{"active":[110,100,90,70,65,60,0],"standby":[40,30,0]},"chamber":[]},"spindleRPM":[]}}
+```
 ** filament-change.g **
 ```
 ; 0:/sys/filament-change.g
@@ -195,7 +202,8 @@ M400                                                       ; clear moves
 
 M291 P"Press OK to recommence print." R"Filament Handling" S2
 
-M98 P"0:/macros/Heat Nozzle"                               ; Get nozzle hot and continue print```
+M98 P"0:/macros/Heat Nozzle"                               ; Get nozzle hot and continue print
+```
 ** filaments.csv **
 ```
 RepRapFirmware filament assignment file v1 generated at 2020-08-01 15:01
@@ -237,7 +245,8 @@ G30                                                        ; home Z by probing t
 G90                                                        ; absolute positioning
 G1 H0 Z5 F400                                              ; lift Z relative to current position
 
-M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine```
+M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
+```
 ** homex.g **
 ```
 ; 0:/sys/homex.g
@@ -257,7 +266,8 @@ G1 H1 X-255 F3000                                          ; move quickly to X e
 
 G1 Z-3 F800 H2                                             ; place Z back to starting position
 
-M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine```
+M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
+```
 ** homey.g **
 ```
 ; 0:/sys/homey.g
@@ -275,7 +285,8 @@ G1 H1 Y-215 F3000                                          ; move quickly to Y e
 
 G1 Z-3 F800 H2                                             ; place Z back to starting position
 
-M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine```
+M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
+```
 ** homez.g **
 ```
 ; 0:/sys/homez.g
@@ -297,7 +308,8 @@ G30                                                        ; home Z by probing t
 G90                                                        ; absolute positioning
 G1 H0 Z5 F400                                              ; lift Z relative to current position
 
-M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine```
+M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
+```
 ** pause.g **
 ```
 ; 0:/sys/pause.g
@@ -312,7 +324,8 @@ G91                                                        ; Relative Positionin
 G1 Z10 F360                                                ; Raise Z
 G90                                                        ; Absolute Values
 G1 X10 Y0 F6000                                            ; Parking Position
-M300 S80 P2000                                             ; play beep sound```
+M300 S80 P2000                                             ; play beep sound
+```
 ** primeline.g **
 ```
 ; 0:/sys/primeline.g
@@ -322,7 +335,8 @@ G1 X0 Z0.6 Y{-2+(0.1*(floor(10*(cos(sqrt(sensors.analog[0].lastReading * state.u
 G92 E0.0                                                   ; set E position to 0
 G1 Z0.2 X100.0 E30.0 F1000.0                               ; prime line
 G92 E0.0                                                   ; set E position to 0
-M400                                                       ; finish all current moves / clear the buffer```
+M400                                                       ; finish all current moves / clear the buffer
+```
 ** resume.g **
 ```
 ; 0:/sys/resume.g
@@ -331,13 +345,15 @@ M400                                                       ; finish all current 
 G1 R1 X0 Y0 Z5 F8000                                       ; go to 5mm above position of the last print move
 G1 R1 X0 Y0                                                ; go back to the last print move
 ;G1 E2 F1000                                               ; Feed 70mm of filament at 800mm/min
-M83                                                        ; relative extruder moves```
+M83                                                        ; relative extruder moves
+```
 ** retractprobe.g **
 ```
 ; 0:/sys/retractprobe.g
 ; called to retract a physical Z probe
 
-M280 P0 S90                                                ; retract BLTouch```
+M280 P0 S90                                                ; retract BLTouch
+```
 ** sleep.g **
 ```
 ; 0:/sys/sleep.g
@@ -346,7 +362,8 @@ M280 P0 S90                                                ; retract BLTouch```
 M104 S0                                                    ; turn off temperature
 M140 S0                                                    ; turn off heatbed
 M107                                                       ; turn off fan
-M18 XEZY                                                   ; unlock all axis```
+M18 XEZY                                                   ; unlock all axis
+```
 ** start.g **
 ```
 ; 0:/sys/start.g
@@ -368,7 +385,8 @@ G1 X0 Y0 Z2                                                ; Final position befo
                                                            ; of the primeline at the objects temp and to immediately print the object
                                                            ; following primeline completion. 
 
-; Slicer generated gcode takes it away from here```
+; Slicer generated gcode takes it away from here
+```
 ** stop.g **
 ```
 ; 0:/sys/stop.g
@@ -402,18 +420,22 @@ M300 P150 S2500
 G4 P151
 M300 P350 S3700
 G4 P351
-M400```
+M400
+```
 ** tfree0.g **
 ```
 ; 0:/sys/tfree0.g
-; called when tool 0 is freed```
+; called when tool 0 is freed
+```
 ** tpost0.g **
 ```
 ; 0:/sys/tpost0.g
 ; called after tool 0 has been selected
 
-M116 P0                                                    ; Wait for set temperatures to be reached```
+M116 P0                                                    ; Wait for set temperatures to be reached
+```
 ** tpre0.g **
 ```
 ; 0:/sys/tpre0.g
-; called before tool 0 is selected```
+; called before tool 0 is selected
+```
