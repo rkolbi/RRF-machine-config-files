@@ -39,6 +39,86 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 ![Start Screen](Start-screen.jpg)
 
+<br>4) **:bulb:Sliced object flow events.** When initiating a print, the following sequence of events occur.  
+**"/sys/start.g"** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types.  
+**"/filaments/PETG/config.g"** is the second codeset that picks off where the generic "start.g" code ended. As written, this example refers to the PETG "config.g" file, located in the "filaments" directory. This codeset contains the gcode commands that are particular to the system's loaded filament type - set by use of the macro discussed above or from within DWC.  
+**"Slicer's Start GCode"** is the last bit of codeset to be executed before the object's sliced gcode starts.  
+**"Slicer's End GCode"** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls **"stop.g"**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily printed part retrieval.  
+Combining all of those together would yield the following:  
+
+
+```g-code
+; start.g file
+;M280 P0 S160                                    ; BLTouch, alarm release
+;G4 P100                                         ; BLTouch, delay for release command
+G28                                              ; Home all
+G1 Z100                                          ; Last chance to check nozzle cleanliness
+M220 S100                                        ; Set speed factor back to 100% in case it was changed
+M221 S100                                        ; Set extrusion factor back to 100% in case it was changed
+M290 R0 S0                                       ; Clear babystepping
+M106 S0                                          ; Turn part cooling blower off if it is on
+M703                                             ; Execute loaded filement's config.g
+
+; /filaments/PETG/config.g file
+M300 S1000 P200 G4 P500 M300 S3000 P300          ; play some tones
+M572 D0 S0.0                                     ; clear pressure advance 
+M140 S75                                         ; set bed temp
+M104 S150                                        ; set extruder temp
+M190 S75                                         ; wait for bed temp
+M109 S150                                        ; wait for extruder temp
+G32                                              ; Level bed
+G29                                              ; Bed mesh
+G90                                              ; Absolute Positioning
+M83                                              ; Extruder relative mode
+; Insert additional filament specific settings here
+
+; start.g file (continued)
+G1 X0 Y0 Z2                                      ; Final position before slicer's temp is reached and primeline is printed.
+; The primeline macro is executed by the slicer gcode to enable direct printing
+; of the primeline at the objects temp and to immediately print the object
+; following primeline completion. 
+; Slicer generated gcode takes it away from here
+
+; ideaMaker Start G-Code
+; Set nozzle and bed to the specific temperatures declared within this slicer
+M140 S{temperature_heatbed}                      ; set bed temp
+M104 S{temperature_extruder1}                    ; set extruder temp
+M190 S{temperature_heatbed}                      ; wait for bed temp
+M109 S{temperature_extruder1}                    ; wait for extruder temp
+; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+M98 P"0:/sys/primeLine.g"                        ; primeline macro
+
+; /sys/primeline.g
+; Print prime-line at a 'randomized' Y positon from -1.1 to -2.9
+G1 X0 Z0.6 Y{-2+(0.1*(floor(10*(cos(sqrt(sensors.analog[0].lastReading * state.upTime))))))} F3000.0;
+G92 E0.0
+G1 Z0.2 X100.0 E30.0 F1000.0 ; prime line
+G92 E0.0
+M400
+
+; ideaMaker Start G-Code (continues)
+; Set pressure advance
+M572 D0 S0.07                                    ; set pressure advance
+```
+OBJECTS GCODE HERE
+```g-code
+; ideaMaker End G-Code
+M400                                             ; Make sure all moves are complete
+M0                                               ; Stop everything and run sys/stop.g
+
+; /sys/stop.g
+; called when M0 (Stop) command is run (e.g. when a print from SD card is cancelled)
+M83                                              ; set extruder to relative mode
+M104 S0                                          ; turn off temperature
+M140 S0                                          ; turn off heatbed
+M107                                             ; turn off fan
+G1 F1000.0                                       ; set feed rate
+G1 E-2                                           ; retract
+G1 X110 Y200 Z205 F3000                          ; place nozzle center/top
+M400                                             ; Clear queue
+M18 YXE                                          ; unlock X, Y, and E axis
+```
+
 <br><br>
 
 ## **Additional notes:**  
