@@ -1,4 +1,5 @@
-** bed.g **
+**bed.g **
+
 ```
 ; 0:/sys/bed.g
 ; Called to perform automatic bed compensation via G32
@@ -24,7 +25,8 @@ G1 H2 Z8 F2600                                             ; Raise head 8mm to e
 G1 X104 Y100 F6000                                         ; Put head over the centre of the bed, or wherever you want to probe
 G30
 ```
-** cancel.g **
+**cancel.g **
+
 ```
 ; 0:/sys/cancel.g
 ; called when a print is canceled after a pause.
@@ -37,7 +39,8 @@ G1 F1000.0                                                 ; set feed rate
 G1 E-2                                                     ; retract
 M18 YXE                                                    ; unlock X, Y, E axis
 ```
-** config.g **
+**config.g**
+
 ```
 ; 0:/sys/config.g
 ; Configuration file for MK3s Duet WiFi, firmware version 3.11
@@ -156,7 +159,8 @@ T0                                                         ; Set Tool 0 active
 ; Relase X, Y, and E axis
 M18 YXE                                                    ; Unlock X, Y, and E axis
 ```
-** current-sense-homing.g **
+**current-sense-homing.g **
+
 ```
 ; 0:/sys/current-sense-homing.g
 ; Current and Sensitivity for homing routines
@@ -165,7 +169,8 @@ M915 X S2 F0 H400 R0                                       ; Set X axis Sensitiv
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
 M913 X20 Y20 Z60                                           ; set X Y Z motors to X% of their normal current
 ```
-** current-sense-normal.g **
+**current-sense-normal.g **
+
 ```
 ; 0:/sys/current-sense-normal.g
 ; Current and Sensitivity for normal routine
@@ -174,18 +179,21 @@ M913 X100 Y100 Z100                                        ; set X Y Z motors to
 M915 X S3 F0 H200 R0                                       ; Set X axis Sensitivity
 M915 Y S3 F0 H200 R0                                       ; Set y axis Sensitivity
 ```
-** deployprobe.g **
+**deployprobe.g **
+
 ```
 ; 0:/sys/deployprobe.g
 ; called to deploy a physical Z probe
 
 M280 P0 S10                                                ; deploy BLTouch
 ```
-** dwc2settings.json **
+**dwc2settings.json **
+
 ```
 {"main":{"language":"en","lastHostname":"10.0.1.124","darkTheme":false,"useBinaryPrefix":true,"disableAutoComplete":false,"settingsStorageLocal":false,"settingsSaveDelay":2000,"cacheStorageLocal":true,"cacheSaveDelay":4000,"notifications":{"errorsPersistent":false,"timeout":5000},"webcam":{"url":"","updateInterval":5000,"liveUrl":"","useFix":false,"embedded":false,"rotation":0,"flip":"none"}},"machine":{"ajaxRetries":2,"updateInterval":250,"extendedUpdateEvery":20,"fileTransferRetryThreshold":358400,"crcUploads":true,"pingInterval":2000,"babystepAmount":0.05,"codes":[],"displayedExtraTemperatures":[2,3,4],"displayedExtruders":[0,1],"displayedFans":[-1,0],"moveSteps":{"X":[100,50,10,1,0.1],"Y":[100,50,10,1,0.1],"Z":[50,25,5,0.5,0.05],"default":[100,50,10,1,0.1]},"moveFeedrate":6000,"extruderAmounts":[100,50,20,10,5,1],"extruderFeedrates":[60,30,15,5,1],"temperatures":{"tool":{"active":[250,235,220,205,195,160,120,100,0],"standby":[210,180,160,140,0]},"bed":{"active":[110,100,90,70,65,60,0],"standby":[40,30,0]},"chamber":[]},"spindleRPM":[]}}
 ```
-** filament-change.g **
+**filament-change.g **
+
 ```
 ; 0:/sys/filament-change.g
 ; called when a print from SD card runs out of filament
@@ -204,13 +212,15 @@ M291 P"Press OK to recommence print." R"Filament Handling" S2
 
 M98 P"0:/macros/Heat Nozzle"                               ; Get nozzle hot and continue print
 ```
-** filaments.csv **
+**filaments.csv **
+
 ```
 RepRapFirmware filament assignment file v1 generated at 2020-08-01 15:01
 extruder,filament
 0,PETG
 ```
-** homeall.g **
+**homeall.g **
+
 ```
 ; 0:/sys/homeall.g
 ; home x, y, and z axis
@@ -247,7 +257,8 @@ G1 H0 Z5 F400                                              ; lift Z relative to 
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-** homex.g **
+**homex.g **
+
 ```
 ; 0:/sys/homex.g
 ; home the x axis
@@ -268,7 +279,8 @@ G1 Z-3 F800 H2                                             ; place Z back to sta
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-** homey.g **
+**homey.g **
+
 ```
 ; 0:/sys/homey.g
 ; home the y axis
@@ -287,7 +299,8 @@ G1 Z-3 F800 H2                                             ; place Z back to sta
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-** homez.g **
+**homez.g **
+
 ```
 ; 0:/sys/homez.g
 ; home the z axis
@@ -310,7 +323,8 @@ G1 H0 Z5 F400                                              ; lift Z relative to 
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-** pause.g **
+**pause.g **
+
 ```
 ; 0:/sys/pause.g
 ; called when a print from SD card is paused
@@ -326,7 +340,8 @@ G90                                                        ; Absolute Values
 G1 X10 Y0 F6000                                            ; Parking Position
 M300 S80 P2000                                             ; play beep sound
 ```
-** primeline.g **
+**primeline.g **
+
 ```
 ; 0:/sys/primeline.g
 ; Print prime-line at a 'randomized' Y positon from -1.1 to -2.9
@@ -337,7 +352,8 @@ G1 Z0.2 X100.0 E30.0 F1000.0                               ; prime line
 G92 E0.0                                                   ; set E position to 0
 M400                                                       ; finish all current moves / clear the buffer
 ```
-** resume.g **
+**resume.g **
+
 ```
 ; 0:/sys/resume.g
 ; called before a print from SD card is resumed
@@ -347,14 +363,16 @@ G1 R1 X0 Y0                                                ; go back to the last
 ;G1 E2 F1000                                               ; Feed 70mm of filament at 800mm/min
 M83                                                        ; relative extruder moves
 ```
-** retractprobe.g **
+**retractprobe.g**
+
 ```
 ; 0:/sys/retractprobe.g
 ; called to retract a physical Z probe
 
 M280 P0 S90                                                ; retract BLTouch
 ```
-** sleep.g **
+**sleep.g**
+
 ```
 ; 0:/sys/sleep.g
 ; called when M1 (Sleep) is being processed
@@ -364,7 +382,8 @@ M140 S0                                                    ; turn off heatbed
 M107                                                       ; turn off fan
 M18 XEZY                                                   ; unlock all axis
 ```
-** start.g **
+**start.g **
+
 ```
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
@@ -387,7 +406,8 @@ G1 X0 Y0 Z2                                                ; Final position befo
 
 ; Slicer generated gcode takes it away from here
 ```
-** stop.g **
+**stop.g **
+
 ```
 ; 0:/sys/stop.g
 ; called when M0 (Stop) is run (e.g. when a print from SD card is cancelled)
@@ -422,19 +442,22 @@ M300 P350 S3700
 G4 P351
 M400
 ```
-** tfree0.g **
+**tfree0.g**
+
 ```
 ; 0:/sys/tfree0.g
 ; called when tool 0 is freed
 ```
-** tpost0.g **
+**tpost0.g**
+
 ```
 ; 0:/sys/tpost0.g
 ; called after tool 0 has been selected
 
 M116 P0                                                    ; Wait for set temperatures to be reached
 ```
-** tpre0.g **
+**tpre0.g**
+
 ```
 ; 0:/sys/tpre0.g
 ; called before tool 0 is selected

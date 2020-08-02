@@ -1,4 +1,5 @@
-** Filament Handling **
+**Filament Handling**
+
 ```
 ; 0:/macros/Filament Handling
 ; Macro used for all filament handling evolutions
@@ -44,7 +45,8 @@ else
    M98 P"0:/sys/filament-change.g" ; call filament-change.g
    M24
 ```
-** Heat Nozzle **
+**Heat Nozzle**
+
 ```
 ; 0:/macros/Heat Nozzle
 ; Macro used to heat hozzle to temperture set by "Set Filament Type" macro
@@ -54,7 +56,8 @@ T0
 M104 S230                           
 M109 S230                           
 ```
-** Set Filament Type **
+**Set Filament Type**
+
 ```
 ; 0:/macros/Set Filament Type
 ; Macro used to set system's loaded filament type
