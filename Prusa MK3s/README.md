@@ -49,8 +49,8 @@ Combining all of those together would yield the following:
 
 ```g-code
 ; start.g file
-;M280 P0 S160                                    ; BLTouch, alarm release
-;G4 P100                                         ; BLTouch, delay for release command
+M280 P0 S160                                     ; BLTouch, alarm release
+G4 P100                                          ; BLTouch, delay for release command
 G28                                              ; Home all
 G1 Z100                                          ; Last chance to check nozzle cleanliness
 M220 S100                                        ; Set speed factor back to 100% in case it was changed
