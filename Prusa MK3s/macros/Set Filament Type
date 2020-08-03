@@ -1,64 +1,79 @@
-if sensors.filamentMonitors[0].filamentPresent = false ; if filament is loaded then reject action to change filament type
+; 0:/macros/Set Filament Type
+; Macro used to set system's loaded filament type
+
+if sensors.filamentMonitors[0].filamentPresent = false           ; if filament is loaded then reject action to change filament type
 
   M291 P"Press OK to change filament type, else press CANCEL to exit." R"Filament Handling" S3
 
   ; Set PLA temp
-  M28 "0:/macros/Heat Nozzle"                              ; Begin writing to SD card file
+  M28 "0:/macros/Heat Nozzle"                                    ; Begin writing to SD card file
+  ; 0:/macros/Heat Nozzle
+  ; Heat nozzle to set temp
   M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T5
-  T0                                                       ; Activate Hotend
-  M109 S200                                                ; set temp to 200c and wait
-  M29                                                      ; Stop writing to SD card
+  T0                                                             ; Activate Hotend
+  M109 S200                                                      ; set temp to 200c and wait
+  M29                                                            ; Stop writing to SD card
   
-  M28 "0:/sys/filaset"                                     ; Begin writing to SD card file
+  M28 "0:/sys/filaset"                                           ; Begin writing to SD card file
+  ; 0:/sys/filaset
   ; This gcode is used by Filament Handling Macro
-  T0 M702                                                  ; Set system filament as UNLOADED
-  T0 M701 S"PLA"                                           ; Set system filament as PLA
-  M29                                                      ; Stop writing to SD card
+  T0 M702                                                        ; Set system filament as UNLOADED
+  T0 M701 S"PLA"                                                 ; Set system filament as PLA
+  M29                                                            ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to PLA. Press cancel to save this selection or OK to proceed to next filament type."
   
   ; Set PETg temp
-  M28 "0:/macros/Heat Nozzle"                              ; Begin writing to SD card file
+  M28 "0:/macros/Heat Nozzle"                                    ; Begin writing to SD card file
+  ; 0:/macros/Heat Nozzle
+  ; Heat nozzle to set temp
   M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
-  T0                                                       ; Activate Hotend
-  M109 S230                                                ; set temp to 230c and wait
-  M29                                                      ; Stop writing to SD card
+  T0                                                             ; Activate Hotend
+  M109 S230                                                      ; set temp to 230c and wait
+  M29                                                            ; Stop writing to SD card
   
-  M28 "0:/sys/filaset"                                     ; Begin writing to SD card file
+  M28 "0:/sys/filaset"                                           ; Begin writing to SD card file
+  ; 0:/sys/filaset
   ; This gcode is used by Filament Handling Macro
-  T0 M702                                                  ; Set system filament as UNLOADED
-  T0 M701 S"PETG"                                          ; Set system filament as PETG
-  M29                                                      ; Stop writing to SD card
+  T0 M702                                                        ; Set system filament as UNLOADED
+  T0 M701 S"PETG"                                                ; Set system filament as PETG
+  M29                                                            ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to PETg. Press cancel to save this selection or OK to proceed to next filament type."
 
   ; Set ABS temp
-  M28 "0:/macros/Heat Nozzle"                              ; Begin writing to SD card file
+  M28 "0:/macros/Heat Nozzle"                                    ; Begin writing to SD card file
+  ; 0:/macros/Heat Nozzle
+  ; Heat nozzle to set temp
   M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T5
-  T0                                                       ; Activate Hotend
-  M109 S250                                                ; set temp to 250c and wait
-  M29                                                      ; Stop writing to SD card
+  T0                                                             ; Activate Hotend
+  M109 S250                                                      ; set temp to 250c and wait
+  M29                                                            ; Stop writing to SD card
   
-  M28 "0:/sys/filaset"                                     ; Begin writing to SD card file
+  M28 "0:/sys/filaset"                                           ; Begin writing to SD card file
+  ; 0:/sys/filaset
   ; This gcode is used by Filament Handling Macro
-  T0 M702                                                  ; Set system filament as UNLOADED
-  T0 M701 S"ABS"                                           ; Set system filament as ABS
-  M29                                                      ; Stop writing to SD card
+  T0 M702                                                        ; Set system filament as UNLOADED
+  T0 M701 S"ABS"                                                 ; Set system filament as ABS
+  M29                                                            ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to ABS. Press cancel to save this selection or OK to proceed to next filament type."
 
   ; Set PC temp
-  M28 "0:/macros/Heat Nozzle"                              ; Begin writing to SD card file
+  M28 "0:/macros/Heat Nozzle"                                    ; Begin writing to SD card file
+  ; 0:/macros/Heat Nozzle
+  ; Heat nozzle to set temp
   M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T5
-  T0                                                       ; Activate Hotend
-  M109 S270                                                ; set temp to 270c and wait
-  M29                                                      ; Stop writing to SD card
+  T0                                                             ; Activate Hotend
+  M109 S270                                                      ; set temp to 270c and wait
+  M29                                                            ; Stop writing to SD card
   
-  M28 "0:/sys/filaset"                                     ; Begin writing to SD card file
+  M28 "0:/sys/filaset"                                           ; Begin writing to SD card file
+  ; 0:/sys/filaset
   ; This gcode is used by Filament Handling Macro
-  T0 M702                                                  ; Set system filament as UNLOADED
-  T0 M701 S"PC"                                            ; Set system filament as PC
-  M29                                                      ; Stop writing to SD card
+  T0 M702                                                        ; Set system filament as UNLOADED
+  T0 M701 S"PC"                                                  ; Set system filament as PC
+  M29                                                            ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to PC. Press cancel to save this selection or OK to proceed to next filament type."
 
