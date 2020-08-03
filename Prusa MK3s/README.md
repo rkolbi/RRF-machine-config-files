@@ -2,7 +2,7 @@
 
 ## MK3s - Duet 2 WiFi wiring guide [PDF](Duet-MK3s.pdf)    
 
-## MK3s - Duet 2 WiFi sd-card file dump [TXT](ALL\ Files.md)    
+## MK3s - Duet 2 WiFi sd-card file dump [TXT](ALL Files.md)    
 
 <br>
 
