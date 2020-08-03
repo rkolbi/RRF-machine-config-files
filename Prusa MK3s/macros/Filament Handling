@@ -11,10 +11,10 @@ if state.status != "processing"
       M291 P"Retracting filament..." T5                          ; Display another message
       G1 E-150 F5000                                             ; Retract filament
       M400                                                       ; Wait for the moves to finish
-      T0 M702
+      T0 M702                                                    ; Select tool 0, set filament is unloaded
       M104 S-273                                                 ; turn off hotend
       M140 S-273                                                 ; turn off heatbed
-      M98 P"0:/macros/Filament Handling"; run again
+      M98 P"0:/macros/Filament Handling"; run again              ; Now that filament is unloaded, lets ask to load filament
 
    else
 
@@ -28,7 +28,7 @@ if state.status != "processing"
       G4 P1000                                                   ; Wait one second
       G1 E-1 F1800                                               ; Retract 10mm of filament at 1800mm/min
       M400                                                       ; Wait for moves to complete
-      M98 P"0:/sys/filaset"
+      M98 P"0:/sys/filaset"                                      ; Set system filament type
       M400                                                       ; Wait for moves to complete
       M104 S-273                                                 ; turn off hotend
       M140 S-273                                                 ; turn off heatbed
@@ -37,4 +37,4 @@ else
 
    M291 P"Press OK to begin filament CHANGE, else press CANCEL to exit." R"Filament Handling" S3
    M98 P"0:/sys/filament-change.g"                               ; call filament-change.g
-   M24
+   M24                                                           ; Start/resume SD print
