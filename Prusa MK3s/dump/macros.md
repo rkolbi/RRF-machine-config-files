@@ -41,6 +41,7 @@ else
    M291 P"Press OK to begin filament CHANGE, else press CANCEL to exit." R"Filament Handling" S3
    M98 P"0:/sys/filament-change.g"                               ; call filament-change.g
    M24                                                           ; Start/resume SD print
+
 ```
 **Heat Nozzle - v08/03/20**
 ```g-code
@@ -50,9 +51,7 @@ else
 M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
 T0                                  ; Select Tool 0
 M109 S230                           ; set temp to 230c and wait
-```
-**Maintenance - v08/03/20**
-```g-code
+
 ```
 **Set Filament Type - v08/03/20**
 ```g-code
@@ -138,5 +137,6 @@ if sensors.filamentMonitors[0].filamentPresent = false           ; if filament i
 else
 
  M291 S3 R"Filament Handling" P"Filament is currently loaded. Please unload filament before changing filament type."
+
 
 ```
