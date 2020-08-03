@@ -218,6 +218,8 @@ extruder,filament
 ```
 **filaset - v08/03/20**
 ```g-code
+; 0:/sys/filaset
+; This gcode is used by Filament Handling Macro
 T0 M702
 T0 M701 S"PETG"
 
