@@ -41,14 +41,14 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 ![Start Screen](Start-screen.jpg)
 
-## **Sliced object flow events:**   
+## **Print flow events:**   
 When initiating a print, the following sequence of events occur in this order.  
-**1 - "/sys/start.g"** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types. From this codeset, the fillament's config.g is called.  
-**2 - "/filaments/PETG/config.g"** is the second codeset that get initiated from the "M703" command in the "start.g" file. As written in this example, we are set to use the PETG "config.g" file, located in the "filaments" directory. This codeset contains the gcode commands that are particular to PETG (this is set by use of the macro discussed above or from within DWC).  
-**3 - "Slicer's Start GCode"** is the last bit of codeset to be executed before the object's sliced gcode starts.    
+**1 - /sys/start.g** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types. From this codeset, the fillament's config.g is called.  
+**2 - /filaments/PETG/config.g** is the second codeset that get initiated from the "M703" command in the "start.g" file. As written in this example, we are set to use the PETG "config.g" file, located in the "filaments/PETG" directory. This contains the gcode commands that are particular to PETG filament type.  
+**3 - Slicer's Start GCode** is the last bit of codeset to be executed before the object's sliced gcode starts. This contains the settings particulr to the actual print and the exact PETG filament loaded. This would be your *'fine'* settings, where PETG/config.g could be considered your *'medium'* settings, and start.g would be the *'rough'* - performing evaluations to get the printer ready.    
 **4 - The part's actual gcode** made by the slicer.  
-**5 - "Slicer's End GCode"** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls  
- **6 - "/sys/stop.g"**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily retrieve the printed part.  
+**5 - Slicer's End GCode** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls  
+ **6 - /sys/stop.g**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily retrieve the printed part.  
 
 <br><br>
 
