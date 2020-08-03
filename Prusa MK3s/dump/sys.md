@@ -381,28 +381,28 @@ M18 XEZY                                                   ; unlock all axis
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
 
-;M280 P0 S160                                    ; BLTouch, alarm release
-;G4 P100                                         ; BLTouch, delay for release command
-M572 D0 S0.0                                     ; clear pressure advance
-M703                                             ; Execute loaded filement's config.g
-G28                                              ; Home all
+;M280 P0 S160                                              ; BLTouch, alarm release
+;G4 P100                                                   ; BLTouch, delay for release command
+M572 D0 S0.0                                               ; clear pressure advance
+M703                                                       ; Execute loaded filement's config.g
+G28                                                        ; Home all
 
 ; if using BLTouch probe, use the following line:
-G1 Z100                                          ; Last chance to check nozzle cleanliness
+G1 Z100                                                    ; Last chance to check nozzle cleanliness
 ; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
-;G1 Z5 X100 Y100                                 ; Place nozzle center of bed, 5mm up
+;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
 
-M220 S100                                        ; Set speed factor back to 100% in case it was changed
-M221 S100                                        ; Set extrusion factor back to 100% in case it was changed
-M290 R0 S0                                       ; Clear babystepping
-M106 S0                                          ; Turn part cooling blower off if it is on
-M116                                             ; wait for all temperatures
-G32                                              ; Level bed
-G29                                              ; Bed mesh
-G90                                              ; Absolute Positioning
-M83                                              ; Extruder relative mode
-M98 P"0:/sys/current-sense-normal.g"             ; Ensure that motor currents and sense are set for printing 
-G1 X0 Y0 Z2                                      ; Final position before slicer's temp is reached and primeline is printed.
+M220 S100                                                  ; Set speed factor back to 100% in case it was changed
+M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed
+M290 R0 S0                                                 ; Clear babystepping
+M106 S0                                                    ; Turn part cooling blower off if it is on
+M116                                                       ; wait for all temperatures
+G32                                                        ; Level bed
+G29                                                        ; Bed mesh
+G90                                                        ; Absolute Positioning
+M83                                                        ; Extruder relative mode
+M98 P"0:/sys/current-sense-normal.g"                       ; Ensure that motor currents and sense are set for printing 
+G1 X0 Y0 Z2                                                ; Final position before slicer's temp is reached and primeline is printed.
  
 ; The primeline macro is executed by the slicer gcode to enable direct printing
 ; of the primeline at the objects temp and to immediately print the object
