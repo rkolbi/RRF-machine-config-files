@@ -1,6 +1,7 @@
-if state.status != "processing"
+; 0:/macros/Filament Handling
+; Macro used for all filament handling evolutions
 
-   ; Printer is not currently printing!
+if state.status != "processing"                                  ; Printer is not currently printing!
 
    if sensors.filamentMonitors[0].filamentPresent = true
    
