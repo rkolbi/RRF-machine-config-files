@@ -149,7 +149,7 @@ M0                                       ; Stop everything and run sys/stop.g
 
 <br><br>
 
-## <center>DUET System (sd-card contents) files follow</center>
+## DUET System (sd-card contents) files follow:
 
 ## 0:/sys/
 
