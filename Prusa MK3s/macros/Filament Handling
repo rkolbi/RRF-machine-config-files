@@ -3,7 +3,7 @@
 
 if state.status != "processing"                                  ; Printer is not currently printing!
 
-   if sensors.filamentMonitors[0].filamentPresent = true
+   if sensors.filamentMonitors[0].filamentPresent = true         ; Filament is detected, currently loaded
    
       M291 P"Press OK to begin filament UNLOADING, else press CANCEL to exit." R"Filament Handling" S3
       M291 P"Please wait while the nozzle is being heated." T5   ; Display message
