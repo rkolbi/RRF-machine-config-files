@@ -152,6 +152,8 @@ M0                                       ; Stop everything and run sys/stop.g
 
 ## DUET System (sd-card contents) files follow:
 
+***Always use the github folders as they will contain the latest revisions of these files.**
+
 ## 0:/sys/
 
 **bed.g - v08/04/20**
