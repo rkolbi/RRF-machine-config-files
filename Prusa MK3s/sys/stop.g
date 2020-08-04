@@ -2,14 +2,14 @@
 ; called when M0 (Stop) is run (e.g. when a print from SD card is cancelled)
 
 M83                                                        ; Set extruder to relative mode
+M106 S255                                                  ; Turn fan fully on
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
-M107                                                       ; Turn off fan
 G1 F1000.0                                                 ; Set feed rate
-G1 E-2                                                     ; Retract
-G1 X110 Y200 Z205 F3000                                    ; Place nozzle center/top
+G1 E-2.5                                                   ; Retract 2.5mm
+G1 X0 Y215 Z205 F1000                                      ; Place nozzle to left side, build plate to front, Z at top
 M400                                                       ; Clear queue
-G1 X0 Y215 F1000                                           ; Place nozzle to left side, build plate to front
+M107                                                       ; Turn off fan
 M18 YXE                                                    ; Unlock X, Y, and E axis
 
 ; Play a triumphant tune to celebrate a successful print.
