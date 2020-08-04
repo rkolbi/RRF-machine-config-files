@@ -1,6 +1,8 @@
 ; 0:/sys/pause.g
 ; called when a print from SD card is paused
 
+M120                                                       ; Push the state of the machine onto a stack
+
 if sensors.filamentMonitors[0].filamentPresent = false
    G1 E-3 F3000                                            ; if filament has run out, retract 6mm of filament
 
