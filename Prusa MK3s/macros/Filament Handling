@@ -1,41 +1,41 @@
 ; 0:/macros/Filament Handling
 ; Macro used for all filament handling evolutions
 
-if state.status != "processing"                                  ; Printer is not currently printing!
+if state.status != "processing"                            ; Printer is not currently printing!
 
-   if sensors.filamentMonitors[0].filamentPresent = true         ; Filament is detected, currently loaded
+   if sensors.filamentMonitors[0].filamentPresent = true   ; Filament is detected, currently loaded
    
       M291 P"Press OK to begin filament UNLOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5   ; Display message
-      M98 P"0:/macros/Heat Nozzle"                               ; heat nozzle to predetermined temp
+      M291 P"Please wait while the nozzle is being heated." T5 
+      M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament unloading. Gently pull filament and press OK." R"Filament Handling" S2
-      M291 P"Retracting filament..." T5                          ; Display another message
-      G1 E-150 F5000                                             ; Retract filament
-      M400                                                       ; Wait for the moves to finish
-      T0 M702                                                    ; Select tool 0, set filament is unloaded
-      M104 S-273                                                 ; turn off hotend
-      M140 S-273                                                 ; turn off heatbed
-      M98 P"0:/macros/Filament Handling"; run again              ; Now that filament is unloaded, lets ask to load filament
+      M291 P"Retracting filament..." T5                    ; Display another message
+      G1 E-150 F5000                                       ; Retract filament
+      M400                                                 ; Wait for the moves to finish
+      T0 M702                                              ; Select tool 0, set filament is unloaded
+      M104 S-273                                           ; Turn off hotend
+      M140 S-273                                           ; Turn off heatbed
+      M98 P"0:/macros/Filament Handling"; run again        ; Now that filament is unloaded, lets ask to load filament
 
    else
 
       M291 P"Press OK to begin filament LOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5   ; Display message
-      M98 P"0:/macros/Heat Nozzle"                               ; heat nozzle to predetermined temp
+      M291 P"Please wait while the nozzle is being heated." T5 
+      M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament loading. Insert filament and press OK." R"Filament Handling" S2
-      M291 P"Feeding filament..." T5                             ; Display new message
-      G1 E150 F450                                               ; Feed 150mm of filament at 600mm/min
-      G1 E20 F100                                                ; Feed 20mm of filament at 100mm/min
-      G4 P1000                                                   ; Wait one second
-      G1 E-1 F1800                                               ; Retract 10mm of filament at 1800mm/min
-      M400                                                       ; Wait for moves to complete
-      M98 P"0:/sys/filaset"                                      ; Set system filament type
-      M400                                                       ; Wait for moves to complete
-      M104 S-273                                                 ; turn off hotend
-      M140 S-273                                                 ; turn off heatbed
+      M291 P"Feeding filament..." T5                       ; Display new message
+      G1 E150 F450                                         ; Feed 150mm of filament at 600mm/min
+      G1 E20 F100                                          ; Feed 20mm of filament at 100mm/min
+      G4 P1000                                             ; Wait one second
+      G1 E-1 F1800                                         ; Retract 10mm of filament at 1800mm/min
+      M400                                                 ; Wait for moves to complete
+      M98 P"0:/sys/filaset"                                ; Set system filament type
+      M400                                                 ; Wait for moves to complete
+      M104 S-273                                           ; Turn off hotend
+      M140 S-273                                           ; Turn off heatbed
 
 else
 
    M291 P"Press OK to begin filament CHANGE, else press CANCEL to exit." R"Filament Handling" S3
-   M98 P"0:/sys/filament-change.g"                               ; call filament-change.g
-   M24                                                           ; Start/resume SD print
+   M98 P"0:/sys/filament-change.g"                         ; Call filament-change.g
+   M24                                                     ; Start/resume SD print
