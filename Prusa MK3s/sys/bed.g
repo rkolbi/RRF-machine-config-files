@@ -20,4 +20,9 @@ while move.calibration.initial.deviation >= 0.002          ; perform additional 
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
 G1 H2 Z8 F2600                                             ; Raise head 8mm to ensure it is above the Z probe trigger height
 G1 X104 Y100 F6000                                         ; Put head over the centre of the bed, or wherever you want to probe
-G30                                                        ; Probe the bed at the current XY position. When the probe is triggered, set the Z coordinate to the probe trigger height.
+G30                                                        ; Probe the bed at the current XY position. When the probe is triggered, 
+                                                           ; set the Z coordinate to the probe trigger height.
+
+M400                                                       ; Finish moves / clear buffer
+G90                                                        ; absolute positioning
+G1 H0 Z8 F400                                              ; lift Z to the 8mm mark
