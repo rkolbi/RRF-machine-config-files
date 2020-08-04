@@ -147,9 +147,9 @@ M0                                       ; Stop everything and run sys/stop.g
 
 **It is highly recommend to read through the very detailed Duet Wiki pages at https://duet3d.dozuki.com. RepRapFirmware supported G-code reference can be found here https://duet3d.dozuki.com/Wiki/Gcode#main.*
 
+<br><br>
 
-
-# DUET System (sd-card contents) files follow:
+## <center>DUET System (sd-card contents) files follow</center>
 
 ## 0:/sys/
 
