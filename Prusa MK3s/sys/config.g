@@ -19,9 +19,9 @@ M575 P1 S1 B38400                                          ; Enable support for 
 ; Drive Mappings S0 = backwards, S1 = forwards
 M569 P0 S1                                                 ; Drive 0 goes forwards: X Axis
 M569 P1 S1                                                 ; Drive 1 goes forwards: Y Axis
-M569 P2 S1                                                 ; Drive 2 goes forwards: Z Axis
-M569 P3 S0                                                 ; Drive 3 goes backwards: E Axis (Bondtech BMGm)
-M569 P4 S1                                                 ; Drive 4 goes forwards: Z Axis (at E1)
+M569 P2 S1                                                 ; Drive 2 goes forwards: Z Axis Left
+M569 P3 S0                                                 ; Drive 3 goes backwards: E Axis
+M569 P4 S1                                                 ; Drive 4 goes forwards: Z Axis Right (using E1)
 
 ; Motor Configuration
 ; !!! For stock motors, use the following as a starting point:
@@ -104,7 +104,7 @@ M308 S4 Y"drivers" A"TMC2660"                              ; Case fan - configur
 M308 S3 Y"mcu-temp" A"Duet2Wifi"                           ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100                                       ; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H4:3 L0.15 X1 B0.3 T40:70                          ; Case fan - set fan 2 value
-M912 P0 S-5.5                                              ; MCU Temp calibration - default reads 7.5c higher than ambient
+M912 P0 S-5.5                                              ; MCU Temp calibration - default reads 5.5c higher than ambient
 
 ; Tools
 M563 P0 D0 H1 F0                                           ; Define tool 0
