@@ -1,6 +1,7 @@
-# **SYS DIRECTORY - v08/03/20**
+# 0:/sys/
 
-**bed.g - v08/03/20**
+**bed.g - v08/04/20**
+
 ```g-code
 ; 0:/sys/bed.g
 ; Called to perform automatic bed compensation via G32
@@ -27,7 +28,7 @@ G1 X104 Y100 F6000                                         ; Put head over the c
 G30                                                        ; Probe the bed at the current XY position. When the probe is triggered, set the Z coordinate to the probe trigger height.
 
 ```
-**cancel.g - v08/03/20**
+**cancel.g - v08/04/20**
 ```g-code
 ; 0:/sys/cancel.g
 ; called when a print is canceled after a pause.
@@ -41,7 +42,7 @@ G1 E-2                                                     ; retract 2mm
 M18 YXE                                                    ; unlock X, Y, E axis
 
 ```
-**config.g - v08/03/20**
+**config.g - v08/04/20**
 ```g-code
 ; 0:/sys/config.g
 ; Configuration file for MK3s Duet WiFi, firmware version 3.11
@@ -161,7 +162,7 @@ T0                                                         ; Set Tool 0 active
 M18 YXE                                                    ; Unlock X, Y, and E axis
 
 ```
-**current-sense-homing.g - v08/03/20**
+**current-sense-homing.g - v08/04/20**
 ```g-code
 ; 0:/sys/current-sense-homing.g
 ; Current and Sensitivity for homing routines
@@ -170,7 +171,7 @@ M915 X S2 F0 H400 R0                                       ; Set X axis Sensitiv
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
 M913 X20 Y20 Z60                                           ; set X Y Z motors to X% of their normal current
 ```
-**current-sense-normal.g - v08/03/20**
+**current-sense-normal.g - v08/04/20**
 ```g-code
 ; 0:/sys/current-sense-normal.g
 ; Current and Sensitivity for normal routine
@@ -179,18 +180,18 @@ M913 X100 Y100 Z100                                        ; set X Y Z motors to
 M915 X S3 F0 H200 R0                                       ; Set X axis Sensitivity
 M915 Y S3 F0 H200 R0                                       ; Set y axis Sensitivity
 ```
-**deployprobe.g - v08/03/20**
+**deployprobe.g - v08/04/20**
 ```g-code
 ; 0:/sys/deployprobe.g
 ; called to deploy a physical Z probe
 
 M280 P0 S10                                                ; deploy BLTouch
 ```
-**dwc2settings.json - v08/03/20**
+**dwc2settings.json - v08/04/20**
 ```g-code
 {"main":{"language":"en","lastHostname":"10.0.1.124","darkTheme":false,"useBinaryPrefix":true,"disableAutoComplete":false,"settingsStorageLocal":false,"settingsSaveDelay":2000,"cacheStorageLocal":true,"cacheSaveDelay":4000,"notifications":{"errorsPersistent":false,"timeout":5000},"webcam":{"url":"","updateInterval":5000,"liveUrl":"","useFix":false,"embedded":false,"rotation":0,"flip":"none"}},"machine":{"ajaxRetries":2,"updateInterval":250,"extendedUpdateEvery":20,"fileTransferRetryThreshold":358400,"crcUploads":true,"pingInterval":2000,"babystepAmount":0.05,"codes":[],"displayedExtraTemperatures":[2,3,4],"displayedExtruders":[0,1],"displayedFans":[-1,0],"moveSteps":{"X":[100,50,10,1,0.1],"Y":[100,50,10,1,0.1],"Z":[50,25,5,0.5,0.05],"default":[100,50,10,1,0.1]},"moveFeedrate":6000,"extruderAmounts":[100,50,20,10,5,1],"extruderFeedrates":[60,30,15,5,1],"temperatures":{"tool":{"active":[250,235,220,205,195,160,120,100,0],"standby":[210,180,160,140,0]},"bed":{"active":[110,100,90,70,65,60,0],"standby":[40,30,0]},"chamber":[]},"spindleRPM":[]}}
 ```
-**filament-change.g - v08/03/20**
+**filament-change.g - v08/04/20**
 ```g-code
 ; 0:/sys/filament-change.g
 ; called when a print from SD card runs out of filament
@@ -209,22 +210,20 @@ M291 P"Press OK to recommence print." R"Filament Handling" S2
 
 M98 P"0:/macros/Heat Nozzle"                               ; Get nozzle hot and continue print
 ```
-**filaments.csv - v08/03/20**
+**filaments.csv - v08/04/20**
 ```g-code
 RepRapFirmware filament assignment file v1 generated at 2020-08-01 15:01
 extruder,filament
 0,PETG
 
 ```
-**filaset - v08/03/20**
+**filaset - v08/04/20**
 ```g-code
-; 0:/sys/filaset
-; This gcode is used by Filament Handling Macro
 T0 M702
 T0 M701 S"PETG"
 
 ```
-**homeall.g - v08/03/20**
+**homeall.g - v08/04/20**
 ```g-code
 ; 0:/sys/homeall.g
 ; home x, y, and z axis
@@ -261,7 +260,7 @@ G1 H0 Z5 F400                                              ; lift Z relative to 
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-**homex.g - v08/03/20**
+**homex.g - v08/04/20**
 ```g-code
 ; 0:/sys/homex.g
 ; home the x axis
@@ -282,7 +281,7 @@ G1 Z-3 F800 H2                                             ; place Z back to sta
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-**homey.g - v08/03/20**
+**homey.g - v08/04/20**
 ```g-code
 ; 0:/sys/homey.g
 ; home the y axis
@@ -301,7 +300,7 @@ G1 Z-3 F800 H2                                             ; place Z back to sta
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-**homez.g - v08/03/20**
+**homez.g - v08/04/20**
 ```g-code
 ; 0:/sys/homez.g
 ; home the z axis
@@ -324,7 +323,7 @@ G1 H0 Z5 F400                                              ; lift Z relative to 
 
 M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine
 ```
-**pause.g - v08/03/20**
+**pause.g - v08/04/20**
 ```g-code
 ; 0:/sys/pause.g
 ; called when a print from SD card is paused
@@ -341,7 +340,7 @@ G1 X10 Y0 F6000                                            ; Parking Position
 M300 S80 P2000                                             ; play beep sound
 
 ```
-**primeline.g - v08/03/20**
+**primeline.g - v08/04/20**
 ```g-code
 ; 0:/sys/primeline.g
 ; Print prime-line at a 'randomized' Y positon from -1.1 to -2.9
@@ -352,7 +351,7 @@ G1 Z0.2 X100.0 E30.0 F1000.0                               ; prime line
 G92 E0.0                                                   ; set E position to 0
 M400                                                       ; finish all current moves / clear the buffer
 ```
-**resume.g - v08/03/20**
+**resume.g - v08/04/20**
 ```g-code
 ; 0:/sys/resume.g
 ; called before a print from SD card is resumed
@@ -362,14 +361,14 @@ G1 R1 X0 Y0                                                ; go back to the last
 ;G1 E2 F1000                                               ; Feed 70mm of filament at 800mm/min
 M83                                                        ; relative extruder moves
 ```
-**retractprobe.g - v08/03/20**
+**retractprobe.g - v08/04/20**
 ```g-code
 ; 0:/sys/retractprobe.g
 ; called to retract a physical Z probe
 
 M280 P0 S90                                                ; retract BLTouch
 ```
-**sleep.g - v08/03/20**
+**sleep.g - v08/04/20**
 ```g-code
 ; 0:/sys/sleep.g
 ; called when M1 (Sleep) is being processed
@@ -380,7 +379,7 @@ M107                                                       ; turn off fan
 M18 XEZY                                                   ; unlock all axis
 
 ```
-**start.g - v08/03/20**
+**start.g - v08/04/20**
 ```g-code
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
@@ -415,7 +414,7 @@ G1 X0 Y0 Z2                                                ; Final position befo
 ; Slicer generated gcode takes it away from here
 
 ```
-**stop.g - v08/03/20**
+**stop.g - v08/04/20**
 ```g-code
 ; 0:/sys/stop.g
 ; called when M0 (Stop) is run (e.g. when a print from SD card is cancelled)
@@ -451,167 +450,138 @@ G4 P351
 M400
 
 ```
+# 0:/macros/
 
-# **MACROS DIRECTORY - v08/03/20**
+**Filament Handling - v08/04/20**
 
-**Filament Handling - v08/03/20**
 ```g-code
 ; 0:/macros/Filament Handling
 ; Macro used for all filament handling evolutions
 
-if state.status != "processing"                                  ; Printer is not currently printing!
+if state.status != "processing"                            ; Printer is not currently printing!
 
-   if sensors.filamentMonitors[0].filamentPresent = true
+   if sensors.filamentMonitors[0].filamentPresent = true   ; Filament is detected, currently loaded
    
       M291 P"Press OK to begin filament UNLOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5   ; Display message
-      M98 P"0:/macros/Heat Nozzle"                               ; heat nozzle to predetermined temp
+      M291 P"Please wait while the nozzle is being heated." T5 
+      M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament unloading. Gently pull filament and press OK." R"Filament Handling" S2
-      M291 P"Retracting filament..." T5                          ; Display another message
-      G1 E-150 F5000                                             ; Retract filament
-      M400                                                       ; Wait for the moves to finish
-      T0 M702                                                    ; Select tool 0, set filament is unloaded
-      M104 S-273                                                 ; turn off hotend
-      M140 S-273                                                 ; turn off heatbed
-      M98 P"0:/macros/Filament Handling"; run again              ; Now that filament is unloaded, lets ask to load filament
+      M291 P"Retracting filament..." T5                    ; Display another message
+      G1 E-150 F5000                                       ; Retract filament
+      M400                                                 ; Wait for the moves to finish
+      T0 M702                                              ; Select tool 0, set filament is unloaded
+      M104 S-273                                           ; Turn off hotend
+      M140 S-273                                           ; Turn off heatbed
+      M98 P"0:/macros/Filament Handling"; run again        ; Now that filament is unloaded, lets ask to load filament
 
    else
 
       M291 P"Press OK to begin filament LOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5   ; Display message
-      M98 P"0:/macros/Heat Nozzle"                               ; heat nozzle to predetermined temp
+      M291 P"Please wait while the nozzle is being heated." T5 
+      M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament loading. Insert filament and press OK." R"Filament Handling" S2
-      M291 P"Feeding filament..." T5                             ; Display new message
-      G1 E150 F450                                               ; Feed 150mm of filament at 600mm/min
-      G1 E20 F100                                                ; Feed 20mm of filament at 100mm/min
-      G4 P1000                                                   ; Wait one second
-      G1 E-1 F1800                                               ; Retract 10mm of filament at 1800mm/min
-      M400                                                       ; Wait for moves to complete
-      M98 P"0:/sys/filaset"                                      ; Set system filament type
-      M400                                                       ; Wait for moves to complete
-      M104 S-273                                                 ; turn off hotend
-      M140 S-273                                                 ; turn off heatbed
+      M291 P"Feeding filament..." T5                       ; Display new message
+      G1 E150 F450                                         ; Feed 150mm of filament at 600mm/min
+      G1 E20 F100                                          ; Feed 20mm of filament at 100mm/min
+      G4 P1000                                             ; Wait one second
+      G1 E-1 F1800                                         ; Retract 10mm of filament at 1800mm/min
+      M400                                                 ; Wait for moves to complete
+      M98 P"0:/sys/filaset"                                ; Set system filament type
+      M400                                                 ; Wait for moves to complete
+      M104 S-273                                           ; Turn off hotend
+      M140 S-273                                           ; Turn off heatbed
 
 else
 
    M291 P"Press OK to begin filament CHANGE, else press CANCEL to exit." R"Filament Handling" S3
-   M98 P"0:/sys/filament-change.g"                               ; call filament-change.g
-   M24                                                           ; Start/resume SD print
+   M98 P"0:/sys/filament-change.g"                         ; Call filament-change.g
+   M24                                                     ; Start/resume SD print
 
 ```
-**Heat Nozzle - v08/03/20**
+**Heat Nozzle - v08/04/20**
 ```g-code
 ; 0:/macros/Heat Nozzle
 ; Heat nozzle to set temp
 
 M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
-T0                                  ; Select Tool 0
-M109 S230                           ; set temp to 230c and wait
+T0                                                         ; Select Tool 0
+M109 S230                                                  ; set temp to 230c and wait
 
 ```
-**Set Filament Type - v08/03/20**
+**Set Filament Type - v08/04/20**
 ```g-code
 ; 0:/macros/Set Filament Type
 ; Macro used to set system's loaded filament type
 
-if sensors.filamentMonitors[0].filamentPresent = false           ; if filament is loaded then reject action to change filament type
+if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is loaded then reject action to change filament type
 
   M291 P"Press OK to change filament type, else press CANCEL to exit." R"Filament Handling" S3
 
   ; Set PLA temp
-  M559 P"0:/macros/Heat Nozzle"                                  ; Begin writing to SD card file
-  ; 0:/macros/Heat Nozzle
-  ; Heat nozzle to set temp
-  
+  M28 "0:/macros/Heat Nozzle"                                ; Begin writing to SD card file
   M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T5
-  T0                                                             ; Activate Hotend
-  M109 S200                                                      ; set temp to 200c and wait
-  M29                                                            ; Stop writing to SD card
+  T0                                                          ; Activate Hotend
+  M109 S200                                                   ; set temp to 200c and wait
+  M29                                                         ; Stop writing to SD card
   
-  M559 P"0:/sys/filaset"                                         ; Begin writing to SD card file
-  ; 0:/sys/filaset
-  ; This gcode is used by Filament Handling Macro
-  
-  T0 M702                                                        ; Set system filament as UNLOADED
-  T0 M701 S"PLA"                                                 ; Set system filament as PLA
-  M29                                                            ; Stop writing to SD card
+  M28 "0:/sys/filaset"                                        ; Begin writing to SD card file
+  T0 M702                                                     ; Set system filament as UNLOADED
+  T0 M701 S"PLA"                                              ; Set system filament as PLA
+  M29                                                         ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to PLA. Press cancel to save this selection or OK to proceed to next filament type."
   
   ; Set PETg temp
-  M559 P"0:/macros/Heat Nozzle"                                  ; Begin writing to SD card file
-  ; 0:/macros/Heat Nozzle
-  ; Heat nozzle to set temp
-  
+  M28 "0:/macros/Heat Nozzle"                               ; Begin writing to SD card file
   M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
-  T0                                                             ; Activate Hotend
-  M109 S230                                                      ; set temp to 230c and wait
-  M29                                                            ; Stop writing to SD card
+  T0                                                          ; Activate Hotend
+  M109 S230                                                   ; set temp to 230c and wait
+  M29                                                         ; Stop writing to SD card
   
-  M559 P"0:/sys/filaset"                                         ; Begin writing to SD card file
-  ; 0:/sys/filaset
-  ; This gcode is used by Filament Handling Macro
-  
-  T0 M702                                                        ; Set system filament as UNLOADED
-  T0 M701 S"PETG"                                                ; Set system filament as PETG
-  M29                                                            ; Stop writing to SD card
+  M28 "0:/sys/filaset"                                      ; Begin writing to SD card file
+  T0 M702                                                     ; Set system filament as UNLOADED
+  T0 M701 S"PETG"                                             ; Set system filament as PETG
+  M29                                                         ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to PETg. Press cancel to save this selection or OK to proceed to next filament type."
 
   ; Set ABS temp
-  M559 P"0:/macros/Heat Nozzle"                                  ; Begin writing to SD card file
-  ; 0:/macros/Heat Nozzle
-  ; Heat nozzle to set temp
-  
+  M28 "0:/macros/Heat Nozzle"                               ; Begin writing to SD card file
   M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T5
-  T0                                                             ; Activate Hotend
-  M109 S250                                                      ; set temp to 250c and wait
-  M29                                                            ; Stop writing to SD card
+  T0                                                          ; Activate Hotend
+  M109 S250                                                   ; set temp to 250c and wait
+  M29                                                         ; Stop writing to SD card
   
-  M559 P"0:/sys/filaset"                                         ; Begin writing to SD card file
-  ; 0:/sys/filaset
-  ; This gcode is used by Filament Handling Macro
-  
-  T0 M702                                                        ; Set system filament as UNLOADED
-  T0 M701 S"ABS"                                                 ; Set system filament as ABS
-  M29                                                            ; Stop writing to SD card
+  M28 "0:/sys/filaset"                                      ; Begin writing to SD card file
+  T0 M702                                                     ; Set system filament as UNLOADED
+  T0 M701 S"ABS"                                              ; Set system filament as ABS
+  M29                                                         ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to ABS. Press cancel to save this selection or OK to proceed to next filament type."
 
   ; Set PC temp
-  M559 P"0:/macros/Heat Nozzle"                                  ; Begin writing to SD card file
-  ; 0:/macros/Heat Nozzle
-  ; Heat nozzle to set temp
-  
+  M28 "0:/macros/Heat Nozzle"                               ; Begin writing to SD card file
   M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T5
-  T0                                                             ; Activate Hotend
-  M109 S270                                                      ; set temp to 270c and wait
-  M29                                                            ; Stop writing to SD card
+  T0                                                          ; Activate Hotend
+  M109 S270                                                   ; set temp to 270c and wait
+  M29                                                         ; Stop writing to SD card
   
-  M559 P"0:/sys/filaset"                                         ; Begin writing to SD card file
-  ; 0:/sys/filaset
-  ; This gcode is used by Filament Handling Macro
-  
-  T0 M702                                                        ; Set system filament as UNLOADED
-  T0 M701 S"PC"                                                  ; Set system filament as PC
-  M29                                                            ; Stop writing to SD card
+  M28 "0:/sys/filaset"                                      ; Begin writing to SD card file
+  T0 M702                                                     ; Set system filament as UNLOADED
+  T0 M701 S"PC"                                               ; Set system filament as PC
+  M29                                                         ; Stop writing to SD card
 
   M291 S3 R"Filament Handling" P"Filament type currently set to PC. Press cancel to save this selection or OK to proceed to next filament type."
 
 else
 
- M291 S3 R"Filament Handling" P"Filament is currently loaded. Please unload filament before changing filament type."
+  M291 S3 R"Filament Handling" P"Filament is currently loaded. Please unload filament before changing filament type."
 
 
 ```
+# 0:/filaments/ABS/
 
-
-
-# **FILAMENTS DIRECTORY - v08/03/20**
-
-## **ABS DIRECTORY - v08/03/20**
-
-**config.g - v08/03/20**
+**config.g - v08/04/20**
 
 ```g-code
 ; 0:/filaments/ABS/config.g
@@ -625,18 +595,17 @@ M104 S150                                                   ; set extruder warm-
 ; Insert additional filament specific settings here
 
 ```
-**load.g - v08/03/20**
+**load.g - v08/04/20**
 ```g-code
 
 ```
-**unload.g - v08/03/20**
+**unload.g - v08/04/20**
 ```g-code
 
 ```
+# 0:/filaments/PC/
 
-## **PC DIRECTORY - v08/03/20**
-
-**config.g - v08/03/20**
+**config.g - v08/04/20**
 
 ```g-code
 ; 0:/filaments/PC/config.g
@@ -650,18 +619,17 @@ M104 S150                                                   ; set extruder warm-
 ; Insert additional filament specific settings here
 
 ```
-**load.g - v08/03/20**
+**load.g - v08/04/20**
 ```g-code
 
 ```
-**unload.g - v08/03/20**
+**unload.g - v08/04/20**
 ```g-code
 
 ```
+# 0:/filaments/PETG/
 
-## **PETG DIRECTORY - v08/03/20**
-
-**config.g - v08/03/20**
+**config.g - v08/04/20**
 
 ```g-code
 ; 0:/filaments/PETG/config.g
@@ -675,18 +643,17 @@ M104 S150                                                   ; set extruder warm-
 ; Insert additional filament specific settings here
 
 ```
-**load.g - v08/03/20**
+**load.g - v08/04/20**
 ```g-code
 
 ```
-**unload.g - v08/03/20**
+**unload.g - v08/04/20**
 ```g-code
 
 ```
+# 0:/filaments/PLA/
 
-## **PLA DIRECTORY - v08/03/20**
-
-**config.g - v08/03/20**
+**config.g - v08/04/20**
 
 ```g-code
 ; 0:/filaments/PLA/config.g
@@ -700,11 +667,11 @@ M104 S150                                                   ; set extruder warm-
 ; Insert additional filament specific settings here
 
 ```
-**load.g - v08/03/20**
+**load.g - v08/04/20**
 ```g-code
 
 ```
-**unload.g - v08/03/20**
+**unload.g - v08/04/20**
 ```g-code
 
 ```
