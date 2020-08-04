@@ -9,6 +9,8 @@ G1 F1000.0                                                 ; set feed rate
 G1 E-2                                                     ; retract
 G1 X110 Y200 Z205 F3000                                    ; place nozzle center/top
 M400                                                       ; Clear queue
+G1 X0                                                      ; Place nozzle to left side
+G1 Y215                                                    ; Place build plate to front
 M18 YXE                                                    ; unlock X, Y, and E axis
 
 ; Play a triumphant tune to celebrate a successful print.
