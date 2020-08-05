@@ -3,7 +3,7 @@
 
 if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is loaded then reject action to change filament type
 
-  M291 P"Press OK to change filament type, else press CANCEL to exit." R"Filament Handling" S3
+  M291 P{move.extruders[0].filament} ^ " is currently set. Press OK to change filament type, else press CANCEL to exit." R"Filament Handling" S3
 
   ; Set PLA temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
