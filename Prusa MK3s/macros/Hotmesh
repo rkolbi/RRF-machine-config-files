@@ -15,7 +15,7 @@ while iterations <=9                                       ; Perform 10 passes
     G1 Z15                                                 ; Move Z 15mm up
     G4 S0.5                                                ; Wait .5 seconds
 M116                                                       ; Wait for all temperatures
-M291 P{"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown."} R"Hotmesh" S0 T10
+M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
 ; Start countdown - use Z as indicator   
 while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
@@ -28,5 +28,5 @@ M400                                                       ; Clear queue
 G29                                                        ; Perfrom bed mesh
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
-M291 P{"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait."} R"Hotmesh" S0 T10
+M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
 G28                                                        ; Home
