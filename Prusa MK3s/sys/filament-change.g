@@ -14,3 +14,5 @@ M400                                                       ; clear moves
 M291 P"Press OK to recommence print." R"Filament Handling" S2
 
 M98 P"0:/macros/Heat Nozzle"                               ; Get nozzle hot and continue print
+M116                                                       ; wait for all temperatures - shouldn't need this but just incase
+M121                                                       ; Recover the last state pushed onto the stack
