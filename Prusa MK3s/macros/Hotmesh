@@ -21,7 +21,7 @@ while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
     G1 Z-15                                                ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
-M291 P{"Performing homing, gantry alignment, and mesh probing. Please wait."} R"Hotmesh" S0 T10
+M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
 
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
