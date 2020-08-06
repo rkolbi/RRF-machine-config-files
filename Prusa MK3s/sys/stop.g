@@ -7,6 +7,7 @@ M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 G1 F1000.0                                                 ; Set feed rate
 G1 E-2.5                                                   ; Retract 2.5mm
+M98 P"current-sense-homing.g"                              ; Adjust current and sensitivity for homing routines
 G1 X0 Y215 Z205 F1000                                      ; Place nozzle to left side, build plate to front, Z at top
 M400                                                       ; Clear queue
 M107                                                       ; Turn off fan

@@ -1,6 +1,7 @@
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
 
+T0                                                         ; Ensure tool is selected
 ;M280 P0 S160                                              ; BLTouch, alarm release
 ;G4 P100                                                   ; BLTouch, delay for release command
 M572 D0 S0.0                                               ; clear pressure advance

@@ -1,7 +1,7 @@
 ; 0:/sys/homeall.g
 ; home x, y, and z axis
 
-M98 P"current-sense-homing.g"                              ; Current and Sensitivity for homing routines
+M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 ; !!! If using Pinda, comment-out the following two lines
 M280 P0 S160                                               ; BLTouch, alarm release
@@ -30,5 +30,3 @@ G30                                                        ; home Z by probing t
 
 G90                                                        ; absolute positioning
 G1 H0 Z5 F400                                              ; lift Z relative to current position
-
-M98 P"current-sense-normal.g"                              ; Current and Sensitivity for normal routine

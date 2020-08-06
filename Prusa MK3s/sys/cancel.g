@@ -7,4 +7,5 @@ M140 S-273                                                 ; turn off heatbed
 M107                                                       ; turn off fan
 G1 F1000.0                                                 ; set feed rate
 G1 E-2                                                     ; retract 2mm
+M98 P"current-sense-homing.g"                              ; Set current and sensitivity for homing routines
 M18 YXE                                                    ; unlock X, Y, E axis

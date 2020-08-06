@@ -8,7 +8,7 @@ while iterations <=2                                       ; Perform 3 passes
    G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, half way along Y axis
    G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G90                                                     ; Set to Absolute Positioning
-   G1 X100                                                 ; Move to center
+   G1 X100 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
@@ -19,7 +19,7 @@ while move.calibration.initial.deviation >= 0.002          ; perform additional 
    G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, half way along Y axis
    G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G90                                                     ; Set to Absolute Positioning
-   G1 X100                                                 ; Move to center
+   G1 X100 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
