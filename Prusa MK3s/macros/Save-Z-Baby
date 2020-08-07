@@ -4,8 +4,8 @@
 ; and this is for a specific filament type, recommend placing this yielded information in the filament's config.g.
  
 if move.axes[2].babystep !=0                                ; If no babysteps are currently adjusted - exit routine
-   echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight + move.axes[2].babystep}
-   G31 Z{sensors.probes[0].triggerHeight + move.axes[2].babystep}
+   echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight + (move.axes[2].babystep * -1)}
+   G31 Z{sensors.probes[0].triggerHeight + (move.axes[2].babystep * -1)}
    M500 P10:31                                              ; save settings to config-overide.g - G31 P31 saves trigger height, 
 	                                                    ; trigger value, and X and Y offsets for each possible Z probe type. 
 							    ; P10 parameter saves the G10 tool offsets.
