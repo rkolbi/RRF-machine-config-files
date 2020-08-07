@@ -27,7 +27,7 @@ M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Ho
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
 G29                                                        ; Perfrom bed mesh
-G29 S3 [P{move.extruders[0].filament^"-heightmap.csv"}]    ; Save heightmap.csv as PETG-heightmap.csv
+G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10

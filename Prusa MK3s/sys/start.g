@@ -22,10 +22,10 @@ G1 Z100                                                    ; Last chance to chec
 M116                                                       ; wait for all temperatures
 G4 S30                                                     ; wait additional 30 seconds for bed to stabilize
 G32                                                        ; Level bed
-G29 S1 [P{move.extruders[0].filament^"-heightmap.csv"}]    ; Load bed mesh for system filament type
+G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save
    G29                                                     ; Perform mesh now
-   G29 S3 [P{move.extruders[0].filament^"-heightmap.csv"}] ; Save mesh with filament type prefixed
+   G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
 G90                                                        ; Absolute Positioning
 M83                                                        ; Extruder relative mode
 M98 P"0:/sys/current-sense-normal.g"                       ; Ensure that motor currents and sense are set for printing 
