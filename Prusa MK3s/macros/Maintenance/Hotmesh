@@ -1,6 +1,7 @@
 ; 0:/macros/hotmesh.g
 ; Called to perform automatic heated bedmesh compensation
-; Alternative Hotmesh.g - This saved the heightmap as filament type appended to the file name (PETG-heightmap.csv)
+; Alternative Hotmesh.g - This saves the heightmap to the system's set filament
+; type directory (0:/filaments/PETG/heightmap.csv)
  
 T0                                                         ; Ensure tool is selected
 M703                                                       ; Heat bed to set temp based off current system filament type

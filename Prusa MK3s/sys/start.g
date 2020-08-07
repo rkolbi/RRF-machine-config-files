@@ -1,7 +1,8 @@
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
-; Alternative Start.g - This loads the heightmap as filament type prefixed to the file name (PETG-heightmap.csv)
-; if the heightmap does not exist, create one, and then save with filamnet type prefixed to the file name - as above
+; Alternative Start.g - This loads the heightmap from the system's set filament
+; type directory (0:/filaments/PETG/heightmap.csv), if the heightmap does not
+; exist, create one, and then save in the filament's directory.
  
 T0                                                         ; Ensure tool is selected
 ;M280 P0 S160                                              ; BLTouch, alarm release
