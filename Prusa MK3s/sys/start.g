@@ -20,6 +20,7 @@ G1 Z100                                                    ; Last chance to chec
 ;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
 
 M116                                                       ; wait for all temperatures
+G4 S30                                                     ; wait additional 30 seconds for bed to stabilize
 G32                                                        ; Level bed
 G29 S1 [P{move.extruders[0].filament^"-heightmap.csv"}]    ; Load bed mesh for system filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save
