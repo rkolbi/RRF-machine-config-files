@@ -13,4 +13,3 @@ if move.axes[2].babystep !=0                                ; If no babysteps ar
  
 else
    echo "Baby stepping is not currently employed, exiting."
-

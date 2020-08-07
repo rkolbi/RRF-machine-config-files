@@ -20,6 +20,7 @@ G1 Z100                                                    ; Last chance to chec
 ; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
 ;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
 
+M300 S4000 P100 G4 P200 M300 S4000 P100 G4 P200 M300 S4000 P100 ; Give a triple beep
 M116                                                       ; wait for all temperatures
 G4 S30                                                     ; wait additional 30 seconds for bed to stabilize
 G32                                                        ; Level bed

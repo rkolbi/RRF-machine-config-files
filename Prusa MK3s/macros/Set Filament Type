@@ -7,7 +7,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
 
   ; Set PLA temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S200                                                   ; set temp to 200c and wait
   M29                                                         ; Stop writing to SD card
@@ -21,7 +21,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
   
   ; Set PETg temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S230                                                   ; set temp to 230c and wait
   M29                                                         ; Stop writing to SD card
@@ -35,7 +35,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
 
   ; Set ABS temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S250                                                   ; set temp to 250c and wait
   M29                                                         ; Stop writing to SD card
@@ -49,7 +49,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
 
   ; Set PC temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S270                                                   ; set temp to 270c and wait
   M29                                                         ; Stop writing to SD card

@@ -10,9 +10,11 @@ G1 F1000.0                                                 ; Set feed rate
 M98 P"current-sense-homing.g"                              ; Adjust current and sensitivity for homing routines
 
 ; Let cool and wiggle for bit to reduce end stringing
+M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 G91                                                        ; Set to Relative Positioning
 G1 Z2 F400                                                 ; Move Z up 2mm
 G4 S10                                                     ; Wait for 10 seconds for filament to solidify
+M300 S4000 P100                                            ; Give a single beep
 G1 X2 Y2 F1000                                             ; Wiggle +2mm
 G4 S1                                                      ; Wait for 1 second
 G1 X-2 Y-2 F1000                                           ; Wiggle -2mm

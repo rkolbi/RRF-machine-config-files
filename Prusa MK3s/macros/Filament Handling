@@ -6,7 +6,6 @@ if state.status != "processing"                            ; Printer is not curr
    if sensors.filamentMonitors[0].filamentPresent = true   ; Filament is detected, currently loaded
    
       M291 P"Press OK to begin filament UNLOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5 
       M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament unloading. Gently pull filament and press OK." R"Filament Handling" S2
       M291 P"Retracting filament..." T5                    ; Display another message
@@ -20,7 +19,6 @@ if state.status != "processing"                            ; Printer is not curr
    else
 
       M291 P"Press OK to begin filament LOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5 
       M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament loading. Insert filament and press OK." R"Filament Handling" S2
       M291 P"Feeding filament..." T5                       ; Display new message
