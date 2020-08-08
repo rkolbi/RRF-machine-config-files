@@ -12,7 +12,7 @@ while iterations <=2                                       ; Perform 3 passes
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
-while move.calibration.initial.deviation >= 0.002          ; perform additional tramming if previous deviation was over 0.002mm 
+while move.calibration.initial.deviation >= 0.003          ; perform additional tramming if previous deviation was over 0.003mm 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
