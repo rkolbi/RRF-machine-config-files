@@ -1,7 +1,7 @@
 # Zaribo/Prusa i3 MK3s - Duet 2 WiFi - RRF 3.11
 
 ## MK3s - Duet 2 WiFi wiring guide [PDF](Duet-MK3s.pdf)    
-
+## Complete downloadable Guide + File listinf [PDF](ZMK3s-Duet2W.pdf)
 <br>
 
 ## **Hardware changes from stock MK3s:**
