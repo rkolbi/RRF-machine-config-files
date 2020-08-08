@@ -10,7 +10,7 @@
 
 - Bondtech Mosquito Extruder  
 
-- 0.9 Stepper motors on X & Y axis (17HM15-0904S @ omc-stepperonline.com) 	
+- 0.9 Stepper motors on X & Y axis 	
 
 - Duet WiFi  
   
@@ -157,7 +157,7 @@ M0                                       ; Stop everything and run sys/stop.g
 
 ### file dump - v08/08/20
 ### Directory / File list follow:
-****  
+****
 filaments.csv  
 **/filaments**  
 **/filaments/ABS**  
@@ -210,15 +210,6 @@ stop.g
 ### File contents follow:
 ****
 
-
-#### 
-##### /filaments.csv
-```g-code
-RepRapFirmware filament assignment file v1 generated at 2020-08-01 15:01
-extruder,filament
-0,PETG
-
-```
 #### /filaments
 #### /filaments/ABS
 ##### /filaments/ABS/config.g
@@ -335,7 +326,6 @@ if state.status != "processing"                            ; Printer is not curr
    if sensors.filamentMonitors[0].filamentPresent = true   ; Filament is detected, currently loaded
    
       M291 P"Press OK to begin filament UNLOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5 
       M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament unloading. Gently pull filament and press OK." R"Filament Handling" S2
       M291 P"Retracting filament..." T5                    ; Display another message
@@ -349,7 +339,6 @@ if state.status != "processing"                            ; Printer is not curr
    else
 
       M291 P"Press OK to begin filament LOADING, else press CANCEL to exit." R"Filament Handling" S3
-      M291 P"Please wait while the nozzle is being heated." T5 
       M98 P"0:/macros/Heat Nozzle"                         ; Heat nozzle to predetermined temp
       M291 P"Ready for filament loading. Insert filament and press OK." R"Filament Handling" S2
       M291 P"Feeding filament..." T5                       ; Display new message
@@ -375,7 +364,7 @@ else
 ; 0:/macros/Heat Nozzle
 ; Heat nozzle to set temp
 
-M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
+M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T10
 T0                                                         ; Select Tool 0
 M109 S230                                                  ; set temp to 230c and wait
 
@@ -391,7 +380,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
 
   ; Set PLA temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for PLA, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S200                                                   ; set temp to 200c and wait
   M29                                                         ; Stop writing to SD card
@@ -405,7 +394,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
   
   ; Set PETg temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for PETg, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S230                                                   ; set temp to 230c and wait
   M29                                                         ; Stop writing to SD card
@@ -419,7 +408,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
 
   ; Set ABS temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for ABS, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S250                                                   ; set temp to 250c and wait
   M29                                                         ; Stop writing to SD card
@@ -433,7 +422,7 @@ if sensors.filamentMonitors[0].filamentPresent = false        ; if filament is l
 
   ; Set PC temp
   M28 "0:/macros/Heat Nozzle"                                 ; Begin writing to SD card file
-  M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T5
+  M291 R"Filament Handling" P"Heating nozzle for PC, please wait." S0 T10
   T0                                                          ; Activate Hotend
   M109 S270                                                   ; set temp to 270c and wait
   M29                                                         ; Stop writing to SD card
