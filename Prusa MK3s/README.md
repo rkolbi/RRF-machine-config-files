@@ -155,10 +155,9 @@ M0                                       ; Stop everything and run sys/stop.g
 
 ***Always use the github folders as they will contain the latest revisions of these files.**
 
-### file dump - v08/08/20
+### file dump - v08/09/20
 ### Directory / File list follow:
 ****
-filaments.csv  
 **/filaments**  
 **/filaments/ABS**  
 config.g  
@@ -271,18 +270,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-07 18:59, min error -0.085, max error 0.107, mean 0.025, deviation 0.040
+RepRapFirmware height map file v2 generated at 2020-08-08 13:25, min error -0.082, max error 0.120, mean 0.031, deviation 0.041
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,235.00,10.00,195.00,-1.00,26.25,23.12,9,9
- -0.023,  0.010,  0.013,  0.015, -0.043, -0.030, -0.018, -0.053, -0.072
- -0.030,  0.030,  0.033,  0.013, -0.028, -0.003,  0.020, -0.013, -0.085
- -0.018,  0.030,  0.055,  0.030, -0.003, -0.003,  0.030,  0.000, -0.045
- -0.023,  0.033,  0.028,  0.023,  0.002,  0.030,  0.045,  0.023, -0.040
-  0.005,  0.023,  0.010,  0.018,  0.020,  0.038,  0.055,  0.043,  0.013
-  0.007,  0.025,  0.020,  0.023,  0.013,  0.038,  0.053,  0.043,  0.015
- -0.003,  0.035,  0.062,  0.062,  0.002,  0.062,  0.100,  0.077,  0.038
-  0.013,  0.050,  0.075,  0.072,  0.023,  0.072,  0.107,  0.107,  0.045
-  0.013,  0.067,  0.065,  0.062,  0.053,  0.102,  0.105,  0.102,  0.082
+  0.005,  0.018,  0.015,  0.015, -0.048, -0.005, -0.005, -0.065, -0.070
+  0.002,  0.043,  0.035,  0.010, -0.035, -0.005,  0.013, -0.018, -0.082
+ -0.005,  0.043,  0.067,  0.028,  0.002,  0.007,  0.025,  0.000, -0.048
+ -0.003,  0.040,  0.035,  0.025,  0.007,  0.023,  0.045,  0.020, -0.035
+  0.020,  0.033,  0.015,  0.020,  0.028,  0.040,  0.060,  0.053,  0.018
+  0.018,  0.035,  0.025,  0.028,  0.015,  0.043,  0.058,  0.060,  0.030
+  0.010,  0.043,  0.070,  0.072,  0.007,  0.065,  0.097,  0.077,  0.040
+  0.020,  0.058,  0.080,  0.070,  0.030,  0.075,  0.112,  0.112,  0.058
+  0.025,  0.082,  0.072,  0.067,  0.058,  0.105,  0.120,  0.120,  0.090
 
 ```
 ##### /filaments/PETG/load.g
@@ -483,21 +482,18 @@ G28                                                        ; Home
 ##### /macros/Maintenance/Save-Z-Baby
 ```g-code
 ; 0:/macros/Save-Z
-; This macro adds the current babystep offset to the Z trigger height and saves it to config-overide.g
-; ! M501 needs to be in config.g to automatically be recalled on reset. If using multiple filament settings,
+; This macro subtracts the current babystep offset to the Z trigger height and lets the user
+; know what to change the G31 command in 0:/sys/config.g to. If you are using multiple filament settings,
 ; and this is for a specific filament type, recommend placing this yielded information in the filament's config.g.
- 
-if move.axes[2].babystep !=0                                ; If no babysteps are currently adjusted - exit routine
+	 
+if move.axes[2].babystep !=0                                 ; If no babysteps are currently adjusted - exit routine
    echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
-   G31 Z{sensors.probes[0].triggerHeight - move.axes[2].babystep}
-   echo {"Place either M501 -or- G31 Z" ^ sensors.probes[0].triggerHeight - move.axes[2].babystep) ^ " in your config.g."}
-   M500 P10:31                                              ; save settings to config-overide.g - G31 P31 saves trigger height, 
-                                                            ; trigger value, and X and Y offsets for each possible Z probe type. 
-                                                            ; P10 parameter saves the G10 tool offsets.
+   echo {"Edit the G31 command in your config.g to the new Z offset as: G31 Z" ^ sensors.probes[0].triggerHeight}
+   M291 P"Press OK to clear babystepping, else press CANCEL to exit." S3
+   M290 R0 S0                                                ; clear babystepping 
  
 else
    echo "Baby stepping is not currently employed, exiting."
-
 ```
 #### /sys
 ##### /sys/bed.g
@@ -516,7 +512,7 @@ while iterations <=2                                       ; Perform 3 passes
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
-while move.calibration.initial.deviation >= 0.002          ; perform additional tramming if previous deviation was over 0.002mm 
+while move.calibration.initial.deviation >= 0.003          ; perform additional tramming if previous deviation was over 0.003mm 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
@@ -626,7 +622,7 @@ M557 X25:235 Y10:195 P9                                    ; Define mesh grid fo
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
 M950 H0 C"bedheat" T0                                      ; Creates Bed Heater
-M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0                  ; Bed PID Calibration - updated 01AUG2020
+M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 01AUG2020
 M140 H0                                                    ; Bed uses Heater 0
 M143 H0 S120                                               ; Set temperature limit for heater 0 to 120C Bed
 
@@ -637,14 +633,14 @@ M591 D0 P2 C"e0stop" S1                                    ; Filament Runout Sen
 ; !!! Use this line for stock thermisotr: M308 S1 P"e0_temp" Y"thermistor" A"Nozzle" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd
 M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"                   ; Set extruder thermistor for PT1000
 M950 H1 C"e0heat" T1                                       ; Create HotEnd Heater
-M307 H1 A444.4 C181.6 D3.9 S1.00 V24.1 B0                  ; Hotend PID Calibration - updated 01AUG2020
+M307 H1 A311.0 C130.0 D4.3 S1.00 V24.1 B0                  ; Hotend PID Calibration @ 240c - updated 09AUG2020
 M143 H1 S285                                               ; Set temperature limit for heater 1 to 285C HotEnd
 M302 S190 R190                                             ; Allow cold extrudes, S-Minimum extrusion temperature, R-Minimum retraction temperature
 
 ; Fans
-M950 F1 C"Fan1" Q250                                       ; Creates HOTEND Fan
+M950 F1 C"Fan1" Q1000                                      ; Creates HOTEND Fan
 M106 P1 T45 S255 H1                                        ; HOTEND Fan Settings
-M950 F0 C"Fan0" Q250                                       ; Creates PARTS COOLING FAN
+M950 F0 C"Fan0" Q1000                                      ; Creates PARTS COOLING FAN
 M106 P0 H-1                                                ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned off PARTS COOLING FAN
 ; The following lines are for auto case fan control, attached to 'fan2' header on duet board
 M308 S4 Y"drivers" A"TMC2660"                              ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
