@@ -5,7 +5,7 @@
 	 
 if move.axes[2].babystep !=0                                 ; If no babysteps are currently adjusted - exit routine
    echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
-   echo {"Edit the G31 command in your config.g to the new Z offset as: G31 Z" ^ sensors.probes[0].triggerHeight}
+   echo {"Edit the G31 command in your config.g to the new Z offset as: G31 Z" ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
    M291 P"Press OK to clear babystepping, else press CANCEL to exit." S3
    M290 R0 S0                                                ; clear babystepping 
  
