@@ -481,7 +481,7 @@ M591 D0 P2 C"e0stop" S1                                    ; Filament Runout Sen
 ; !!! Use this line for stock thermisotr: M308 S1 P"e0_temp" Y"thermistor" A"Nozzle" T100000 B4725 R4700  ; Set thermistor + ADC parameters for heater 1 HotEnd
 M308 S1 P"e0_temp" Y"pt1000" A"Mosquito"                   ; Set extruder thermistor for PT1000
 M950 H1 C"e0heat" T1                                       ; Create HotEnd Heater
-M307 H1 A444.4 C181.6 D3.9 S1.00 V24.1 B0                  ; Hotend PID Calibration - updated 01AUG2020
+M307 H1 A311.0 C130.0 D4.3 S1.00 V24.1 B0                  ; Hotend PID Calibration - updated 09AUG2020
 M143 H1 S285                                               ; Set temperature limit for heater 1 to 285C HotEnd
 M302 S190 R190                                             ; Allow cold extrudes, S-Minimum extrusion temperature, R-Minimum retraction temperature
 
