@@ -1,5 +1,5 @@
-##DUET System (sd-card contents) files follow:##
-###### *Always use the github folders as they will contain the latest revisions of these files.######
+## DUET System (sd-card contents) files follow: ##
+###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
 ### file dump - v08/09/20
 ### Directory / File list follow:
