@@ -327,21 +327,18 @@ G28                                                        ; Home
 ##### /macros/Maintenance/Save-Z-Baby
 ```g-code
 ; 0:/macros/Save-Z
-; This macro adds the current babystep offset to the Z trigger height and saves it to config-overide.g
-; ! M501 needs to be in config.g to automatically be recalled on reset. If using multiple filament settings,
+; This macro subtracts the current babystep offset to the Z trigger height and lets the user
+; know what to change the G31 command in 0:/sys/config.g to. If you are using multiple filament settings,
 ; and this is for a specific filament type, recommend placing this yielded information in the filament's config.g.
- 
-if move.axes[2].babystep !=0                                ; If no babysteps are currently adjusted - exit routine
+	 
+if move.axes[2].babystep !=0                                 ; If no babysteps are currently adjusted - exit routine
    echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
-   G31 Z{sensors.probes[0].triggerHeight - move.axes[2].babystep}
-   echo {"Place either M501 -or- G31 Z" ^ sensors.probes[0].triggerHeight - move.axes[2].babystep) ^ " in your config.g."}
-   M500 P10:31                                              ; save settings to config-overide.g - G31 P31 saves trigger height, 
-                                                            ; trigger value, and X and Y offsets for each possible Z probe type. 
-                                                            ; P10 parameter saves the G10 tool offsets.
+   echo {"Edit the G31 command in your config.g to the new Z offset as: G31 Z" ^ sensors.probes[0].triggerHeight}
+   M291 P"Press OK to clear babystepping, else press CANCEL to exit." S3
+   M290 R0 S0                                                ; clear babystepping 
  
 else
    echo "Baby stepping is not currently employed, exiting."
-
 ```
 #### /sys
 ##### /sys/bed.g
