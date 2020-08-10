@@ -334,10 +334,10 @@ G28                                                        ; Home
 ; know what to change the G31 command in 0:/sys/config.g to. If you are using multiple filament settings,
 ; and this is for a specific filament type, recommend placing this yielded information in the filament's config.g.
 	 
-
-if state.status != "processing"                                      ; Printer is not currently printing!
-
-   if move.axes[2].babystep !=0                                      ; If no babysteps are currently adjusted - exit routine
+ 
+if state.status != "processing"                                     ; Printer is not currently printing!
+ 
+   if move.axes[2].babystep !=0                                     ; If no babysteps are currently adjusted - exit routine
       echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       echo {"Edit the G31 command in your config.g to the new Z offset as: G31 Z" ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       M291 P{"Set probe offset to " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep ^ ", clear babysteps, and REHOME Z?"} R"!WARNING! Do not proceed if printing!" S3
@@ -348,9 +348,9 @@ if state.status != "processing"                                      ; Printer i
       M291 P"Ensure M501 exists in 0:/sys/config, or manually edit the G31 Z setting, to make this change permanent." R"Note on making change permanent." S3 
    else
       echo "Baby stepping is not currently active, nothing to do."
-
+ 
 else
-   M291 P"This would be detrimental to ongoing print, aborting."  S3
+   M291 P"This would be detrimental to ongoing print, please run this when print is finshed and bed is clear for homing sequence."  S3
 
 ```
 #### /sys
