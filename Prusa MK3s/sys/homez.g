@@ -1,6 +1,9 @@
 ; 0:/sys/homez.g
 ; home the z axis
 
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Exit this macro
+
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 ; !!! If using Pinda, comment-out the following two lines
