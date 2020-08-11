@@ -481,7 +481,8 @@ M557 X25:235 Y10:195 P9                                    ; Define mesh grid fo
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
 M950 H0 C"bedheat" T0                                      ; Creates Bed Heater
-M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 01AUG2020
+;M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 01AUG2020
+M307 H0 A91.5 C264.0 D10.2 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 11AUG2020
 M140 H0                                                    ; Bed uses Heater 0
 M143 H0 S120                                               ; Set temperature limit for heater 0 to 120C Bed
 
@@ -584,6 +585,9 @@ T0 M701 S"PETG"
 ; 0:/sys/homeall.g
 ; home x, y, and z axis
 
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Exit this macro
+
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 ; !!! If using Pinda, comment-out the following two lines
@@ -613,11 +617,15 @@ G30                                                        ; home Z by probing t
 
 G90                                                        ; absolute positioning
 G1 H0 Z5 F400                                              ; lift Z relative to current position
+
 ```
 ##### /sys/homex.g
 ```g-code
 ; 0:/sys/homex.g
 ; home the x axis
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Exit this macro
 
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
@@ -632,11 +640,15 @@ G1 H0 X5 F1000                                             ; move slowly away
 G1 H1 X-255 F3000                                          ; move quickly to X endstop, second check
 
 G1 Z-3 F800 H2                                             ; place Z back to starting position
+
 ```
 ##### /sys/homey.g
 ```g-code
 ; 0:/sys/homey.g
 ; home the y axis
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Exit this macro
 
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
@@ -649,11 +661,15 @@ G1 H0 Y5 F1000                                             ; move slowly away
 G1 H1 Y-215 F3000                                          ; move quickly to Y endstop, second check
 
 G1 Z-3 F800 H2                                             ; place Z back to starting position
+
 ```
 ##### /sys/homez.g
 ```g-code
 ; 0:/sys/homez.g
 ; home the z axis
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Exit this macro
 
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
@@ -670,6 +686,7 @@ G30                                                        ; home Z by probing t
 
 G90                                                        ; absolute positioning
 G1 H0 Z5 F400                                              ; lift Z relative to current position
+
 ```
 ##### /sys/pause.g
 ```g-code
