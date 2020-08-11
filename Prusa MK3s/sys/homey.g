@@ -1,9 +1,6 @@
 ; 0:/sys/homey.g
 ; home the y axis
 
-if state.status = "processing"                             ; Printer is currently printing!
-   M99                                                     ; Exit this macro
-
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 G91                                                        ; relative positioning

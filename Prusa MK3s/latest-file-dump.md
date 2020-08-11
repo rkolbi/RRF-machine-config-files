@@ -118,18 +118,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-08 13:25, min error -0.082, max error 0.120, mean 0.031, deviation 0.041
+RepRapFirmware height map file v2 generated at 2020-08-11 13:24, min error -0.082, max error 0.125, mean 0.035, deviation 0.042
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,235.00,10.00,195.00,-1.00,26.25,23.12,9,9
-  0.005,  0.018,  0.015,  0.015, -0.048, -0.005, -0.005, -0.065, -0.070
-  0.002,  0.043,  0.035,  0.010, -0.035, -0.005,  0.013, -0.018, -0.082
- -0.005,  0.043,  0.067,  0.028,  0.002,  0.007,  0.025,  0.000, -0.048
- -0.003,  0.040,  0.035,  0.025,  0.007,  0.023,  0.045,  0.020, -0.035
-  0.020,  0.033,  0.015,  0.020,  0.028,  0.040,  0.060,  0.053,  0.018
-  0.018,  0.035,  0.025,  0.028,  0.015,  0.043,  0.058,  0.060,  0.030
-  0.010,  0.043,  0.070,  0.072,  0.007,  0.065,  0.097,  0.077,  0.040
-  0.020,  0.058,  0.080,  0.070,  0.030,  0.075,  0.112,  0.112,  0.058
-  0.025,  0.082,  0.072,  0.067,  0.058,  0.105,  0.120,  0.120,  0.090
+  0.013,  0.033,  0.028,  0.028, -0.013,  0.000, -0.008, -0.050, -0.077
+ -0.010,  0.048,  0.040,  0.033, -0.013, -0.003,  0.010, -0.013, -0.082
+ -0.015,  0.040,  0.065,  0.055, -0.005,  0.005,  0.023,  0.000, -0.058
+ -0.010,  0.035,  0.028,  0.035,  0.005,  0.025,  0.035,  0.028, -0.018
+  0.013,  0.030,  0.018,  0.020,  0.030,  0.035,  0.043,  0.045,  0.005
+  0.040,  0.040,  0.038,  0.033,  0.020,  0.043,  0.058,  0.055,  0.025
+  0.013,  0.053,  0.075,  0.080,  0.018,  0.062,  0.095,  0.075,  0.053
+  0.020,  0.067,  0.085,  0.075,  0.035,  0.085,  0.115,  0.115,  0.072
+  0.030,  0.085,  0.077,  0.085,  0.070,  0.115,  0.120,  0.125,  0.095
 
 ```
 ##### /filaments/PETG/load.g
@@ -484,7 +484,6 @@ M557 X25:235 Y10:195 P9                                    ; Define mesh grid fo
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
 M950 H0 C"bedheat" T0                                      ; Creates Bed Heater
-;M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 01AUG2020
 M307 H0 A91.5 C264.0 D10.2 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 11AUG2020
 M140 H0                                                    ; Bed uses Heater 0
 M143 H0 S120                                               ; Set temperature limit for heater 0 to 120C Bed
@@ -588,9 +587,6 @@ T0 M701 S"PETG"
 ; 0:/sys/homeall.g
 ; home x, y, and z axis
 
-if state.status = "processing"                             ; Printer is currently printing!
-   M99                                                     ; Exit this macro
-
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 ; !!! If using Pinda, comment-out the following two lines
@@ -627,9 +623,6 @@ G1 H0 Z5 F400                                              ; lift Z relative to 
 ; 0:/sys/homex.g
 ; home the x axis
 
-if state.status = "processing"                             ; Printer is currently printing!
-   M99                                                     ; Exit this macro
-
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 G91                                                        ; relative positioning
@@ -650,9 +643,6 @@ G1 Z-3 F800 H2                                             ; place Z back to sta
 ; 0:/sys/homey.g
 ; home the y axis
 
-if state.status = "processing"                             ; Printer is currently printing!
-   M99                                                     ; Exit this macro
-
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
 G91                                                        ; relative positioning
@@ -670,9 +660,6 @@ G1 Z-3 F800 H2                                             ; place Z back to sta
 ```g-code
 ; 0:/sys/homez.g
 ; home the z axis
-
-if state.status = "processing"                             ; Printer is currently printing!
-   M99                                                     ; Exit this macro
 
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
@@ -785,9 +772,10 @@ G1 Z100                                                    ; Last chance to chec
 ; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
 ;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
 
-M300 S4000 P100 G4 P200 M300 S4000 P100 G4 P200 M300 S4000 P100 ; Give a triple beep
+M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
-G4 S30                                                     ; wait additional 30 seconds for bed to stabilize
+M300 S4000 P100                                            ; Give a single beep
+G4 S60                                                     ; wait additional 60 seconds for bed to stabilize
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save

@@ -20,9 +20,10 @@ G1 Z100                                                    ; Last chance to chec
 ; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
 ;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
 
-M300 S4000 P100 G4 P200 M300 S4000 P100 G4 P200 M300 S4000 P100 ; Give a triple beep
+M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
-G4 S30                                                     ; wait additional 30 seconds for bed to stabilize
+M300 S4000 P100                                            ; Give a single beep
+G4 S60                                                     ; wait additional 60 seconds for bed to stabilize
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save
