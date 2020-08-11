@@ -294,6 +294,9 @@ else
 ; Called to perform automatic heated bedmesh compensation
 ; Alternative Hotmesh.g - This saves the heightmap to the system's set filament
 ; type directory (0:/filaments/PETG/heightmap.csv)
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Abort this macro   
  
 T0                                                         ; Ensure tool is selected
 M703                                                       ; Heat bed to set temp based off current system filament type
