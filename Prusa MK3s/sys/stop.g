@@ -12,19 +12,19 @@ M98 P"current-sense-homing.g"                              ; Adjust current and 
 ; Let cool and wiggle for bit to reduce end stringing
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 G91                                                        ; Set to Relative Positioning
-G1 Z2 F400                                                 ; Move Z up 2mm
-G4 S10                                                     ; Wait for 10 seconds for the filament to solidify
+G1 Z3 F400                                                 ; Move Z up 3mm
+G4 S60                                                     ; Wait for 60 seconds for the filament to solidify
 M300 S4000 P100                                            ; Give a single beep
 G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 S1                                                      ; Wait for 1 second
+G4 P100                                                    ; Wait 100ms
 G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 S1                                                      ; Wait for 1 second
+G4 P100                                                    ; Wait 100ms
 G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 S1                                                      ; Wait for 1 second
+G4 P100                                                    ; Wait 100ms
 G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 S1                                                      ; Wait for 1 second
+G4 P100                                                    ; Wait 100ms
 G1 X0 Y0 F1000                                             ; Wiggle back
-G4 S1                                                      ; Wait for 1 second
+G4 P100                                                    ; Wait 100ms
 G90                                                        ; Set to Absolute Positioning
 ; End of wiggle routine
 
