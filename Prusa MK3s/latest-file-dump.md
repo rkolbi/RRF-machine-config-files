@@ -28,6 +28,7 @@ Heat Nozzle
 Set Filament Type  
 **/macros/Maintenance**  
 Hotmesh  
+Hotmesh.part  
 Save-Z-Baby  
 **/sys**  
 bed.g  
@@ -118,18 +119,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-12 13:16, min error -0.082, max error 0.102, mean 0.024, deviation 0.037
+RepRapFirmware height map file v2 generated at 2020-08-13 03:04, min error -0.049, max error 0.124, mean 0.042, deviation 0.038
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
-25.00,235.00,10.00,195.00,-1.00,26.25,23.12,9,9
- -0.010,  0.005,  0.023,  0.030, -0.018, -0.003, -0.005, -0.048, -0.062
- -0.028,  0.038,  0.048,  0.048, -0.015,  0.013,  0.020, -0.018, -0.082
- -0.028,  0.030,  0.065,  0.045,  0.002,  0.015,  0.025, -0.008, -0.060
- -0.018,  0.030,  0.033,  0.043, -0.003,  0.020,  0.035,  0.007, -0.040
- -0.005,  0.015,  0.002,  0.015,  0.010,  0.025,  0.038,  0.023, -0.010
-  0.015,  0.028,  0.028,  0.025,  0.005,  0.033,  0.038,  0.040,  0.002
-  0.000,  0.045,  0.067,  0.067,  0.010,  0.055,  0.072,  0.060,  0.013
-  0.018,  0.058,  0.080,  0.075,  0.023,  0.065,  0.102,  0.087,  0.028
-  0.025,  0.072,  0.077,  0.065,  0.055,  0.090,  0.087,  0.082,  0.048
+25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
+ -0.014,  0.024,  0.018,  0.041, -0.010, -0.001, -0.009, -0.009, -0.021
+ -0.021,  0.049,  0.049,  0.069,  0.016,  0.015,  0.039,  0.020, -0.049
+ -0.025,  0.046,  0.062,  0.064,  0.016,  0.028,  0.031,  0.033, -0.023
+ -0.008,  0.036,  0.053,  0.040,  0.023,  0.028,  0.043,  0.038, -0.019
+ -0.016,  0.023,  0.004,  0.033,  0.023,  0.033,  0.036,  0.046,  0.030
+  0.031,  0.041,  0.070,  0.034,  0.020,  0.038,  0.053,  0.056,  0.036
+  0.028,  0.051,  0.076,  0.070,  0.030,  0.044,  0.062,  0.104,  0.055
+  0.046,  0.075,  0.101,  0.101,  0.049,  0.062,  0.120,  0.124,  0.071
+  0.045,  0.101,  0.096,  0.096,  0.079,  0.102,  0.110,  0.114,  0.097
 
 ```
 ##### /filaments/PETG/load.g
@@ -310,6 +311,50 @@ G91                                                        ; Set to Rel Position
 while iterations <=9                                       ; Perform 10 passes
     G1 Z15 F300                                            ; Move Z 15mm up
     G4 S0.5                                                ; Wait .5 seconds
+G1 Z3 F300                                                 ; Raise an additional 3mm
+M116                                                       ; Wait for all temperatures
+M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
+; Start countdown - use Z as indicator   
+while iterations <=9                                       ; Perform 10 passes
+    G4 S30                                                 ; Wait 30 seconds
+    G1 Z-15 F300                                           ; Move Z 15mm down
+G90                                                        ; Set to Absolute Positioning
+M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
+ 
+G32                                                        ; Home and Level gantry
+M400                                                       ; Clear queue
+G29                                                        ; Perfrom bed mesh
+G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+M104 S-273                                                 ; Turn off hotend
+M140 S-273                                                 ; Turn off heatbed
+M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
+
+G28                                                        ; Home
+M18                                                        ; Free all
+
+```
+##### /macros/Maintenance/Hotmesh.part
+```g-code
+; 0:/macros/hotmesh.g
+; Called to perform automatic heated bedmesh compensation
+; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Abort this macro   
+ 
+T0                                                         ; Ensure tool is selected
+M703                                                       ; Heat bed to set temp based off current system filament type
+M104 S-273                                                 ; Turn off hotend
+M106 S0                                                    ; Turn part cooling blower off if it is on
+M291 P{"Performing bed heatup per " ^ move.extruders[0].filament ^ " profile. This process will take approximately 6 minutes."} R"Hotmesh" S0 T10
+G28                                                        ; Home
+G1 X100 Y100                                               ; Place nozzle center of bed
+ 
+; Give 5 minutes for stabilization
+G91                                                        ; Set to Rel Positioning
+while iterations <=9                                       ; Perform 10 passes
+    G1 Z15 F300                                            ; Move Z 15mm up
+    G4 S0.5                                                ; Wait .5 seconds
 M116                                                       ; Wait for all temperatures
 M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
 ; Start countdown - use Z as indicator   
@@ -466,7 +511,7 @@ M558 P9 C"^zprobe.in" H5 F400 T10000                       ; BLTouch, connected 
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
-M557 X25:235 Y10:195 P9                                    ; Define mesh grid for probing
+M557 X25:225 Y10:195 P9                                    ; Define mesh grid for probing
 
 ; Z-Probe Setting for PINDA v2
 ; 1 - If using PindaV2, Remove above M558 & M950 lines, replace with the following M558 & M308 line
@@ -823,6 +868,9 @@ G1 Z2 F300                                                 ; Final position befo
 
 M83                                                        ; Set extruder to relative mode
 M106 S255                                                  ; Turn fan fully on
+M572 D0 S0.0                                               ; clear pressure advance
+M220 S100                                                  ; Set speed factor back to 100% in case it was changed
+M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed
 G1 E-2                                                     ; Retract 2mm
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed

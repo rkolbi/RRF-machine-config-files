@@ -3,6 +3,9 @@
 
 M83                                                        ; Set extruder to relative mode
 M106 S255                                                  ; Turn fan fully on
+M572 D0 S0.0                                               ; clear pressure advance
+M220 S100                                                  ; Set speed factor back to 100% in case it was changed
+M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed
 G1 E-2                                                     ; Retract 2mm
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
