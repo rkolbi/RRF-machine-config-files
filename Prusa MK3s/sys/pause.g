@@ -12,4 +12,4 @@ G91                                                        ; Relative Positionin
 G1 Z10 F360                                                ; Raise Z
 G90                                                        ; Absolute Values
 G1 X10 Y0 F6000                                            ; Parking Position
-M300 S80 P2000                                             ; play beep sound
+M300 S80 P2000                                             ; play a beep sound

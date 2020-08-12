@@ -37,7 +37,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z725.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
+M906 X1340.00 Y1600.00 Z675.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
 M84 S1000                                                  ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
@@ -50,7 +50,7 @@ M564 H0                                                    ; allow unhomed movem
 M574 X1 S3                                                 ; Set endstops controlled by motor load detection
 M574 Y1 S3                                                 ; Set endstops controlled by motor load detection
 
-; Stallgaurd Sensitivy
+; Stallgaurd Sensitivity
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
@@ -100,7 +100,7 @@ M106 P0 H-1                                                ; Set fan 1 value, PW
 ; The following lines are for auto case fan control, attached to 'fan2' header on duet board
 M308 S4 Y"drivers" A"TMC2660"                              ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
                                                            ; !!! Reports 0C when there is no warning, 100C if any driver reports over-temperature
-                                                           ; !!! warning , and 150C if any driver reports over temperature shutdown
+                                                           ; !!! warning , and 150C if any driver reports over-temperature shutdown
 M308 S3 Y"mcu-temp" A"Duet2Wifi"                           ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100                                       ; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H4:3 L0.15 X1 B0.3 T40:70                          ; Case fan - set fan 2 value
@@ -113,4 +113,4 @@ G10 P0 R0 S0                                               ; Set initial tool 0 
 T0                                                         ; Set Tool 0 active
 
 ; Relase X, Y, and E axis
-M18 XYZE                                                   ; Unlock X, Y, and E axis
+M18 XYZE                                                    ; Unlock X, Y, and E axis

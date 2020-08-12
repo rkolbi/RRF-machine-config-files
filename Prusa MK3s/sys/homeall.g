@@ -1,5 +1,5 @@
 ; 0:/sys/homeall.g
-; home x, y, and z axis
+; home x, y, and z-axis
 
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
@@ -14,13 +14,13 @@ G1 Z3 F800 H2                                              ; lift Z relative to 
 G1 H0 X5 F1000                                             ; move slowly away 
 G1 H1 X-255 F3000                                          ; move quickly to X endstop 
 G1 H0 X5 F1000                                             ; move slowly away 
-G1 H1 X-255 F3000                                          ; move quickly to X endstop, second check 
+G1 H1 X-255 F3000                                          ; move quickly to X endstop, a second check 
 
 ; HOME Y
 G1 H0 Y5 F1000                                             ; move slowly away 
 G1 H1 Y-215 F3000                                          ; move quickly to Y endstop 
 G1 H0 Y5 F1000                                             ; move slowly away 
-G1 H1 Y-215 F3000                                          ; move quickly to Y endstops, second check
+G1 H1 Y-215 F3000                                          ; move quickly to Y endstops, a second check
 
 ; HOME Z
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height

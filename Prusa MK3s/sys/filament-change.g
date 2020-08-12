@@ -6,7 +6,7 @@ G91                                                        ; Relative Positionin
 G1 Z20 F360                                                ; Raise Z
 G90                                                        ; Absolute Values
 G1 X200 Y0 F6000                                           ; Parking Position
-M300 S800 P8000                                            ; play beep sound
+M300 S800 P8000                                            ; play a beep sound
 
 M98 P"0:/macros/Filament Handling"                         ; unload and load filament using macro       
 M400                                                       ; clear moves

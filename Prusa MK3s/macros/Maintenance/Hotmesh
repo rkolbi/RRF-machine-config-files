@@ -1,4 +1,4 @@
-; 0:/macros/Maintenance/hotmesh.g
+; 0:/macros/hotmesh.g
 ; Called to perform automatic heated bedmesh compensation
 ; Alternative Hotmesh.g - This saves the heightmap to the system's set filament
 ; type directory (0:/filaments/PETG/heightmap.csv)
@@ -27,6 +27,8 @@ while iterations <=9                                       ; Perform 10 passes
     G1 Z-15                                                ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
+               
+M558 P9 C"^zprobe.in" H3 F100 T6000 A10 R0.75 S0.003       ; BLTouch fine, connected to Z probe IN pin
  
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
@@ -35,4 +37,8 @@ G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Sa
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
+
+M558 P9 C"^zprobe.in" H5 F600 T10000                       ; BLTouch normal, connected to Z probe IN pin
+
 G28                                                        ; Home
+M18                                                        ; Free all

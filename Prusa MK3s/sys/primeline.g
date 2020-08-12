@@ -1,11 +1,28 @@
 ; 0:/sys/primeline.g
-; Print prime-line at a 'randomized' Y positon from -1.1 to -2.9
-; Prime line routine from second line down ref: http://projects.ttlexceeded.com
+; Print prime-line at a 'randomized' Y position from -1.1 to -2.9
+; Prime line routine from the second line down ref: http://projects.ttlexceeded.com
  
+; Charge! tune
+M400
+G4 S1
+M300 P200 S523.25
+G4 P200
+M300 P200 S659.25
+G4 P200
+M300 P200 S739.99
+G4 P250
+M300 P285 S880.00
+G4 P450
+M300 P285 S880.00
+G4 P285
+M300 P625 S1108.73
+G4 S1
+M400		
+	
 G1 X0 Z0.6 Y{-2+(0.1*(floor(10*(cos(sqrt(sensors.analog[0].lastReading * state.upTime))))))} F3000.0;
 G0 Z0.15                                                   ; Primeline nozzle position
 G92 E0.0                                                   ; Reset extrusion distance
-G1 E8 F1000                                                ; De-retract and push ooze
+G1 E6 F1000                                                ; De-retract and push ooze
 G1 X20.0 E6 F1000.0                                        ; Fat 20mm intro line @ 0.30
 G1 X60.0 E3.2 F1000.0                                      ; Thin +40mm intro line @ 0.08
 G1 X100.0 E6 F1000.0                                       ; Fat +40mm intro line @ 0.15

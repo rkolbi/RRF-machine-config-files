@@ -6,24 +6,24 @@
  
 T0                                                         ; Ensure tool is selected
 ;M280 P0 S160                                              ; BLTouch, alarm release
-;G4 P100                                                   ; BLTouch, delay for release command
+;G4 P100                                                   ; BLTouch, delay for the release command
 M572 D0 S0.0                                               ; clear pressure advance
 M220 S100                                                  ; Set speed factor back to 100% in case it was changed
 M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed
 M290 R0 S0                                                 ; Clear babystepping
 M106 S0                                                    ; Turn part cooling blower off if it is on
-M703                                                       ; Execute loaded filement's config.g
+M703                                                       ; Execute loaded filament's config.g
 G28                                                        ; Home all
 
 ; if using BLTouch probe, use the following line:
 G1 Z100                                                    ; Last chance to check nozzle cleanliness
-; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
+; if using Pinda type probe, use the following line to place probe center of the bed to heat the probe
 ;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
 
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
 M300 S4000 P100                                            ; Give a single beep
-G4 S120                                                    ; wait additional 2 minutes for bed to stabilize
+G4 S120                                                    ; wait additional 2 minutes for the bed to stabilize
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save

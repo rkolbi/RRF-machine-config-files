@@ -13,17 +13,22 @@ M98 P"current-sense-homing.g"                              ; Adjust current and 
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 G91                                                        ; Set to Relative Positioning
 G1 Z2 F400                                                 ; Move Z up 2mm
-G4 S30                                                     ; Wait for 30 seconds for filament to solidify
+G4 S10                                                     ; Wait for 10 seconds for the filament to solidify
 M300 S4000 P100                                            ; Give a single beep
 G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 P100                                                    ; Wait for 100 m.second
+G4 S1                                                      ; Wait for 1 second
 G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 P100                                                    ; Wait for 100 m.second
+G4 S1                                                      ; Wait for 1 second
+G1 X2 Y2 F1000                                             ; Wiggle +2mm
+G4 S1                                                      ; Wait for 1 second
+G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
+G4 S1                                                      ; Wait for 1 second
 G1 X0 Y0 F1000                                             ; Wiggle back
+G4 S1                                                      ; Wait for 1 second
 G90                                                        ; Set to Absolute Positioning
 ; End of wiggle routine
 
-G1 X220 Y215 Z205 F1000                                    ; Place nozzle to left side, build plate to front, Z at top
+G1 X220 Y215 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top
 M400                                                       ; Clear queue
 M107                                                       ; Turn off fan
 M18 YXE                                                    ; Unlock X, Y, and E axis
