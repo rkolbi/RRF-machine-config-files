@@ -118,18 +118,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-12 03:11, min error -0.090, max error 0.110, mean 0.021, deviation 0.038
+RepRapFirmware height map file v2 generated at 2020-08-12 12:59, min error -0.546, max error 0.380, mean -0.068, deviation 0.308
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,235.00,10.00,195.00,-1.00,26.25,23.12,9,9
- -0.013,  0.010,  0.013,  0.020, -0.020, -0.013, -0.013, -0.062, -0.075
- -0.033,  0.035,  0.028,  0.038, -0.018, -0.003,  0.007, -0.018, -0.090
- -0.038,  0.025,  0.053,  0.038, -0.005,  0.005,  0.023, -0.005, -0.053
- -0.025,  0.028,  0.023,  0.033,  0.002,  0.020,  0.035,  0.013, -0.033
- -0.013,  0.013,  0.007,  0.013,  0.010,  0.028,  0.040,  0.025,  0.000
-  0.007,  0.028,  0.018,  0.018,  0.005,  0.033,  0.048,  0.040,  0.005
- -0.003,  0.035,  0.065,  0.065,  0.005,  0.048,  0.077,  0.060,  0.035
- -0.003,  0.038,  0.067,  0.067,  0.018,  0.060,  0.110,  0.087,  0.053
-  0.000,  0.062,  0.060,  0.072,  0.050,  0.087,  0.087,  0.087,  0.070
+  0.380,  0.269,  0.153,  0.001, -0.126, -0.259, -0.416, -0.546,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
+      0,      0,      0,      0,      0,      0,      0,      0,      0
 
 ```
 ##### /filaments/PETG/load.g
@@ -292,8 +292,7 @@ else
 ```g-code
 ; 0:/macros/hotmesh.g
 ; Called to perform automatic heated bedmesh compensation
-; Alternative Hotmesh.g - This saves the heightmap to the system's set filament
-; type directory (0:/filaments/PETG/heightmap.csv)
+; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
 
 if state.status = "processing"                             ; Printer is currently printing!
    M99                                                     ; Abort this macro   
@@ -319,8 +318,6 @@ while iterations <=9                                       ; Perform 10 passes
     G1 Z-15                                                ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
-               
-M558 P9 C"^zprobe.in" H3 F100 T6000 A10 R0.75 S0.003       ; BLTouch fine, connected to Z probe IN pin
  
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
@@ -329,8 +326,6 @@ G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Sa
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
-
-M558 P9 C"^zprobe.in" H5 F600 T10000                       ; BLTouch normal, connected to Z probe IN pin
 
 G28                                                        ; Home
 M18                                                        ; Free all
@@ -374,7 +369,7 @@ G28                                                        ; Home
 
 while iterations <=2                                       ; Perform 3 passes
    G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G30 P1 X225 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G90                                                     ; Set to Absolute Positioning
    G1 X100 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
