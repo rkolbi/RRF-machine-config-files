@@ -40,7 +40,8 @@ if result > 1                                              ; If file doesn't exi
 G90                                                        ; Absolute Positioning
 M83                                                        ; Extruder relative mode
 M98 P"0:/sys/current-sense-normal.g"                       ; Ensure that motor currents and sense are set for printing 
-G1 X0 Y0 Z2                                                ; Final position before slicer's temp is reached and primeline is printed.
+G1 X0 Y0                                                   ; Final position before slicer's temp is reached and primeline is printed.
+G1 Z2                                                      ; Final Z position before slicer's temp is reached and primeline is printed.
  
 ; The primeline macro is executed by the slicer gcode to enable direct printing
 ; of the primeline at the objects temp and to immediately print the object
