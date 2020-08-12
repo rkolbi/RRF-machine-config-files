@@ -1,4 +1,4 @@
-; 0:/macros/hotmesh.g
+; 0:/macros/Maintenance/hotmesh.g
 ; Called to perform automatic heated bedmesh compensation
 ; Alternative Hotmesh.g - This saves the heightmap to the system's set filament
 ; type directory (0:/filaments/PETG/heightmap.csv)
