@@ -12,23 +12,18 @@ M98 P"current-sense-homing.g"                              ; Adjust current and 
 ; Let cool and wiggle for bit to reduce end stringing
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 G91                                                        ; Set to Relative Positioning
-G1 Z3 F400                                                 ; Move Z up 3mm
-G4 S60                                                     ; Wait for 60 seconds for the filament to solidify
-M300 S4000 P100                                            ; Give a single beep
-G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 P100                                                    ; Wait 100ms
-G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 P100                                                    ; Wait 100ms
-G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 P100                                                    ; Wait 100ms
-G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 P100                                                    ; Wait 100ms
-G1 X0 Y0 F1000                                             ; Wiggle back
-G4 P100                                                    ; Wait 100ms
-G90                                                        ; Set to Absolute Positioning
-; End of wiggle routine
+G1 Z2 F400                                                 ; Move Z up 3mm
 
-G1 X220 Y215 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top
+; Start countdown - use X/Y as indicators of counting  
+while iterations <=9                                       ; Perform 10 passes
+    G4 S6                                                  ; Wait 6 seconds
+    G1 X1 Y1 F1000                                         ; Wiggle +1mm
+    G4 S6                                                  ; Wait 6 seconds
+    G1 Z0.5 X-1 Y-1 F1000                                  ; Wiggle -1mm, Z +0.5
+
+G90                                                        ; Set to Absolute Positioning
+
+G1 X220 Y205 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top
 M400                                                       ; Clear queue
 M107                                                       ; Turn off fan
 M18 YXE                                                    ; Unlock X, Y, and E axis

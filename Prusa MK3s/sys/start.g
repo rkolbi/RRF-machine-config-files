@@ -15,15 +15,23 @@ M106 S0                                                    ; Turn part cooling b
 M703                                                       ; Execute loaded filament's config.g
 G28                                                        ; Home all
 
-; if using BLTouch probe, use the following line:
-G1 Z100                                                    ; Last chance to check nozzle cleanliness
-; if using Pinda type probe, use the following line to place probe center of the bed to heat the probe
-;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
+;G1 Z5 X100 Y100                                           ; [PINDA] Place nozzle center of bed, 5mm up
+
+G1 Z160 F300                                               ; [BLTouch] Last chance to check nozzle cleanliness
 
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
 M300 S4000 P100                                            ; Give a single beep
-G4 S120                                                    ; wait additional 2 minutes for the bed to stabilize
+
+; [BLTouch] Start countdown - use Z as indicator  
+G91                                                        ; [BLTouch] Set to Relative Positioning
+while iterations <=9                                       ; [BLTouch] Perform 10 passes
+    G4 S12                                                 ; [BLTouch] Wait 12 seconds
+    G1 Z-15 F300                                           ; [BLTouch] Move Z 15mm down
+G90                                                        ; [BLTouch] Set to Absolute Positioning
+
+;G4 S120                                                   ; [PINDA] wait additional 2 minutes for the bed to stabilize
+
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save

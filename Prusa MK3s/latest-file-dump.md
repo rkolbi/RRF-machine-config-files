@@ -308,14 +308,14 @@ G1 X100 Y100                                               ; Place nozzle center
 ; Give 5 minutes for stabilization
 G91                                                        ; Set to Rel Positioning
 while iterations <=9                                       ; Perform 10 passes
-    G1 Z15                                                 ; Move Z 15mm up
+    G1 Z15 F300                                            ; Move Z 15mm up
     G4 S0.5                                                ; Wait .5 seconds
 M116                                                       ; Wait for all temperatures
 M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
 ; Start countdown - use Z as indicator   
 while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
-    G1 Z-15                                                ; Move Z 15mm down
+    G1 Z-15 F300                                           ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
  
@@ -531,7 +531,7 @@ M18 XYZE                                                    ; Unlock X, Y, and E
 
 M915 X S2 F0 H400 R0                                       ; Set X axis Sensitivity
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
-M913 X20 Y20 Z60                                           ; set X Y Z motors to X% of their normal current
+M913 X20 Y30 Z60                                           ; set X Y Z motors to X% of their normal current
 ```
 ##### /sys/current-sense-normal.g
 ```g-code
@@ -722,16 +722,10 @@ G4 S1
 M400		
 	
 G1 X0 Z0.6 Y{-2+(0.1*(floor(10*(cos(sqrt(sensors.analog[0].lastReading * state.upTime))))))} F3000.0;
-G0 Z0.15                                                   ; Primeline nozzle position
 G92 E0.0                                                   ; Reset extrusion distance
-G1 E6 F1000                                                ; De-retract and push ooze
-G1 X20.0 E6 F1000.0                                        ; Fat 20mm intro line @ 0.30
-G1 X60.0 E3.2 F1000.0                                      ; Thin +40mm intro line @ 0.08
-G1 X100.0 E6 F1000.0                                       ; Fat +40mm intro line @ 0.15
-G1 E-0.8 F3000                                             ; Retract to avoid stringing
-G1 X99.5 E0 F1000.0                                        ; -0.5mm wipe action to avoid string
-G1 X110.0 E0 F1000.0                                       ; +10mm intro line @ 0.00
-G1 E0.6 F1500                                              ; De-retract
+G1 E8                                                      ; Purge Bubble
+G1 X60.0 E11.0 F1000.0                                      ; intro line
+G1 X120.0 E16.0 F1000.0                                    ; intro line
 G92 E0.0                                                   ; Reset extrusion distance
 M400                                                       ; Finish all current moves / clear the buffer
 
@@ -785,15 +779,23 @@ M106 S0                                                    ; Turn part cooling b
 M703                                                       ; Execute loaded filament's config.g
 G28                                                        ; Home all
 
-; if using BLTouch probe, use the following line:
-G1 Z100                                                    ; Last chance to check nozzle cleanliness
-; if using Pinda type probe, use the following line to place probe center of the bed to heat the probe
-;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
+;G1 Z5 X100 Y100                                           ; [PINDA] Place nozzle center of bed, 5mm up
+
+G1 Z160 F300                                               ; [BLTouch] Last chance to check nozzle cleanliness
 
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
 M300 S4000 P100                                            ; Give a single beep
-G4 S120                                                    ; wait additional 2 minutes for the bed to stabilize
+
+; [BLTouch] Start countdown - use Z as indicator  
+G91                                                        ; [BLTouch] Set to Relative Positioning
+while iterations <=9                                       ; [BLTouch] Perform 10 passes
+    G4 S12                                                 ; [BLTouch] Wait 12 seconds
+    G1 Z-15 F300                                           ; [BLTouch] Move Z 15mm down
+G90                                                        ; [BLTouch] Set to Absolute Positioning
+
+;G4 S120                                                   ; [PINDA] wait additional 2 minutes for the bed to stabilize
+
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save
@@ -827,23 +829,18 @@ M98 P"current-sense-homing.g"                              ; Adjust current and 
 ; Let cool and wiggle for bit to reduce end stringing
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 G91                                                        ; Set to Relative Positioning
-G1 Z3 F400                                                 ; Move Z up 3mm
-G4 S60                                                     ; Wait for 60 seconds for the filament to solidify
-M300 S4000 P100                                            ; Give a single beep
-G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 P100                                                    ; Wait 100ms
-G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 P100                                                    ; Wait 100ms
-G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 P100                                                    ; Wait 100ms
-G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 P100                                                    ; Wait 100ms
-G1 X0 Y0 F1000                                             ; Wiggle back
-G4 P100                                                    ; Wait 100ms
-G90                                                        ; Set to Absolute Positioning
-; End of wiggle routine
+G1 Z2 F400                                                 ; Move Z up 3mm
 
-G1 X220 Y215 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top
+; Start countdown - use X/Y as indicators of counting  
+while iterations <=9                                       ; Perform 10 passes
+    G4 S6                                                  ; Wait 6 seconds
+    G1 X1 Y1 F1000                                         ; Wiggle +1mm
+    G4 S6                                                  ; Wait 6 seconds
+    G1 Z0.5 X-1 Y-1 F1000                                  ; Wiggle -1mm, Z +0.5
+
+G90                                                        ; Set to Absolute Positioning
+
+G1 X220 Y205 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top
 M400                                                       ; Clear queue
 M107                                                       ; Turn off fan
 M18 YXE                                                    ; Unlock X, Y, and E axis

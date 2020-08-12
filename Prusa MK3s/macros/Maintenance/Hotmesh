@@ -16,14 +16,14 @@ G1 X100 Y100                                               ; Place nozzle center
 ; Give 5 minutes for stabilization
 G91                                                        ; Set to Rel Positioning
 while iterations <=9                                       ; Perform 10 passes
-    G1 Z15                                                 ; Move Z 15mm up
+    G1 Z15 F300                                            ; Move Z 15mm up
     G4 S0.5                                                ; Wait .5 seconds
 M116                                                       ; Wait for all temperatures
 M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
 ; Start countdown - use Z as indicator   
 while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
-    G1 Z-15                                                ; Move Z 15mm down
+    G1 Z-15 F300                                           ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
  
