@@ -23,7 +23,7 @@ G1 Z100                                                    ; Last chance to chec
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
 M300 S4000 P100                                            ; Give a single beep
-G4 S60                                                     ; wait additional 60 seconds for bed to stabilize
+G4 S120                                                    ; wait additional 2 minutes for bed to stabilize
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save
