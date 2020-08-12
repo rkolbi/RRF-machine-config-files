@@ -37,11 +37,12 @@ G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Lo
 if result > 1                                              ; If file doesn't exist, perform mesh and save
    G29                                                     ; Perform mesh now
    G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+
+M400                                                       ; Finish all current moves / clear the buffer
 G90                                                        ; Absolute Positioning
 M83                                                        ; Extruder relative mode
 M98 P"0:/sys/current-sense-normal.g"                       ; Ensure that motor currents and sense are set for printing 
-G1 X0 Y0                                                   ; Final position before slicer's temp is reached and primeline is printed.
-G1 Z2                                                      ; Final Z position before slicer's temp is reached and primeline is printed.
+G1 X0 Y0 Z2                                                ; Final position before slicer's temp is reached and primeline is printed.
  
 ; The primeline macro is executed by the slicer gcode to enable direct printing
 ; of the primeline at the objects temp and to immediately print the object
