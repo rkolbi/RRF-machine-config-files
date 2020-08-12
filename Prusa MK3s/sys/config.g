@@ -37,8 +37,8 @@ M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z650.00 E650.00 I40                 ; Set initial motor currents (mA) and motor idle factor in percent
-M84 S300                                                   ; Set idle timeout
+M906 X1340.00 Y1600.00 Z725.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
+M84 S1000                                                  ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
 M584 X0 Y1 Z2:4 E3                                         ; two Z motors connected to driver outputs Z and E1
@@ -113,4 +113,4 @@ G10 P0 R0 S0                                               ; Set initial tool 0 
 T0                                                         ; Set Tool 0 active
 
 ; Relase X, Y, and E axis
-M18 YXE                                                    ; Unlock X, Y, and E axis
+M18 XYZE                                                   ; Unlock X, Y, and E axis
