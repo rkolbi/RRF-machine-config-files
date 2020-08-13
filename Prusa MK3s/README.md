@@ -151,13 +151,12 @@ M0                                       ; Stop everything and run sys/stop.g
 
 <br><br>
 
-## DUET System (sd-card contents) files follow:
+## DUET System (sd-card contents) files follow: ##
+###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
-***Always use the github folders as they will contain the latest revisions of these files.**
-
-### file dump - v08/09/20
+### file dump - v08/13/20
 ### Directory / File list follow:
-****
+****  
 **/filaments**  
 **/filaments/ABS**  
 config.g  
@@ -182,6 +181,7 @@ Heat Nozzle
 Set Filament Type  
 **/macros/Maintenance**  
 Hotmesh  
+Hotmesh.part  
 Save-Z-Baby  
 **/sys**  
 bed.g  
@@ -209,6 +209,8 @@ stop.g
 ### File contents follow:
 ****
 
+
+#### 
 #### /filaments
 #### /filaments/ABS
 ##### /filaments/ABS/config.g
@@ -270,18 +272,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-08 13:25, min error -0.082, max error 0.120, mean 0.031, deviation 0.041
+RepRapFirmware height map file v2 generated at 2020-08-13 03:15, min error -0.060, max error 0.087, mean 0.030, deviation 0.033
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
-25.00,235.00,10.00,195.00,-1.00,26.25,23.12,9,9
-  0.005,  0.018,  0.015,  0.015, -0.048, -0.005, -0.005, -0.065, -0.070
-  0.002,  0.043,  0.035,  0.010, -0.035, -0.005,  0.013, -0.018, -0.082
- -0.005,  0.043,  0.067,  0.028,  0.002,  0.007,  0.025,  0.000, -0.048
- -0.003,  0.040,  0.035,  0.025,  0.007,  0.023,  0.045,  0.020, -0.035
-  0.020,  0.033,  0.015,  0.020,  0.028,  0.040,  0.060,  0.053,  0.018
-  0.018,  0.035,  0.025,  0.028,  0.015,  0.043,  0.058,  0.060,  0.030
-  0.010,  0.043,  0.070,  0.072,  0.007,  0.065,  0.097,  0.077,  0.040
-  0.020,  0.058,  0.080,  0.070,  0.030,  0.075,  0.112,  0.112,  0.058
-  0.025,  0.082,  0.072,  0.067,  0.058,  0.105,  0.120,  0.120,  0.090
+25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
+ -0.008,  0.028,  0.023,  0.033,  0.000,  0.000,  0.005,  0.033, -0.005
+ -0.015,  0.053,  0.062,  0.062, -0.003, -0.008,  0.015,  0.000, -0.060
+ -0.018,  0.048,  0.070,  0.062,  0.000,  0.000,  0.010,  0.007, -0.035
+ -0.015,  0.035,  0.040,  0.038,  0.005,  0.023,  0.035,  0.040, -0.025
+ -0.010,  0.000,  0.000,  0.020,  0.002,  0.028,  0.020,  0.030, -0.008
+ -0.005,  0.030,  0.040,  0.028,  0.002,  0.030,  0.028,  0.040,  0.007
+ -0.008,  0.055,  0.075,  0.070,  0.018,  0.033,  0.067,  0.070,  0.028
+  0.043,  0.070,  0.085,  0.080,  0.043,  0.058,  0.085,  0.087,  0.040
+  0.040,  0.075,  0.082,  0.075,  0.067,  0.075,  0.085,  0.085,  0.053
 
 ```
 ##### /filaments/PETG/load.g
@@ -444,8 +446,10 @@ else
 ```g-code
 ; 0:/macros/hotmesh.g
 ; Called to perform automatic heated bedmesh compensation
-; Alternative Hotmesh.g - This saves the heightmap to the system's set filament
-; type directory (0:/filaments/PETG/heightmap.csv)
+; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Abort this macro   
  
 T0                                                         ; Ensure tool is selected
 M703                                                       ; Heat bed to set temp based off current system filament type
@@ -458,14 +462,15 @@ G1 X100 Y100                                               ; Place nozzle center
 ; Give 5 minutes for stabilization
 G91                                                        ; Set to Rel Positioning
 while iterations <=9                                       ; Perform 10 passes
-    G1 Z15                                                 ; Move Z 15mm up
+    G1 Z15 F300                                            ; Move Z 15mm up
     G4 S0.5                                                ; Wait .5 seconds
+G1 Z3 F300                                                 ; Raise an additional 3mm
 M116                                                       ; Wait for all temperatures
 M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
 ; Start countdown - use Z as indicator   
 while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
-    G1 Z-15                                                ; Move Z 15mm down
+    G1 Z-15 F300                                           ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
  
@@ -476,24 +481,80 @@ G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Sa
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
+
 G28                                                        ; Home
+M18                                                        ; Free all
+
+```
+##### /macros/Maintenance/Hotmesh.part
+```g-code
+; 0:/macros/hotmesh.g
+; Called to perform automatic heated bedmesh compensation
+; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
+
+if state.status = "processing"                             ; Printer is currently printing!
+   M99                                                     ; Abort this macro   
+ 
+T0                                                         ; Ensure tool is selected
+M703                                                       ; Heat bed to set temp based off current system filament type
+M104 S-273                                                 ; Turn off hotend
+M106 S0                                                    ; Turn part cooling blower off if it is on
+M291 P{"Performing bed heatup per " ^ move.extruders[0].filament ^ " profile. This process will take approximately 6 minutes."} R"Hotmesh" S0 T10
+G28                                                        ; Home
+G1 X100 Y100                                               ; Place nozzle center of bed
+ 
+; Give 5 minutes for stabilization
+G91                                                        ; Set to Rel Positioning
+while iterations <=9                                       ; Perform 10 passes
+    G1 Z15 F300                                            ; Move Z 15mm up
+    G4 S0.5                                                ; Wait .5 seconds
+M116                                                       ; Wait for all temperatures
+M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
+; Start countdown - use Z as indicator   
+while iterations <=9                                       ; Perform 10 passes
+    G4 S30                                                 ; Wait 30 seconds
+    G1 Z-15 F300                                           ; Move Z 15mm down
+G90                                                        ; Set to Absolute Positioning
+M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
+ 
+G32                                                        ; Home and Level gantry
+M400                                                       ; Clear queue
+G29                                                        ; Perfrom bed mesh
+G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+M104 S-273                                                 ; Turn off hotend
+M140 S-273                                                 ; Turn off heatbed
+M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
+
+G28                                                        ; Home
+M18                                                        ; Free all
 
 ```
 ##### /macros/Maintenance/Save-Z-Baby
 ```g-code
-; 0:/macros/Save-Z
-; This macro subtracts the current babystep offset to the Z trigger height and lets the user
-; know what to change the G31 command in 0:/sys/config.g to. If you are using multiple filament settings,
-; and this is for a specific filament type, recommend placing this yielded information in the filament's config.g.
+; 0:/macros/Save-Z-Baby
+; This macro subtracts the current babystep offset from the current Z trigger height and informs the user what offset
+; value to change the G31 Z metric to in the 0:/sys/config.g. Additionally, the macro issues a G31 command with the new
+; calculated z-offset, clears the current babystepping, and then rehomes the machine to make the new z-offset effective. 
+; If this is for a specific filament type, recommend placing this yielded information in the filament's config.g - not
+; the 0:/sys/config.g.
 	 
-if move.axes[2].babystep !=0                                 ; If no babysteps are currently adjusted - exit routine
-   echo {"OLD: " ^ sensors.probes[0].triggerHeight ^ " NEW: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
-   echo {"Edit the G31 command in your config.g to the new Z offset as: G31 Z" ^ sensors.probes[0].triggerHeight}
-   M291 P"Press OK to clear babystepping, else press CANCEL to exit." S3
-   M290 R0 S0                                                ; clear babystepping 
+ 
+if state.status != "processing"                                     ; Printer is not currently printing!
+ 
+   if move.axes[2].babystep !=0                                     ; If no babysteps are currently adjusted - exit routine
+      echo {"Previous Z probe trigger height: " ^ sensors.probes[0].triggerHeight ^ ", New: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
+      echo {"Edit the G31 command in your config.g with a new Z offset of: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
+      M291 P{"Set probe offset to " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep ^ ", clear babysteps, and REHOME ALL?"} R"!WARNING! Do not proceed if printing!" S3
+      G31 Z{sensors.probes[0].triggerHeight - move.axes[2].babystep} ; set G31 Z offset to corrected
+      M500 P10:31                                                    ; save settings to config-overide.g - G31 P31 saves trigger height
+      M290 R0 S0                                                     ; set babystep to 0mm absolute
+      G28                                                            ; home all
+      M291 P"Ensure M501 exists in 0:/sys/config, or manually edit the G31 Z offset, to make this change permanent." R"Note on making change permanent." S3 
+   else
+      echo "Babystepping is not currently active, nothing to do."
  
 else
-   echo "Baby stepping is not currently employed, exiting."
+   M291 S2 P"This would be detrimental to the ongoing print. Please run this macro when the print is finished, and the bed is clear & ready for the homing sequence to be conducted." R"WARNING"
 ```
 #### /sys
 ##### /sys/bed.g
@@ -505,8 +566,8 @@ M561                                                       ; Clear any bed trans
 G28                                                        ; Home
 
 while iterations <=2                                       ; Perform 3 passes
-   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, half way along Y axis
-   G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X225 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G90                                                     ; Set to Absolute Positioning
    G1 X100 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
@@ -516,7 +577,7 @@ while move.calibration.initial.deviation >= 0.003          ; perform additional 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
-   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, half way along Y axis
+   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G90                                                     ; Set to Absolute Positioning
    G1 X100 F10000                                          ; Move to center
@@ -582,8 +643,8 @@ M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z650.00 E650.00 I10                 ; Set initial motor currents (mA) and motor idle factor in percent
-M84 S30                                                    ; Set idle timeout
+M906 X1340.00 Y1600.00 Z675.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
+M84 S1000                                                  ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
 M584 X0 Y1 Z2:4 E3                                         ; two Z motors connected to driver outputs Z and E1
@@ -595,15 +656,15 @@ M564 H0                                                    ; allow unhomed movem
 M574 X1 S3                                                 ; Set endstops controlled by motor load detection
 M574 Y1 S3                                                 ; Set endstops controlled by motor load detection
 
-; Stallgaurd Sensitivy
+; Stallgaurd Sensitivity
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H5 F600 T10000                       ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H5 F400 T10000                       ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
-M557 X25:235 Y10:195 P9                                    ; Define mesh grid for probing
+M557 X25:225 Y10:195 P9                                    ; Define mesh grid for probing
 
 ; Z-Probe Setting for PINDA v2
 ; 1 - If using PindaV2, Remove above M558 & M950 lines, replace with the following M558 & M308 line
@@ -622,7 +683,7 @@ M557 X25:235 Y10:195 P9                                    ; Define mesh grid fo
 ; Heatbed Heaters and Thermistor Bed 
 M308 S0 P"bed_temp" Y"thermistor" A"Build Plate" T100000 B4138 R4700 ; Set thermistor + ADC parameters for heater 0 Bed
 M950 H0 C"bedheat" T0                                      ; Creates Bed Heater
-M307 H0 A117.2 C337.4 D9.1 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 01AUG2020
+M307 H0 A91.5 C264.0 D10.2 S1.00 V24.0 B0                  ; Bed PID Calibration @ 75c - updated 11AUG2020
 M140 H0                                                    ; Bed uses Heater 0
 M143 H0 S120                                               ; Set temperature limit for heater 0 to 120C Bed
 
@@ -645,7 +706,7 @@ M106 P0 H-1                                                ; Set fan 1 value, PW
 ; The following lines are for auto case fan control, attached to 'fan2' header on duet board
 M308 S4 Y"drivers" A"TMC2660"                              ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
                                                            ; !!! Reports 0C when there is no warning, 100C if any driver reports over-temperature
-                                                           ; !!! warning , and 150C if any driver reports over temperature shutdown
+                                                           ; !!! warning , and 150C if any driver reports over-temperature shutdown
 M308 S3 Y"mcu-temp" A"Duet2Wifi"                           ; Case fan - configure sensor 3 as thermistor on pin e1temp for left stepper
 M950 F2 C"fan2" Q100                                       ; Case fan - create fan 2 on pin fan2 and set its frequency                        
 M106 P2 H4:3 L0.15 X1 B0.3 T40:70                          ; Case fan - set fan 2 value
@@ -658,7 +719,7 @@ G10 P0 R0 S0                                               ; Set initial tool 0 
 T0                                                         ; Set Tool 0 active
 
 ; Relase X, Y, and E axis
-M18 YXE                                                    ; Unlock X, Y, and E axis
+M18 XYZE                                                    ; Unlock X, Y, and E axis
 
 ```
 ##### /sys/current-sense-homing.g
@@ -668,7 +729,7 @@ M18 YXE                                                    ; Unlock X, Y, and E 
 
 M915 X S2 F0 H400 R0                                       ; Set X axis Sensitivity
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
-M913 X20 Y20 Z60                                           ; set X Y Z motors to X% of their normal current
+M913 X20 Y30 Z60                                           ; set X Y Z motors to X% of their normal current
 ```
 ##### /sys/current-sense-normal.g
 ```g-code
@@ -696,7 +757,7 @@ G91                                                        ; Relative Positionin
 G1 Z20 F360                                                ; Raise Z
 G90                                                        ; Absolute Values
 G1 X200 Y0 F6000                                           ; Parking Position
-M300 S800 P8000                                            ; play beep sound
+M300 S800 P8000                                            ; play a beep sound
 
 M98 P"0:/macros/Filament Handling"                         ; unload and load filament using macro       
 M400                                                       ; clear moves
@@ -723,7 +784,7 @@ T0 M701 S"PETG"
 ##### /sys/homeall.g
 ```g-code
 ; 0:/sys/homeall.g
-; home x, y, and z axis
+; home x, y, and z-axis
 
 M98 P"current-sense-homing.g"                              ; Ensure current and sensitivity is set for homing routines
 
@@ -738,13 +799,13 @@ G1 Z3 F800 H2                                              ; lift Z relative to 
 G1 H0 X5 F1000                                             ; move slowly away 
 G1 H1 X-255 F3000                                          ; move quickly to X endstop 
 G1 H0 X5 F1000                                             ; move slowly away 
-G1 H1 X-255 F3000                                          ; move quickly to X endstop, second check 
+G1 H1 X-255 F3000                                          ; move quickly to X endstop, a second check 
 
 ; HOME Y
 G1 H0 Y5 F1000                                             ; move slowly away 
 G1 H1 Y-215 F3000                                          ; move quickly to Y endstop 
 G1 H0 Y5 F1000                                             ; move slowly away 
-G1 H1 Y-215 F3000                                          ; move quickly to Y endstops, second check
+G1 H1 Y-215 F3000                                          ; move quickly to Y endstops, a second check
 
 ; HOME Z
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height
@@ -754,6 +815,7 @@ G30                                                        ; home Z by probing t
 
 G90                                                        ; absolute positioning
 G1 H0 Z5 F400                                              ; lift Z relative to current position
+
 ```
 ##### /sys/homex.g
 ```g-code
@@ -773,6 +835,7 @@ G1 H0 X5 F1000                                             ; move slowly away
 G1 H1 X-255 F3000                                          ; move quickly to X endstop, second check
 
 G1 Z-3 F800 H2                                             ; place Z back to starting position
+
 ```
 ##### /sys/homey.g
 ```g-code
@@ -790,6 +853,7 @@ G1 H0 Y5 F1000                                             ; move slowly away
 G1 H1 Y-215 F3000                                          ; move quickly to Y endstop, second check
 
 G1 Z-3 F800 H2                                             ; place Z back to starting position
+
 ```
 ##### /sys/homez.g
 ```g-code
@@ -800,17 +864,18 @@ M98 P"current-sense-homing.g"                              ; Ensure current and 
 
 ; !!! If using Pinda, comment-out the following two lines
 M280 P0 S160                                               ; BLTouch, alarm release
-G4 P100                                                    ; BLTouch, delay for release command
+G4 P100                                                    ; BLTouch, delay for the release command
 
 G91                                                        ; relative positioning
-G1 H0 Z3 F6000                                             ; lift Z relative to current position
+G1 H0 Z3 F6000                                             ; lift Z relative to the current position
 G90                                                        ; absolute positioning
 
 G1 X15 Y15 F6000                                           ; go to first probe point
 G30                                                        ; home Z by probing the bed
 
 G90                                                        ; absolute positioning
-G1 H0 Z5 F400                                              ; lift Z relative to current position
+G1 H0 Z5 F400                                              ; lift Z relative to the current position
+
 ```
 ##### /sys/pause.g
 ```g-code
@@ -828,26 +893,37 @@ G91                                                        ; Relative Positionin
 G1 Z10 F360                                                ; Raise Z
 G90                                                        ; Absolute Values
 G1 X10 Y0 F6000                                            ; Parking Position
-M300 S80 P2000                                             ; play beep sound
+M300 S80 P2000                                             ; play a beep sound
 
 ```
 ##### /sys/primeline.g
 ```g-code
 ; 0:/sys/primeline.g
-; Print prime-line at a 'randomized' Y positon from -1.1 to -2.9
-; Prime line routine from second line down ref: http://projects.ttlexceeded.com
+; Print prime-line at a 'randomized' Y position from -1.1 to -2.9
+; Prime line routine from the second line down ref: http://projects.ttlexceeded.com
  
+; Charge! tune
+M400
+G4 S1
+M300 P200 S523.25
+G4 P200
+M300 P200 S659.25
+G4 P200
+M300 P200 S739.99
+G4 P250
+M300 P285 S880.00
+G4 P450
+M300 P285 S880.00
+G4 P285
+M300 P625 S1108.73
+G4 S1
+M400		
+	
 G1 X0 Z0.6 Y{-2+(0.1*(floor(10*(cos(sqrt(sensors.analog[0].lastReading * state.upTime))))))} F3000.0;
-G0 Z0.15                                                   ; Primeline nozzle position
 G92 E0.0                                                   ; Reset extrusion distance
-G1 E2 F1000                                                ; De-retract and push ooze
-G1 X20.0 E6 F1000.0                                        ; Fat 20mm intro line @ 0.30
-G1 X60.0 E3.2 F1000.0                                      ; Thin +40mm intro line @ 0.08
-G1 X100.0 E6 F1000.0                                       ; Fat +40mm intro line @ 0.15
-G1 E-0.8 F3000                                             ; Retract to avoid stringing
-G1 X99.5 E0 F1000.0                                        ; -0.5mm wipe action to avoid string
-G1 X110.0 E0 F1000.0                                       ; +10mm intro line @ 0.00
-G1 E0.6 F1500                                              ; De-retract
+G1 E8                                                      ; Purge Bubble
+G1 X60.0 E11.0 F1000.0                                     ; intro line
+G1 X120.0 E16.0 F1000.0                                    ; intro line
 G92 E0.0                                                   ; Reset extrusion distance
 M400                                                       ; Finish all current moves / clear the buffer
 
@@ -892,32 +968,44 @@ M18 XEZY                                                   ; unlock all axis
  
 T0                                                         ; Ensure tool is selected
 ;M280 P0 S160                                              ; BLTouch, alarm release
-;G4 P100                                                   ; BLTouch, delay for release command
+;G4 P100                                                   ; BLTouch, delay for the release command
 M572 D0 S0.0                                               ; clear pressure advance
 M220 S100                                                  ; Set speed factor back to 100% in case it was changed
 M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed
 M290 R0 S0                                                 ; Clear babystepping
 M106 S0                                                    ; Turn part cooling blower off if it is on
-M703                                                       ; Execute loaded filement's config.g
+M703                                                       ; Execute loaded filament's config.g
 G28                                                        ; Home all
 
-; if using BLTouch probe, use the following line:
-G1 Z100                                                    ; Last chance to check nozzle cleanliness
-; if using Pinda type probe, use the following line to place probe center of bed to heat the probe
-;G1 Z5 X100 Y100                                           ; Place nozzle center of bed, 5mm up
+;G1 Z5 X100 Y100                                           ; [PINDA] Place nozzle center of bed, 5mm up
 
-M300 S4000 P100 G4 P200 M300 S4000 P100 G4 P200 M300 S4000 P100 ; Give a triple beep
+G1 Z160 F300                                               ; [BLTouch] Last chance to check nozzle cleanliness
+
+M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 M116                                                       ; wait for all temperatures
-G4 S30                                                     ; wait additional 30 seconds for bed to stabilize
+M300 S4000 P100                                            ; Give a single beep
+
+; [BLTouch] Start countdown - use Z as indicator  
+G91                                                        ; [BLTouch] Set to Relative Positioning
+while iterations <=9                                       ; [BLTouch] Perform 10 passes
+    G4 S12                                                 ; [BLTouch] Wait 12 seconds
+    G1 Z-15 F300                                           ; [BLTouch] Move Z 15mm down
+G90                                                        ; [BLTouch] Set to Absolute Positioning
+
+;G4 S120                                                   ; [PINDA] wait additional 2 minutes for the bed to stabilize
+
 G32                                                        ; Level bed
 G29 S1 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Load bed mesh for the system's set filament type
 if result > 1                                              ; If file doesn't exist, perform mesh and save
    G29                                                     ; Perform mesh now
    G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+
+M400                                                       ; Finish all current moves / clear the buffer
 G90                                                        ; Absolute Positioning
 M83                                                        ; Extruder relative mode
 M98 P"0:/sys/current-sense-normal.g"                       ; Ensure that motor currents and sense are set for printing 
-G1 X0 Y0 Z2                                                ; Final position before slicer's temp is reached and primeline is printed.
+G1 X0 Y0 F800                                              ; Final position before slicer's temp is reached and primeline is printed.
+G1 Z2 F300                                                 ; Final position before slicer's temp is reached and primeline is printed.
  
 ; The primeline macro is executed by the slicer gcode to enable direct printing
 ; of the primeline at the objects temp and to immediately print the object
@@ -933,6 +1021,9 @@ G1 X0 Y0 Z2                                                ; Final position befo
 
 M83                                                        ; Set extruder to relative mode
 M106 S255                                                  ; Turn fan fully on
+M572 D0 S0.0                                               ; clear pressure advance
+M220 S100                                                  ; Set speed factor back to 100% in case it was changed
+M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed
 G1 E-2                                                     ; Retract 2mm
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
@@ -942,23 +1033,18 @@ M98 P"current-sense-homing.g"                              ; Adjust current and 
 ; Let cool and wiggle for bit to reduce end stringing
 M300 S4000 P100 G4 P200 M300 S4000 P100                    ; Give a double beep
 G91                                                        ; Set to Relative Positioning
-G1 Z2 F400                                                 ; Move Z up 2mm
-G4 S10                                                     ; Wait for 10 seconds for filament to solidify
-M300 S4000 P100                                            ; Give a single beep
-G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 S1                                                      ; Wait for 1 second
-G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 S1                                                      ; Wait for 1 second
-G1 X2 Y2 F1000                                             ; Wiggle +2mm
-G4 S1                                                      ; Wait for 1 second
-G1 X-2 Y-2 F1000                                           ; Wiggle -2mm
-G4 S1                                                      ; Wait for 1 second
-G1 X0 Y0 F1000                                             ; Wiggle back
-G4 S1                                                      ; Wait for 1 second
-G90                                                        ; Set to Absolute Positioning
-; End of wiggle routine
+G1 Z2 F400                                                 ; Move Z up 3mm
 
-G1 X0 Y215 Z205 F1000                                      ; Place nozzle to left side, build plate to front, Z at top
+; Start countdown - use X/Y as indicators of counting  
+while iterations <=9                                       ; Perform 10 passes
+    G4 S6                                                  ; Wait 6 seconds
+    G1 X1 Y1 F1000                                         ; Wiggle +1mm
+    G4 S6                                                  ; Wait 6 seconds
+    G1 Z0.5 X-1 Y-1 F1000                                  ; Wiggle -1mm, Z +0.5
+
+G90                                                        ; Set to Absolute Positioning
+
+G1 X220 Y205 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top
 M400                                                       ; Clear queue
 M107                                                       ; Turn off fan
 M18 YXE                                                    ; Unlock X, Y, and E axis
@@ -982,5 +1068,4 @@ G4 P151
 M300 P350 S3700
 G4 P351
 M400
-
 ```
