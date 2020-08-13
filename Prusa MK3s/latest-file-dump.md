@@ -1,7 +1,7 @@
 ## DUET System (sd-card contents) files follow: ##
 ###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
-### file dump - v08/13/20
+### file dump - v08/14/20
 ### Directory / File list follow:
 ****  
 **/filaments**  
@@ -28,7 +28,6 @@ Heat Nozzle
 Set Filament Type  
 **/macros/Maintenance**  
 Hotmesh  
-Hotmesh.part  
 Save-Z-Baby  
 **/sys**  
 bed.g  
@@ -333,49 +332,6 @@ G28                                                        ; Home
 M18                                                        ; Free all
 
 ```
-##### /macros/Maintenance/Hotmesh.part
-```g-code
-; 0:/macros/hotmesh.g
-; Called to perform automatic heated bedmesh compensation
-; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
-
-if state.status = "processing"                             ; Printer is currently printing!
-   M99                                                     ; Abort this macro   
- 
-T0                                                         ; Ensure tool is selected
-M703                                                       ; Heat bed to set temp based off current system filament type
-M104 S-273                                                 ; Turn off hotend
-M106 S0                                                    ; Turn part cooling blower off if it is on
-M291 P{"Performing bed heatup per " ^ move.extruders[0].filament ^ " profile. This process will take approximately 6 minutes."} R"Hotmesh" S0 T10
-G28                                                        ; Home
-G1 X100 Y100                                               ; Place nozzle center of bed
- 
-; Give 5 minutes for stabilization
-G91                                                        ; Set to Rel Positioning
-while iterations <=9                                       ; Perform 10 passes
-    G1 Z15 F300                                            ; Move Z 15mm up
-    G4 S0.5                                                ; Wait .5 seconds
-M116                                                       ; Wait for all temperatures
-M291 P"Bed temperature at setpoint. Please wait 5 minutes for stabilization, Z indicates countdown." R"Hotmesh" S0 T10
-; Start countdown - use Z as indicator   
-while iterations <=9                                       ; Perform 10 passes
-    G4 S30                                                 ; Wait 30 seconds
-    G1 Z-15 F300                                           ; Move Z 15mm down
-G90                                                        ; Set to Absolute Positioning
-M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
- 
-G32                                                        ; Home and Level gantry
-M400                                                       ; Clear queue
-G29                                                        ; Perfrom bed mesh
-G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
-M104 S-273                                                 ; Turn off hotend
-M140 S-273                                                 ; Turn off heatbed
-M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
-
-G28                                                        ; Home
-M18                                                        ; Free all
-
-```
 ##### /macros/Maintenance/Save-Z-Baby
 ```g-code
 ; 0:/macros/Save-Z-Baby
@@ -392,6 +348,7 @@ if state.status != "processing"                                     ; Printer is
       echo {"Previous Z probe trigger height: " ^ sensors.probes[0].triggerHeight ^ ", New: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       echo {"Edit the G31 command in your config.g with a new Z offset of: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       M291 P{"Set probe offset to " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep ^ ", clear babysteps, and REHOME ALL?"} R"!WARNING! Do not proceed if printing!" S3
+      M400                                                           ; Finish all current moves / clear the buffer
       G31 Z{sensors.probes[0].triggerHeight - move.axes[2].babystep} ; set G31 Z offset to corrected
       M500 P10:31                                                    ; save settings to config-overide.g - G31 P31 saves trigger height
       M290 R0 S0                                                     ; set babystep to 0mm absolute

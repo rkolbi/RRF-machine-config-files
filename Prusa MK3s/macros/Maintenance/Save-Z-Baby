@@ -12,6 +12,7 @@ if state.status != "processing"                                     ; Printer is
       echo {"Previous Z probe trigger height: " ^ sensors.probes[0].triggerHeight ^ ", New: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       echo {"Edit the G31 command in your config.g with a new Z offset of: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       M291 P{"Set probe offset to " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep ^ ", clear babysteps, and REHOME ALL?"} R"!WARNING! Do not proceed if printing!" S3
+      M400                                                           ; Finish all current moves / clear the buffer
       G31 Z{sensors.probes[0].triggerHeight - move.axes[2].babystep} ; set G31 Z offset to corrected
       M500 P10:31                                                    ; save settings to config-overide.g - G31 P31 saves trigger height
       M290 R0 S0                                                     ; set babystep to 0mm absolute
