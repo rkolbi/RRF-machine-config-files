@@ -1,7 +1,7 @@
 ## DUET System (sd-card contents) files follow: ##
 ###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
-### file dump - v08/14/20
+### file dump - v08/15/20
 ### Directory / File list follow:
 ****  
 **/filaments**  
@@ -118,18 +118,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-14 16:27, min error -0.143, max error 0.105, mean 0.018, deviation 0.044
+RepRapFirmware height map file v2 generated at 2020-08-15 06:01, min error -0.148, max error 0.097, mean 0.007, deviation 0.043
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
- -0.025,  0.010, -0.018,  0.010, -0.030, -0.035, -0.055, -0.072, -0.143
- -0.023,  0.018,  0.045,  0.053, -0.015, -0.015,  0.002, -0.033, -0.110
- -0.025,  0.045,  0.053,  0.043, -0.015,  0.010,  0.010,  0.015, -0.062
- -0.003,  0.013,  0.020,  0.043,  0.010,  0.013,  0.025,  0.048, -0.038
-  0.000,  0.002, -0.003,  0.010,  0.013,  0.015,  0.018,  0.015, -0.025
-  0.000,  0.005,  0.013,  0.015,  0.002,  0.020,  0.023,  0.043,  0.015
-  0.000,  0.038,  0.050,  0.060,  0.013,  0.025,  0.060,  0.065,  0.023
-  0.005,  0.045,  0.090,  0.070,  0.038,  0.053,  0.085,  0.097,  0.050
-  0.007,  0.045,  0.055,  0.090,  0.087,  0.090,  0.102,  0.105,  0.070
+ -0.050, -0.015, -0.035, -0.013, -0.033, -0.030, -0.055, -0.087, -0.148
+ -0.048,  0.013,  0.018,  0.035, -0.015, -0.020, -0.003, -0.033, -0.112
+ -0.033,  0.015,  0.030,  0.033, -0.010,  0.000,  0.018,  0.020, -0.065
+ -0.030,  0.010,  0.020,  0.023,  0.005,  0.020,  0.025,  0.015, -0.048
+ -0.025, -0.030, -0.025, -0.003,  0.005,  0.018,  0.028,  0.020, -0.020
+ -0.025, -0.008,  0.007,  0.013, -0.005,  0.023,  0.030,  0.035, -0.003
+ -0.030,  0.007,  0.030,  0.062,  0.013,  0.030,  0.067,  0.067,  0.030
+ -0.020,  0.033,  0.053,  0.065,  0.023,  0.040,  0.070,  0.087,  0.058
+ -0.025,  0.030,  0.030,  0.050,  0.053,  0.070,  0.090,  0.097,  0.075
 
 ```
 ##### /filaments/PETG/load.g
@@ -290,7 +290,7 @@ else
 #### /macros/Maintenance
 ##### /macros/Maintenance/Hotmesh
 ```g-code
-; 0:/macros/hotmesh.g
+; 0:/macros/Maintenance/Hotmesh
 ; Called to perform automatic heated bedmesh compensation
 ; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
 
@@ -334,7 +334,7 @@ M18                                                        ; Free all
 ```
 ##### /macros/Maintenance/Save-Z-Baby
 ```g-code
-; 0:/macros/Save-Z-Baby
+; 0:/macros/Maintenance/Save-Z-Baby
 ; This macro subtracts the current babystep offset from the current Z trigger height and informs the user what offset
 ; value to change the G31 Z metric to in the 0:/sys/config.g. Additionally, the macro issues a G31 command with the new
 ; calculated z-offset, clears the current babystepping, and then rehomes the machine to make the new z-offset effective. 

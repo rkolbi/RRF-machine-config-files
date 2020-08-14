@@ -1,4 +1,4 @@
-; 0:/macros/Save-Z-Baby
+; 0:/macros/Maintenance/Save-Z-Baby
 ; This macro subtracts the current babystep offset from the current Z trigger height and informs the user what offset
 ; value to change the G31 Z metric to in the 0:/sys/config.g. Additionally, the macro issues a G31 command with the new
 ; calculated z-offset, clears the current babystepping, and then rehomes the machine to make the new z-offset effective. 
