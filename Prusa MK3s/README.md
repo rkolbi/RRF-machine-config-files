@@ -71,7 +71,7 @@ M140 S{temperature_heatbed}              ; set bed temp
 M104 S{temperature_extruder1}            ; set extruder temp
 M116                                     ; wait for all temperatures
 
-; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+; Run macro to print primeline at a 'randomized' Y position from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                ; primeline macro
 
 ; Set pressure advance
@@ -100,7 +100,7 @@ M140 S[bed0_temperature]                         ; set bed temp
 M104 S[extruder0_temperature]                    ; set extruder temp
 M116                                             ; wait for all temperatures
 
-; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+; Run macro to print primeline at a 'randomized' Y position from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                        ; primeline macro
 
 ; Set pressure advance
@@ -129,7 +129,7 @@ M140 S[first_layer_bed_temperature]      ; set bed temp
 M104 S[first_layer_temperature]          ; set extruder temp
 M116                                     ; wait for all temperatures
 
-; Run macro to print primeline at a 'randomized' Y positon from -1.1 to -2.9
+; Run macro to print primeline at a 'randomized' Y position from -1.1 to -2.9
 M98 P"0:/sys/primeLine.g"                ; primeline macro
 
 ; Set pressure advance
@@ -154,7 +154,7 @@ M0                                       ; Stop everything and run sys/stop.g
 ## DUET System (sd-card contents) files follow: ##
 ###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
-### file dump - v08/14/20
+### file dump - v08/15/20
 ### Directory / File list follow:
 ****
 **/filaments**  
@@ -269,18 +269,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-13 03:15, min error -0.060, max error 0.087, mean 0.030, deviation 0.033
+RepRapFirmware height map file v2 generated at 2020-08-15 06:01, min error -0.148, max error 0.097, mean 0.007, deviation 0.043
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
- -0.008,  0.028,  0.023,  0.033,  0.000,  0.000,  0.005,  0.033, -0.005
- -0.015,  0.053,  0.062,  0.062, -0.003, -0.008,  0.015,  0.000, -0.060
- -0.018,  0.048,  0.070,  0.062,  0.000,  0.000,  0.010,  0.007, -0.035
- -0.015,  0.035,  0.040,  0.038,  0.005,  0.023,  0.035,  0.040, -0.025
- -0.010,  0.000,  0.000,  0.020,  0.002,  0.028,  0.020,  0.030, -0.008
- -0.005,  0.030,  0.040,  0.028,  0.002,  0.030,  0.028,  0.040,  0.007
- -0.008,  0.055,  0.075,  0.070,  0.018,  0.033,  0.067,  0.070,  0.028
-  0.043,  0.070,  0.085,  0.080,  0.043,  0.058,  0.085,  0.087,  0.040
-  0.040,  0.075,  0.082,  0.075,  0.067,  0.075,  0.085,  0.085,  0.053
+ -0.050, -0.015, -0.035, -0.013, -0.033, -0.030, -0.055, -0.087, -0.148
+ -0.048,  0.013,  0.018,  0.035, -0.015, -0.020, -0.003, -0.033, -0.112
+ -0.033,  0.015,  0.030,  0.033, -0.010,  0.000,  0.018,  0.020, -0.065
+ -0.030,  0.010,  0.020,  0.023,  0.005,  0.020,  0.025,  0.015, -0.048
+ -0.025, -0.030, -0.025, -0.003,  0.005,  0.018,  0.028,  0.020, -0.020
+ -0.025, -0.008,  0.007,  0.013, -0.005,  0.023,  0.030,  0.035, -0.003
+ -0.030,  0.007,  0.030,  0.062,  0.013,  0.030,  0.067,  0.067,  0.030
+ -0.020,  0.033,  0.053,  0.065,  0.023,  0.040,  0.070,  0.087,  0.058
+ -0.025,  0.030,  0.030,  0.050,  0.053,  0.070,  0.090,  0.097,  0.075
 
 ```
 ##### /filaments/PETG/load.g
@@ -441,9 +441,9 @@ else
 #### /macros/Maintenance
 ##### /macros/Maintenance/Hotmesh
 ```g-code
-; 0:/macros/hotmesh.g
+; 0:/macros/Maintenance/Hotmesh
 ; Called to perform automatic heated bedmesh compensation
-; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
+; This saves the heightmap to the system's set filament's type directory (0:/filaments/XXXX/heightmap.csv)
 
 if state.status = "processing"                             ; Printer is currently printing!
    M99                                                     ; Abort this macro   
@@ -485,7 +485,7 @@ M18                                                        ; Free all
 ```
 ##### /macros/Maintenance/Save-Z-Baby
 ```g-code
-; 0:/macros/Save-Z-Baby
+; 0:/macros/Maintenance/Save-Z-Baby
 ; This macro subtracts the current babystep offset from the current Z trigger height and informs the user what offset
 ; value to change the G31 Z metric to in the 0:/sys/config.g. Additionally, the macro issues a G31 command with the new
 ; calculated z-offset, clears the current babystepping, and then rehomes the machine to make the new z-offset effective. 
@@ -615,7 +615,7 @@ M574 Y1 S3                                                 ; Set endstops contro
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H5 F400 T10000                       ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
@@ -855,7 +855,6 @@ M300 S80 P2000                                             ; play a beep sound
 ```g-code
 ; 0:/sys/primeline.g
 ; Print prime-line at a 'randomized' Y position from -1.1 to -2.9
-; Prime line routine from the second line down ref: http://projects.ttlexceeded.com
  
 ; Charge! tune
 M400
@@ -917,9 +916,11 @@ M18 XEZY                                                   ; unlock all axis
 ```g-code
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
-; Alternative Start.g - This loads the heightmap from the system's set filament
-; type directory (0:/filaments/PETG/heightmap.csv), if the heightmap does not
-; exist, create one, and then save in the filament's directory.
+; This also loads the heightmap from the system's set filament type directory
+; (0:/filaments/XXXX/heightmap.csv), if the heightmap does not exist, it will
+; create one, and then save in the filament's directory. The HotMesh macro is
+; a better choice to generate the heightmap as it performs a heat stabilazion
+; routine for ~5 minutes.
  
 T0                                                         ; Ensure tool is selected
 ;M280 P0 S160                                              ; BLTouch, alarm release
