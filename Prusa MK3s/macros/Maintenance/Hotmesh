@@ -1,6 +1,6 @@
 ; 0:/macros/Maintenance/Hotmesh
 ; Called to perform automatic heated bedmesh compensation
-; Alternative Hotmesh.g - This saves the heightmap to the system's set filament's type directory (0:/filaments/PETG/heightmap.csv)
+; This saves the heightmap to the system's set filament's type directory (0:/filaments/XXXX/heightmap.csv)
 
 if state.status = "processing"                             ; Printer is currently printing!
    M99                                                     ; Abort this macro   

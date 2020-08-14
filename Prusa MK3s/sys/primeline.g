@@ -1,6 +1,5 @@
 ; 0:/sys/primeline.g
 ; Print prime-line at a 'randomized' Y position from -1.1 to -2.9
-; Prime line routine from the second line down ref: http://projects.ttlexceeded.com
  
 ; Charge! tune
 M400

@@ -1,8 +1,10 @@
 ; 0:/sys/start.g
 ; Executed before each print - BEFORE ANY SLICER CODE IS RAN
-; Alternative Start.g - This loads the heightmap from the system's set filament
-; type directory (0:/filaments/PETG/heightmap.csv), if the heightmap does not
-; exist, create one, and then save in the filament's directory.
+; This also loads the heightmap from the system's set filament type directory
+; (0:/filaments/XXXX/heightmap.csv), if the heightmap does not exist, it will
+; create one, and then save in the filament's directory. The HotMesh macro is
+; a better choice to generate the heightmap as it performs a heat stabilazion
+; routine for ~5 minutes.
  
 T0                                                         ; Ensure tool is selected
 ;M280 P0 S160                                              ; BLTouch, alarm release
