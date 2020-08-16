@@ -319,12 +319,14 @@ while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
     G1 Z-15 F300                                           ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
+
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
- 
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
+M558 F50 A9                                                ; slow z-probe
 G29                                                        ; Perfrom bed mesh
 G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+M558 F200 A1                                               ; normal z-probe
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
@@ -370,7 +372,7 @@ else
 M561                                                       ; Clear any bed transform
 G28                                                        ; Home
 
-M558 F100 A9                                               ; slower z-probe, first pass
+M558 F50 A9                                                ; slow z-probe, first three passes
 while iterations <=2                                       ; Perform 3 passes
    G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
@@ -378,7 +380,7 @@ while iterations <=2                                       ; Perform 3 passes
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
-M558 F50 A9                                                ; slow z-probe, second pass
+M558 F50 A9                                                ; slow z-probe, additional passes - if needed
 while move.calibration.initial.deviation >= 0.003          ; perform additional tramming if previous deviation was over 0.003mm 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
@@ -619,7 +621,7 @@ G1 H2 Z2 F2600                                             ; raise head 2mm to e
 G90                                                        ; back to absolute mode
 G1 X105 Y105 F6000                                         ; go to probe point
 
-M558 F1000                                                 ; fast z-probe, first pass  
+M558 F1000 A1                                              ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
@@ -684,7 +686,7 @@ G90                                                        ; absolute positionin
 
 G1 X105 Y105 F6000                                         ; go to probe point
 
-M558 F1000                                                 ; fast z-probe, first pass  
+M558 F1000 A1                                              ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 

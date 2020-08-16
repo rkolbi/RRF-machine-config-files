@@ -26,12 +26,14 @@ while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
     G1 Z-15 F300                                           ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
+
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
- 
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
+M558 F50 A9                                                ; slow z-probe
 G29                                                        ; Perfrom bed mesh
 G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+M558 F200 A1                                               ; normal z-probe
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10

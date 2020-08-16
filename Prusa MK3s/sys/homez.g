@@ -13,7 +13,7 @@ G90                                                        ; absolute positionin
 
 G1 X105 Y105 F6000                                         ; go to probe point
 
-M558 F1000                                                 ; fast z-probe, first pass  
+M558 F1000 A1                                              ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
