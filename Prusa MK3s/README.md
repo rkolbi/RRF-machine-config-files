@@ -154,7 +154,7 @@ M0                                       ; Stop everything and run sys/stop.g
 ## DUET System (sd-card contents) files follow: ##
 ###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
-### file dump - v08/15/20
+### file dump - v08/17/20
 ### Directory / File list follow:
 ****
 **/filaments**  
@@ -269,18 +269,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-15 06:01, min error -0.148, max error 0.097, mean 0.007, deviation 0.043
+RepRapFirmware height map file v2 generated at 2020-08-17 01:59, min error -0.062, max error 0.132, mean 0.049, deviation 0.037
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
- -0.050, -0.015, -0.035, -0.013, -0.033, -0.030, -0.055, -0.087, -0.148
- -0.048,  0.013,  0.018,  0.035, -0.015, -0.020, -0.003, -0.033, -0.112
- -0.033,  0.015,  0.030,  0.033, -0.010,  0.000,  0.018,  0.020, -0.065
- -0.030,  0.010,  0.020,  0.023,  0.005,  0.020,  0.025,  0.015, -0.048
- -0.025, -0.030, -0.025, -0.003,  0.005,  0.018,  0.028,  0.020, -0.020
- -0.025, -0.008,  0.007,  0.013, -0.005,  0.023,  0.030,  0.035, -0.003
- -0.030,  0.007,  0.030,  0.062,  0.013,  0.030,  0.067,  0.067,  0.030
- -0.020,  0.033,  0.053,  0.065,  0.023,  0.040,  0.070,  0.087,  0.058
- -0.025,  0.030,  0.030,  0.050,  0.053,  0.070,  0.090,  0.097,  0.075
+  0.045,  0.052,  0.024,  0.015, -0.028, -0.016, -0.011, -0.016, -0.062
+  0.030,  0.070,  0.046,  0.029, -0.017, -0.009,  0.026,  0.006, -0.046
+  0.030,  0.070,  0.080,  0.056,  0.001,  0.014,  0.041,  0.074,  0.012
+  0.055,  0.060,  0.058,  0.054,  0.012,  0.043,  0.059,  0.060,  0.013
+  0.046,  0.044,  0.026,  0.031,  0.017,  0.045,  0.056,  0.074,  0.041
+  0.051,  0.059,  0.074,  0.048,  0.024,  0.055,  0.071,  0.079,  0.046
+  0.027,  0.064,  0.081,  0.083,  0.044,  0.066,  0.108,  0.115,  0.074
+  0.034,  0.064,  0.075,  0.086,  0.059,  0.086,  0.119,  0.132,  0.088
+  0.030,  0.070,  0.062,  0.066,  0.069,  0.104,  0.112,  0.123,  0.085
 
 ```
 ##### /filaments/PETG/load.g
@@ -454,7 +454,7 @@ M104 S-273                                                 ; Turn off hotend
 M106 S0                                                    ; Turn part cooling blower off if it is on
 M291 P{"Performing bed heatup per " ^ move.extruders[0].filament ^ " profile. This process will take approximately 6 minutes."} R"Hotmesh" S0 T10
 G28                                                        ; Home
-G1 X100 Y100                                               ; Place nozzle center of bed
+G1 X105 Y105                                               ; Place nozzle center of bed
  
 ; Give 5 minutes for stabilization
 G91                                                        ; Set to Rel Positioning
@@ -469,12 +469,14 @@ while iterations <=9                                       ; Perform 10 passes
     G4 S30                                                 ; Wait 30 seconds
     G1 Z-15 F300                                           ; Move Z 15mm down
 G90                                                        ; Set to Absolute Positioning
+
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
- 
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 G29                                                        ; Perfrom bed mesh
 G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
+M558 F200 A1                                               ; normal z-probe
 M104 S-273                                                 ; Turn off hotend
 M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
@@ -520,25 +522,27 @@ else
 M561                                                       ; Clear any bed transform
 G28                                                        ; Home
 
+M558 F50 A5 S0.003                                         ; slow z-probe, up to 5 probes until disparity is 0.003 or less - else yield average
 while iterations <=2                                       ; Perform 3 passes
-   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X225 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G90                                                     ; Set to Absolute Positioning
-   G1 X100 F10000                                          ; Move to center
+   G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G1 X105 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 while move.calibration.initial.deviation >= 0.003          ; perform additional tramming if previous deviation was over 0.003mm 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
+      M558 F200 A1                                         ; normal z-probe, return to normal speed
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
-   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G90                                                     ; Set to Absolute Positioning
-   G1 X100 F10000                                          ; Move to center
+   G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G1 X105 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
+M558 F200 A1                                               ; normal z-probe, return to normal speed
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
 G1 Z8                                                      ; Raise head 8mm to ensure it is above the Z probe trigger height
 ```
@@ -598,7 +602,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z675.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
+M906 X1340.00 Y1600.00 Z550.00 E550.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
 M84 S1000                                                  ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
@@ -615,7 +619,7 @@ M574 Y1 S3                                                 ; Set endstops contro
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H6 F200 T10000                       ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
@@ -684,7 +688,7 @@ M18 XYZE                                                    ; Unlock X, Y, and E
 
 M915 X S2 F0 H400 R0                                       ; Set X axis Sensitivity
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
-M913 X20 Y30 Z60                                           ; set X Y Z motors to X% of their normal current
+M913 X30 Y30 Z60                                           ; set X Y Z motors to X% of their normal current
 ```
 ##### /sys/current-sense-normal.g
 ```g-code
@@ -765,12 +769,17 @@ G1 H1 Y-215 F3000                                          ; move quickly to Y e
 ; HOME Z
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height
 G90                                                        ; back to absolute mode
-G1 X15 Y15 F6000                                           ; go to first probe point
+G1 X105 Y105 F6000                                         ; go to probe point
+
+M558 F1000 A1                                              ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
-G90                                                        ; absolute positioning
-G1 H0 Z5 F400                                              ; lift Z relative to current position
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
+G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
+M558 F200 A1                                               ; normal z-probe, set to normal speed  
 ```
 ##### /sys/homex.g
 ```g-code
@@ -825,12 +834,17 @@ G91                                                        ; relative positionin
 G1 H0 Z3 F6000                                             ; lift Z relative to the current position
 G90                                                        ; absolute positioning
 
-G1 X15 Y15 F6000                                           ; go to first probe point
+G1 X105 Y105 F6000                                         ; go to probe point
+
+M558 F1000 A1                                              ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
-G90                                                        ; absolute positioning
-G1 H0 Z5 F400                                              ; lift Z relative to the current position
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
+G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
+M558 F200 A1                                               ; normal z-probe, set to normal speed  
 ```
 ##### /sys/pause.g
 ```g-code
