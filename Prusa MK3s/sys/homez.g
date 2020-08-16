@@ -17,7 +17,7 @@ M558 F1000 A1                                              ; fast z-probe, first
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
-M558 F50 A9                                                ; slow z-probe, second pass  
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 

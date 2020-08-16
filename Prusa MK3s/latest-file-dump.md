@@ -118,18 +118,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-16 18:17, min error -0.082, max error 0.087, mean 0.022, deviation 0.033
+RepRapFirmware height map file v2 generated at 2020-08-17 01:59, min error -0.062, max error 0.132, mean 0.049, deviation 0.037
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
-  0.015,  0.035,  0.007,  0.002, -0.040, -0.030, -0.025, -0.035, -0.082
-  0.007,  0.050,  0.040,  0.015, -0.015, -0.023,  0.033,  0.002, -0.070
-  0.002,  0.048,  0.048,  0.040, -0.005,  0.000,  0.007,  0.043, -0.030
-  0.035,  0.038,  0.040,  0.033, -0.003,  0.018,  0.038,  0.040, -0.008
-  0.010,  0.013, -0.003,  0.002, -0.008,  0.020,  0.030,  0.043, -0.005
-  0.000,  0.028,  0.048,  0.033,  0.002,  0.033,  0.045,  0.043,  0.002
- -0.005,  0.033,  0.053,  0.055,  0.028,  0.040,  0.077,  0.077,  0.035
- -0.008,  0.025,  0.040,  0.053,  0.028,  0.050,  0.082,  0.087,  0.040
- -0.033,  0.033,  0.020,  0.028,  0.038,  0.077,  0.075,  0.070,  0.043
+  0.045,  0.052,  0.024,  0.015, -0.028, -0.016, -0.011, -0.016, -0.062
+  0.030,  0.070,  0.046,  0.029, -0.017, -0.009,  0.026,  0.006, -0.046
+  0.030,  0.070,  0.080,  0.056,  0.001,  0.014,  0.041,  0.074,  0.012
+  0.055,  0.060,  0.058,  0.054,  0.012,  0.043,  0.059,  0.060,  0.013
+  0.046,  0.044,  0.026,  0.031,  0.017,  0.045,  0.056,  0.074,  0.041
+  0.051,  0.059,  0.074,  0.048,  0.024,  0.055,  0.071,  0.079,  0.046
+  0.027,  0.064,  0.081,  0.083,  0.044,  0.066,  0.108,  0.115,  0.074
+  0.034,  0.064,  0.075,  0.086,  0.059,  0.086,  0.119,  0.132,  0.088
+  0.030,  0.070,  0.062,  0.066,  0.069,  0.104,  0.112,  0.123,  0.085
 
 ```
 ##### /filaments/PETG/load.g
@@ -322,7 +322,7 @@ G90                                                        ; Set to Absolute Pos
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
-M558 F50 A9                                                ; slow z-probe
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 G29                                                        ; Perfrom bed mesh
 G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
 M558 F200 A1                                               ; normal z-probe
@@ -371,7 +371,7 @@ else
 M561                                                       ; Clear any bed transform
 G28                                                        ; Home
 
-M558 F50 A9                                                ; slow z-probe, first three passes
+M558 F50 A5 S0.003                                         ; slow z-probe, up to 5 probes until disparity is 0.003 or less - else yield average
 while iterations <=2                                       ; Perform 3 passes
    G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
@@ -379,7 +379,7 @@ while iterations <=2                                       ; Perform 3 passes
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
-M558 F50 A9                                                ; slow z-probe, additional passes - if needed
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 while move.calibration.initial.deviation >= 0.003          ; perform additional tramming if previous deviation was over 0.003mm 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
@@ -624,7 +624,7 @@ M558 F1000 A1                                              ; fast z-probe, first
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
-M558 F50 A9                                                ; slow z-probe, second pass  
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
@@ -689,7 +689,7 @@ M558 F1000 A1                                              ; fast z-probe, first
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
-M558 F50 A9                                                ; slow z-probe, second pass  
+M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
