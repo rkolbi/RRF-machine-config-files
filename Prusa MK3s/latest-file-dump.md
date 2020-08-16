@@ -119,18 +119,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-16 13:23, min error -0.095, max error 0.087, mean 0.025, deviation 0.037
+RepRapFirmware height map file v2 generated at 2020-08-16 15:14, min error -0.043, max error 0.100, mean 0.040, deviation 0.032
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 5.00,205.00,10.00,195.00,-1.00,25.00,23.12,9,9
-      0,  0.030,  0.005,  0.000, -0.040, -0.035, -0.033, -0.048, -0.095
-      0,  0.070,  0.045,  0.040, -0.025, -0.025,  0.015, -0.020, -0.077
-      0,  0.060,  0.060,  0.040, -0.010,  0.002,  0.007,  0.038, -0.033
-      0,  0.048,  0.053,  0.038,  0.000,  0.010,  0.043,  0.035, -0.015
-      0,  0.023,  0.015,  0.018, -0.005,  0.035,  0.033,  0.043, -0.005
-      0,  0.033,  0.072,  0.033,  0.000,  0.033,  0.050,  0.053,  0.002
-      0,  0.035,  0.070,  0.070,  0.028,  0.043,  0.077,  0.077,  0.010
-      0,  0.030,  0.050,  0.070,  0.035,  0.055,  0.082,  0.087,  0.020
-      0,  0.028,  0.025,  0.028,  0.043,  0.070,  0.075,  0.065,  0.023
+      0,  0.040,  0.023,  0.002, -0.003, -0.043, -0.033, -0.008, -0.043
+      0,  0.030,  0.055,  0.033,  0.002, -0.018,  0.005,  0.033,  0.010
+      0,  0.075,  0.082,  0.065,  0.038, -0.005,  0.018,  0.038,  0.025
+      0,  0.023,  0.070,  0.065,  0.040,  0.000,  0.038,  0.065,  0.035
+      0,  0.033,  0.055,  0.018,  0.028,  0.025,  0.040,  0.058,  0.045
+      0,  0.033,  0.045,  0.060,  0.035,  0.028,  0.043,  0.062,  0.067
+      0,  0.023,  0.055,  0.077,  0.060,  0.035,  0.072,  0.090,  0.077
+      0, -0.003,  0.045,  0.072,  0.075,  0.043,  0.077,  0.100,  0.087
+      0,  0.000,  0.067,  0.035,  0.030,  0.045,  0.085,  0.085,  0.080
 
 ```
 ##### /filaments/PETG/load.g
@@ -371,8 +371,8 @@ M561                                                       ; Clear any bed trans
 G28                                                        ; Home
 
 while iterations <=2                                       ; Perform 3 passes
-   G30 P0 X5 Y105 Z-99999                                  ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X200 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G1 X100 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
@@ -381,8 +381,8 @@ while move.calibration.initial.deviation >= 0.003          ; perform additional 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
-   G30 P0 X5 Y105 Z-99999                                  ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X200 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G1 X105 F6000                                           ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
