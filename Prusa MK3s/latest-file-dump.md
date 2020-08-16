@@ -46,6 +46,7 @@ homez.g
 pause.g  
 primeline.g  
 resume.g  
+resurrect.g  
 retractprobe.g  
 sleep.g  
 start.g  
@@ -118,18 +119,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-16 11:18, min error -0.048, max error 0.104, mean 0.035, deviation 0.031
+RepRapFirmware height map file v2 generated at 2020-08-16 13:23, min error -0.095, max error 0.087, mean 0.025, deviation 0.037
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 5.00,205.00,10.00,195.00,-1.00,25.00,23.12,9,9
-  0.026,  0.031,  0.019, -0.004, -0.029, -0.017,  0.002, -0.009, -0.048
-  0.031,  0.061,  0.040,  0.026, -0.006,  0.007,  0.028,  0.017, -0.036
-  0.017,  0.067,  0.072,  0.040, -0.001,  0.012,  0.046,  0.039,  0.009
-  0.021,  0.056,  0.041,  0.036, -0.004,  0.024,  0.036,  0.053,  0.010
-  0.019,  0.028,  0.012,  0.017,  0.009,  0.034,  0.053,  0.056,  0.030
-  0.009,  0.038,  0.026,  0.034,  0.014,  0.043,  0.071,  0.066,  0.039
- -0.004,  0.053,  0.066,  0.067,  0.023,  0.061,  0.098,  0.098,  0.039
-  0.005,  0.054,  0.053,  0.062,  0.036,  0.067,  0.104,  0.094,  0.065
-  0.005,  0.061,  0.049,  0.021,  0.036,  0.096,  0.089,  0.083,  0.062
+      0,  0.030,  0.005,  0.000, -0.040, -0.035, -0.033, -0.048, -0.095
+      0,  0.070,  0.045,  0.040, -0.025, -0.025,  0.015, -0.020, -0.077
+      0,  0.060,  0.060,  0.040, -0.010,  0.002,  0.007,  0.038, -0.033
+      0,  0.048,  0.053,  0.038,  0.000,  0.010,  0.043,  0.035, -0.015
+      0,  0.023,  0.015,  0.018, -0.005,  0.035,  0.033,  0.043, -0.005
+      0,  0.033,  0.072,  0.033,  0.000,  0.033,  0.050,  0.053,  0.002
+      0,  0.035,  0.070,  0.070,  0.028,  0.043,  0.077,  0.077,  0.010
+      0,  0.030,  0.050,  0.070,  0.035,  0.055,  0.082,  0.087,  0.020
+      0,  0.028,  0.025,  0.028,  0.043,  0.070,  0.075,  0.065,  0.023
 
 ```
 ##### /filaments/PETG/load.g
@@ -322,7 +323,6 @@ M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Ho
  
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
-M558 P9 C"^zprobe.in" H5 F60 T6000 A10 R0.75 S0.003        ; BLTouch, connected to Z probe IN pin - slow
 G29                                                        ; Perfrom bed mesh
 G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
 M104 S-273                                                 ; Turn off hotend
@@ -330,9 +330,6 @@ M140 S-273                                                 ; Turn off heatbed
 M291 P"Hotmesh complete. Hotend and Heatbed are turned off. Performing final homing routine. Please wait." R"Hotmesh" S0 T10
 
 G28                                                        ; Home
-
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin - normal
-
 M18                                                        ; Free all
 
 ```
@@ -373,8 +370,6 @@ else
 M561                                                       ; Clear any bed transform
 G28                                                        ; Home
 
-M558 P9 C"^zprobe.in" H5 F60 T6000 A10 R0.75 S0.003        ; BLTouch, connected to Z probe IN pin - slow
-
 while iterations <=2                                       ; Perform 3 passes
    G30 P0 X5 Y105 Z-99999                                  ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X200 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
@@ -388,11 +383,9 @@ while move.calibration.initial.deviation >= 0.003          ; perform additional 
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
    G30 P0 X5 Y105 Z-99999                                  ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X200 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G1 X105 F6000                                          ; Move to center
+   G1 X105 F6000                                           ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
-
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin - medium
 
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
 G1 Z8                                                      ; Raise head 8mm to ensure it is above the Z probe trigger height
@@ -470,11 +463,11 @@ M574 Y1 S3                                                 ; Set endstops contro
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H5 F200 T10000                       ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
-M557 X5:205 Y10:195 P9                                    ; Define mesh grid for probing
+M557 X5:205 Y10:195 P9                                     ; Define mesh grid for probing
 
 ; Z-Probe Setting for PINDA v2
 ; 1 - If using PindaV2, Remove above M558 & M950 lines, replace with the following M558 & M308 line
@@ -539,7 +532,7 @@ M18 XYZE                                                    ; Unlock X, Y, and E
 
 M915 X S2 F0 H400 R0                                       ; Set X axis Sensitivity
 M915 Y S2 F0 H400 R0                                       ; Set y axis Sensitivity
-M913 X20 Y30 Z60                                           ; set X Y Z motors to X% of their normal current
+M913 X30 Y30 Z60                                           ; set X Y Z motors to X% of their normal current
 ```
 ##### /sys/current-sense-normal.g
 ```g-code
@@ -621,13 +614,7 @@ G1 H1 Y-215 F3000                                          ; move quickly to Y e
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height
 G90                                                        ; back to absolute mode
 G1 X105 Y105 F6000                                         ; go to probe point
-
-M558 P9 C"^zprobe.in" H5 F800 T8000                        ; BLTouch, connected to Z probe IN pin - fast
 G30                                                        ; home Z by probing the bed
-M558 P9 C"^zprobe.in" H5 F60 T6000 A10 R0.75 S0.003        ; BLTouch, connected to Z probe IN pin - slow
-G30                                                        ; home Z by probing the bed
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin - normal
-
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
 ```
@@ -685,13 +672,7 @@ G1 H0 Z3 F6000                                             ; lift Z relative to 
 G90                                                        ; absolute positioning
 
 G1 X105 Y105 F6000                                         ; go to probe point
-
-M558 P9 C"^zprobe.in" H5 F800 T8000                        ; BLTouch, connected to Z probe IN pin - fast
 G30                                                        ; home Z by probing the bed
-M558 P9 C"^zprobe.in" H5 F60 T6000 A10 R0.75 S0.003        ; BLTouch, connected to Z probe IN pin - slow
-G30                                                        ; home Z by probing the bed
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin - normal
-
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 ```
 ##### /sys/pause.g
@@ -754,6 +735,49 @@ G1 E3 F400                                                 ; extract 3mm of fila
 G1 R1 X0 Y0 Z5                                             ; go back to the last print position with Z 5mm above
 G1 R1 Z0                                                   ; go to Z position of the last print move
 M121                                                       ; Recover the last state pushed onto the stack
+
+```
+##### /sys/resurrect.g
+```g-code
+; File "0:/gcodes/xyzCalibration_cube.gcode" resume print after print paused at 2020-08-16 12:51
+G21
+M140 P0 S75.0
+G29 S1
+T-1 P0
+G92 X134.325 Y98.175 Z0.570
+G60 S1
+G10 P0 S228 R228
+T0 P0
+M98 P"resurrect-prologue.g"
+M116
+M290 X0.000 Y0.000 Z-0.220 R0
+T-1 P0
+T0 P6
+; Workplace coordinates
+G10 L2 P1 X0.00 Y0.00 Z0.00
+G10 L2 P2 X0.00 Y0.00 Z0.00
+G10 L2 P3 X0.00 Y0.00 Z0.00
+G10 L2 P4 X0.00 Y0.00 Z0.00
+G10 L2 P5 X0.00 Y0.00 Z0.00
+G10 L2 P6 X0.00 Y0.00 Z0.00
+G10 L2 P7 X0.00 Y0.00 Z0.00
+G10 L2 P8 X0.00 Y0.00 Z0.00
+G10 L2 P9 X0.00 Y0.00 Z0.00
+G54
+M106 S0.00
+M106 P1 S1.00
+M106 P2 S1.00
+M116
+G92 E0.00000
+M83
+M23 "0:/gcodes/xyzCalibration_cube.gcode"
+M26 S9112
+G0 F6000 Z2.350
+G0 F6000 X134.325 Y98.175
+G0 F6000 Z0.350
+G1 F1950.0 P0
+G21
+M24
 
 ```
 ##### /sys/retractprobe.g

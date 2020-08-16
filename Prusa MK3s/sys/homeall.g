@@ -26,11 +26,5 @@ G1 H1 Y-215 F3000                                          ; move quickly to Y e
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height
 G90                                                        ; back to absolute mode
 G1 X105 Y105 F6000                                         ; go to probe point
-
-M558 P9 C"^zprobe.in" H5 F800 T8000                        ; BLTouch, connected to Z probe IN pin - fast
 G30                                                        ; home Z by probing the bed
-M558 P9 C"^zprobe.in" H5 F60 T6000 A10 R0.75 S0.003        ; BLTouch, connected to Z probe IN pin - slow
-G30                                                        ; home Z by probing the bed
-M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin - normal
-
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
