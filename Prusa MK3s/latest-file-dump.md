@@ -46,7 +46,6 @@ homez.g
 pause.g  
 primeline.g  
 resume.g  
-resurrect.g  
 retractprobe.g  
 sleep.g  
 start.g  
@@ -756,49 +755,6 @@ G1 E3 F400                                                 ; extract 3mm of fila
 G1 R1 X0 Y0 Z5                                             ; go back to the last print position with Z 5mm above
 G1 R1 Z0                                                   ; go to Z position of the last print move
 M121                                                       ; Recover the last state pushed onto the stack
-
-```
-##### /sys/resurrect.g
-```g-code
-; File "0:/gcodes/xyzCalibration_cube.gcode" resume print after print paused at 2020-08-16 12:51
-G21
-M140 P0 S75.0
-G29 S1
-T-1 P0
-G92 X134.325 Y98.175 Z0.570
-G60 S1
-G10 P0 S228 R228
-T0 P0
-M98 P"resurrect-prologue.g"
-M116
-M290 X0.000 Y0.000 Z-0.220 R0
-T-1 P0
-T0 P6
-; Workplace coordinates
-G10 L2 P1 X0.00 Y0.00 Z0.00
-G10 L2 P2 X0.00 Y0.00 Z0.00
-G10 L2 P3 X0.00 Y0.00 Z0.00
-G10 L2 P4 X0.00 Y0.00 Z0.00
-G10 L2 P5 X0.00 Y0.00 Z0.00
-G10 L2 P6 X0.00 Y0.00 Z0.00
-G10 L2 P7 X0.00 Y0.00 Z0.00
-G10 L2 P8 X0.00 Y0.00 Z0.00
-G10 L2 P9 X0.00 Y0.00 Z0.00
-G54
-M106 S0.00
-M106 P1 S1.00
-M106 P2 S1.00
-M116
-G92 E0.00000
-M83
-M23 "0:/gcodes/xyzCalibration_cube.gcode"
-M26 S9112
-G0 F6000 Z2.350
-G0 F6000 X134.325 Y98.175
-G0 F6000 Z0.350
-G1 F1950.0 P0
-G21
-M24
 
 ```
 ##### /sys/retractprobe.g
