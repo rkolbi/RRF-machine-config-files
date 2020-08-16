@@ -37,7 +37,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z675.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
+M906 X1340.00 Y1600.00 Z550.00 E550.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
 M84 S1000                                                  ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
@@ -54,11 +54,11 @@ M574 Y1 S3                                                 ; Set endstops contro
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H5 F200 T10000                       ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H6 F200 T10000                       ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
-M557 X5:205 Y10:195 P9                                     ; Define mesh grid for probing
+M557 X25:225 Y10:195 P9                                    ; Define mesh grid for probing
 
 ; Z-Probe Setting for PINDA v2
 ; 1 - If using PindaV2, Remove above M558 & M950 lines, replace with the following M558 & M308 line

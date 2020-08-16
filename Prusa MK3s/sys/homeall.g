@@ -26,5 +26,13 @@ G1 H1 Y-215 F3000                                          ; move quickly to Y e
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height
 G90                                                        ; back to absolute mode
 G1 X105 Y105 F6000                                         ; go to probe point
+
+M558 F1000                                                 ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
+
+M558 F50 A9                                                ; slow z-probe, second pass  
+G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
+
+M558 F200 A1                                               ; normal z-probe, set to normal speed  

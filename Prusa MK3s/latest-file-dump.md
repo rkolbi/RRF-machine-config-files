@@ -119,18 +119,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-16 15:14, min error -0.043, max error 0.100, mean 0.040, deviation 0.032
+RepRapFirmware height map file v2 generated at 2020-08-16 18:17, min error -0.082, max error 0.087, mean 0.022, deviation 0.033
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
-5.00,205.00,10.00,195.00,-1.00,25.00,23.12,9,9
-      0,  0.040,  0.023,  0.002, -0.003, -0.043, -0.033, -0.008, -0.043
-      0,  0.030,  0.055,  0.033,  0.002, -0.018,  0.005,  0.033,  0.010
-      0,  0.075,  0.082,  0.065,  0.038, -0.005,  0.018,  0.038,  0.025
-      0,  0.023,  0.070,  0.065,  0.040,  0.000,  0.038,  0.065,  0.035
-      0,  0.033,  0.055,  0.018,  0.028,  0.025,  0.040,  0.058,  0.045
-      0,  0.033,  0.045,  0.060,  0.035,  0.028,  0.043,  0.062,  0.067
-      0,  0.023,  0.055,  0.077,  0.060,  0.035,  0.072,  0.090,  0.077
-      0, -0.003,  0.045,  0.072,  0.075,  0.043,  0.077,  0.100,  0.087
-      0,  0.000,  0.067,  0.035,  0.030,  0.045,  0.085,  0.085,  0.080
+25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
+  0.015,  0.035,  0.007,  0.002, -0.040, -0.030, -0.025, -0.035, -0.082
+  0.007,  0.050,  0.040,  0.015, -0.015, -0.023,  0.033,  0.002, -0.070
+  0.002,  0.048,  0.048,  0.040, -0.005,  0.000,  0.007,  0.043, -0.030
+  0.035,  0.038,  0.040,  0.033, -0.003,  0.018,  0.038,  0.040, -0.008
+  0.010,  0.013, -0.003,  0.002, -0.008,  0.020,  0.030,  0.043, -0.005
+  0.000,  0.028,  0.048,  0.033,  0.002,  0.033,  0.045,  0.043,  0.002
+ -0.005,  0.033,  0.053,  0.055,  0.028,  0.040,  0.077,  0.077,  0.035
+ -0.008,  0.025,  0.040,  0.053,  0.028,  0.050,  0.082,  0.087,  0.040
+ -0.033,  0.033,  0.020,  0.028,  0.038,  0.077,  0.075,  0.070,  0.043
 
 ```
 ##### /filaments/PETG/load.g
@@ -370,23 +370,27 @@ else
 M561                                                       ; Clear any bed transform
 G28                                                        ; Home
 
+M558 F100 A9                                               ; slower z-probe, first pass
 while iterations <=2                                       ; Perform 3 passes
    G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G1 X100 F10000                                          ; Move to center
+   G1 X105 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
+M558 F50 A9                                                ; slow z-probe, second pass
 while move.calibration.initial.deviation >= 0.003          ; perform additional tramming if previous deviation was over 0.003mm 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
+      M558 F200 A1                                         ; normal z-probe, return to normal speed
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
    G30 P0 X25 Y105 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
    G30 P1 X225 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G1 X105 F6000                                           ; Move to center
+   G1 X105 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
 
+M558 F200 A1                                               ; normal z-probe, return to normal speed
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
 G1 Z8                                                      ; Raise head 8mm to ensure it is above the Z probe trigger height
 ```
@@ -446,7 +450,7 @@ M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
 M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
 M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
 M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
-M906 X1340.00 Y1600.00 Z675.00 E650.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
+M906 X1340.00 Y1600.00 Z550.00 E550.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
 M84 S1000                                                  ; Set idle timeout
 
 ; Motor remapping for dual Z and axis Limits
@@ -463,11 +467,11 @@ M574 Y1 S3                                                 ; Set endstops contro
 M98 P"current-sense-homing.g"                              ; Current and Sensitivity for normal routine
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H5 F200 T10000                       ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H6 F200 T10000                       ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.24                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set endstops controlled by probe
-M557 X5:205 Y10:195 P9                                     ; Define mesh grid for probing
+M557 X25:225 Y10:195 P9                                    ; Define mesh grid for probing
 
 ; Z-Probe Setting for PINDA v2
 ; 1 - If using PindaV2, Remove above M558 & M950 lines, replace with the following M558 & M308 line
@@ -614,9 +618,16 @@ G1 H1 Y-215 F3000                                          ; move quickly to Y e
 G1 H2 Z2 F2600                                             ; raise head 2mm to ensure it is above the Z probe trigger height
 G90                                                        ; back to absolute mode
 G1 X105 Y105 F6000                                         ; go to probe point
+
+M558 F1000                                                 ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
 
+M558 F50 A9                                                ; slow z-probe, second pass  
+G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
+
+M558 F200 A1                                               ; normal z-probe, set to normal speed  
 ```
 ##### /sys/homex.g
 ```g-code
@@ -672,8 +683,16 @@ G1 H0 Z3 F6000                                             ; lift Z relative to 
 G90                                                        ; absolute positioning
 
 G1 X105 Y105 F6000                                         ; go to probe point
+
+M558 F1000                                                 ; fast z-probe, first pass  
 G30                                                        ; home Z by probing the bed
 G1 H0 Z5 F400                                              ; lift Z to the 5mm position
+
+M558 F50 A9                                                ; slow z-probe, second pass  
+G30                                                        ; home Z by probing the bed
+G1 H0 Z5 F400                                              ; lift Z to the 5mm position
+
+M558 F200 A1                                               ; normal z-probe, set to normal speed  
 ```
 ##### /sys/pause.g
 ```g-code
