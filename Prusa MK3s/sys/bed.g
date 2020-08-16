@@ -4,10 +4,11 @@
 M561                                                       ; Clear any bed transform
 G28                                                        ; Home
 
+M558 P9 C"^zprobe.in" H5 F60 T6000 A10 R0.75 S0.003        ; BLTouch, connected to Z probe IN pin - slow
+
 while iterations <=2                                       ; Perform 3 passes
-   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X225 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G90                                                     ; Set to Absolute Positioning
+   G30 P0 X5 Y105 Z-99999                                  ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X200 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
    G1 X100 F10000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
@@ -16,12 +17,13 @@ while move.calibration.initial.deviation >= 0.003          ; perform additional 
    if iterations = 5                                       ; Perform 5 addition checks, if needed
       M300 S3000 P500                                      ; Sound alert, required deviation could not be achieved
       abort "!!! ABORTED !!! Failed to achieve < 0.002 deviation. Current deviation is " ^ move.calibration.initial.deviation ^ "mm."
-   G30 P0 X25 Y107 Z-99999                                 ; Probe near a leadscrew, halfway along Y-axis
-   G30 P1 X235 Y107 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
-   G90                                                     ; Set to Absolute Positioning
-   G1 X100 F10000                                          ; Move to center
+   G30 P0 X5 Y105 Z-99999                                  ; Probe near a leadscrew, halfway along Y-axis
+   G30 P1 X200 Y105 Z-99999 S2                             ; Probe near a leadscrew and calibrate 2 motors
+   G1 X105 F6000                                          ; Move to center
    G30                                                     ; Probe the bed at the current XY position
    M400                                                    ; Finish moves, clear buffer
+
+M558 P9 C"^zprobe.in" H5 F200 T8000                        ; BLTouch, connected to Z probe IN pin - medium
 
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
 G1 Z8                                                      ; Raise head 8mm to ensure it is above the Z probe trigger height
