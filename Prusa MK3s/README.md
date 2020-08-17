@@ -43,12 +43,12 @@ To make filament loading, unloading, and changing the most straightforward and s
 
 ## **Print flow events:**   
 When initiating a print, the following sequence of events occur in this order.  
-**/sys/start.g** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types. From this codeset, the fillament's config.g is called.  
+**/sys/start.g** is the first codeset that starts at the beginning of each print. This contains the generic processes that apply to all filament types. From this codeset, the fillament's config.g is called and the bed a heat-stabilized for 2 minutes once target temperature is reached.  
 **/filaments/PETG/config.g** is the second codeset that get initiated from the "M703" command in the "start.g" file. As written in this example, we are set to use the PETG "config.g" file, located in the "filaments/PETG" directory. This contains the gcode commands that are particular to PETG filament type.  
 **Slicer's Start GCode** is the last bit of codeset to be executed before the object's sliced gcode starts. This contains the settings particulr to the actual print and the exact PETG filament loaded. This would be your *'fine'* settings, where PETG/config.g could be considered your *'medium'* settings, and start.g would be the *'rough'* - performing evaluations to get the printer ready.    
 **The part's actual gcode** made by the slicer.  
 **Slicer's End GCode** follows the printed object's gcode. This codeset lets the duet know that the print is finished which calls  
- **/sys/stop.g**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, and positions the machine to easily retrieve the printed part.  
+ **/sys/stop.g**, the very last codeset that is executed. This last part commonly shutdowns heaters, retracts a bit of filament, turns part cooling fan to 100% to solidify filament for 2 minutes, and then positions the machine to easily retrieve the printed part.  
 
 <br><br>
 
@@ -67,23 +67,23 @@ When initiating a print, the following sequence of events occur in this order.
 ; ideaMaker Start G-Code
 
 ; Set nozzle and bed to the specific temperatures declared within this slicer
-M140 S{temperature_heatbed}              ; set bed temp
-M104 S{temperature_extruder1}            ; set extruder temp
-M116                                     ; wait for all temperatures
+M140 S{temperature_heatbed}                      ; set bed temp
+M104 S{temperature_extruder1}                    ; set extruder temp
+M116                                             ; wait for all temperatures
 
 ; Run macro to print primeline at a 'randomized' Y position from -1.1 to -2.9
-M98 P"0:/sys/primeLine.g"                ; primeline macro
+M98 P"0:/sys/primeLine.g"                        ; primeline macro
 
 ; Set pressure advance
-M572 D0 S0.07                            ; set pressure advance
+M572 D0 S0.07                                    ; set pressure advance
 ```
 
 ### **Example end gcode for ideaMaker Slicer:**  
 
 ```g-code
 ; ideaMaker End G-Code
-M400                                     ; Make sure all moves are complete
-M0                                       ; Stop everything and run sys/stop.g
+M400                                             ; Make sure all moves are complete
+M0                                               ; Stop everything and run sys/stop.g
 ```
 
 <br>
@@ -125,22 +125,22 @@ M0
 ; PrusaSlicer Start G-Code:
 
 ; Set nozzle and bed to the specific temperatures declared within this slicer
-M140 S[first_layer_bed_temperature]      ; set bed temp
-M104 S[first_layer_temperature]          ; set extruder temp
-M116                                     ; wait for all temperatures
+M140 S[first_layer_bed_temperature]              ; set bed temp
+M104 S[first_layer_temperature]                  ; set extruder temp
+M116                                             ; wait for all temperatures
 
 ; Run macro to print primeline at a 'randomized' Y position from -1.1 to -2.9
-M98 P"0:/sys/primeLine.g"                ; primeline macro
+M98 P"0:/sys/primeLine.g"                        ; primeline macro
 
 ; Set pressure advance
-M572 D0 S0.07                            ; set pressure advance
+M572 D0 S0.07                                    ; set pressure advance
 ```
 ### **Example end gcode for Prusa Slicer:**  
 
 ```g-code
 ; PrusaSlicer End G-Code
-M400                                     ; Make sure all moves are complete
-M0                                       ; Stop everything and run sys/stop.g
+M400                                             ; Make sure all moves are complete
+M0                                               ; Stop everything and run sys/stop.g
 ```
 
 <br>
@@ -269,18 +269,18 @@ M104 S150                                                  ; set extruder warm-u
 ```
 ##### /filaments/PETG/heightmap.csv
 ```g-code
-RepRapFirmware height map file v2 generated at 2020-08-17 01:59, min error -0.062, max error 0.132, mean 0.049, deviation 0.037
+RepRapFirmware height map file v2 generated at 2020-08-17 03:17, min error -0.050, max error 0.123, mean 0.042, deviation 0.033
 xmin,xmax,ymin,ymax,radius,xspacing,yspacing,xnum,ynum
 25.00,225.00,10.00,195.00,-1.00,25.00,23.12,9,9
-  0.045,  0.052,  0.024,  0.015, -0.028, -0.016, -0.011, -0.016, -0.062
-  0.030,  0.070,  0.046,  0.029, -0.017, -0.009,  0.026,  0.006, -0.046
-  0.030,  0.070,  0.080,  0.056,  0.001,  0.014,  0.041,  0.074,  0.012
-  0.055,  0.060,  0.058,  0.054,  0.012,  0.043,  0.059,  0.060,  0.013
-  0.046,  0.044,  0.026,  0.031,  0.017,  0.045,  0.056,  0.074,  0.041
-  0.051,  0.059,  0.074,  0.048,  0.024,  0.055,  0.071,  0.079,  0.046
-  0.027,  0.064,  0.081,  0.083,  0.044,  0.066,  0.108,  0.115,  0.074
-  0.034,  0.064,  0.075,  0.086,  0.059,  0.086,  0.119,  0.132,  0.088
-  0.030,  0.070,  0.062,  0.066,  0.069,  0.104,  0.112,  0.123,  0.085
+  0.043,  0.044,  0.023,  0.015, -0.035, -0.009, -0.004, -0.013, -0.050
+  0.041,  0.084,  0.057,  0.038, -0.014, -0.001,  0.038,  0.022, -0.033
+  0.029,  0.068,  0.074,  0.053, -0.003,  0.015,  0.035,  0.050,  0.011
+  0.048,  0.052,  0.053,  0.043,  0.008,  0.023,  0.050,  0.061,  0.015
+  0.038,  0.036,  0.018,  0.031,  0.012,  0.039,  0.043,  0.070,  0.035
+  0.038,  0.039,  0.049,  0.034,  0.015,  0.039,  0.063,  0.076,  0.040
+  0.013,  0.047,  0.072,  0.071,  0.036,  0.056,  0.098,  0.102,  0.056
+  0.009,  0.042,  0.060,  0.074,  0.038,  0.079,  0.112,  0.123,  0.078
+  0.006,  0.045,  0.042,  0.054,  0.049,  0.087,  0.095,  0.102,  0.064
 
 ```
 ##### /filaments/PETG/load.g
@@ -473,7 +473,7 @@ G90                                                        ; Set to Absolute Pos
 M291 P"Performing homing, gantry alignment, and mesh probing. Please wait." R"Hotmesh" S0 T10
 G32                                                        ; Home and Level gantry
 M400                                                       ; Clear queue
-M558 F50 A5 S-1                                            ; slow z-probe, take 5 probes and yield average
+M558 F50 A4 S-1                                            ; slow z-probe, take 5 probes and yield average
 G29                                                        ; Perfrom bed mesh
 G29 S3 [P{"0:/filaments/" ^ move.extruders[0].filament ^ "/heightmap.csv"}] ; Save heightmap.csv to filament type's directory
 M558 F200 A1                                               ; normal z-probe
@@ -892,6 +892,7 @@ G92 E0.0                                                   ; Reset extrusion dis
 G1 E8                                                      ; Purge Bubble
 G1 X60.0 E11.0 F1000.0                                     ; intro line
 G1 X120.0 E16.0 F1000.0                                    ; intro line
+G1 X122.0 F1000.0                                          ; wipe 2mm
 G92 E0.0                                                   ; Reset extrusion distance
 M400                                                       ; Finish all current moves / clear the buffer
 
