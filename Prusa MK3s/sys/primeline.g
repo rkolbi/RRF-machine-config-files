@@ -23,5 +23,6 @@ G92 E0.0                                                   ; Reset extrusion dis
 G1 E8                                                      ; Purge Bubble
 G1 X60.0 E11.0 F1000.0                                     ; intro line
 G1 X120.0 E16.0 F1000.0                                    ; intro line
+G1 X122.0 F1000.0                                          ; wipe 2mm
 G92 E0.0                                                   ; Reset extrusion distance
 M400                                                       ; Finish all current moves / clear the buffer
