@@ -93,9 +93,13 @@ M143 H1 S285                                               ; Set temperature lim
 M302 S190 R190                                             ; Allow cold extrudes, S-Minimum extrusion temperature, R-Minimum retraction temperature
 
 ; Fans
-M950 F1 C"Fan1" Q1000                                      ; Creates HOTEND Fan
-M106 P1 T45 S255 H1                                        ; HOTEND Fan Settings
-M950 F0 C"Fan0" Q1000                                      ; Creates PARTS COOLING FAN
+M950 F1 C"Fan1" Q1000                                      ; Creates HOTEND Fan  
+                                                           ; FAN 40X10MM 24VDC - 6.0 CFM (0.168m³/min). 
+                                                           ; Digi-Key: G4010L24B-RSR  
+M106 P1 T45 S255 H1                                        ; HOTEND Fan Settings  
+M950 F0 C"Fan0" Q5000                                      ; Creates PARTS COOLING FAN
+                                                           ; BLOWER 50X15MM 24VDC - 5.0 CFM (0.140m³/min)
+                                                           ; Digi-Key: B5015E24B-BSR
 M106 P0 H-1                                                ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned off PARTS COOLING FAN
 ; The following lines are for auto case fan control, attached to 'fan2' header on duet board
 M308 S4 Y"drivers" A"TMC2660"                              ; Case fan - configure sensor 2 as temperature warning and overheat flags on the TMC2660 on Duet
