@@ -10,15 +10,23 @@
 
 - Bondtech Mosquito Extruder  
 
-- 0.9 Stepper motors on X & Y axis 	
+- 0.9 X axis stepper motor, LDO-42STH48-MAC
 
-- Duet WiFi  
+- 0.9 Y axis stepper motor, LDO-42STH60-MAC
+
+- 1.8 Z axis stepper motors(2), Zaribo 220 teflon coated
+
+- Duet 2, WiFi  
   
 - PanelDue 5i  
   
 - PT1000 hotend thermistor  
   
 - BLTouch v3.1  
+  
+- Hotend fan, 24VDC, 6.0 CFM / Digi-Key: G4010L24B-RSR
+  
+- Part cooling blower, 24VDC, 5.0 CFM / Digi-Key: B5015E24B-BSR
   
   <br><br>
 

@@ -1,7 +1,7 @@
 ## DUET System (sd-card contents) files follow: ##
 ###### *Always use the github folders as they will contain the latest revisions of these files. ######
 
-### file dump - v08/19/20
+### file dump - v08/21/20
 ### Directory / File list follow:
 ****  
 **/filaments**  
@@ -426,7 +426,7 @@ M550 P"ZMK3-BMGm"                                          ; Set printer name
 M551 P"3D"                                                 ; Set password
 M552 S1                                                    ; Enable network
 M586 P0 S1                                                 ; Enable HTTP
-M586 P1 S0                                                 ; Disabled FTP
+M586 P1 S1                                                 ; Disabled FTP
 M586 P2 S0                                                 ; Disabled Telnet
 M575 P1 S1 B38400                                          ; Enable support for PanelDue
 

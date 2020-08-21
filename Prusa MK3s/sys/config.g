@@ -12,7 +12,7 @@ M550 P"ZMK3-BMGm"                                          ; Set printer name
 M551 P"3D"                                                 ; Set password
 M552 S1                                                    ; Enable network
 M586 P0 S1                                                 ; Enable HTTP
-M586 P1 S0                                                 ; Disabled FTP
+M586 P1 S1                                                 ; Disabled FTP
 M586 P2 S0                                                 ; Disabled Telnet
 M575 P1 S1 B38400                                          ; Enable support for PanelDue
 
