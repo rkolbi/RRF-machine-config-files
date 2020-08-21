@@ -16,7 +16,7 @@
 
 - 0.9 Y axis stepper motor, LDO-42STH60-MAC
 
-- 1.8 Z axis stepper motors(2), Zaribo 220 teflon coated
+- 1.8 Z axis stepper motors(2), Zaribo 220 teflon coated lead screws  
 
 - Duet 2, WiFi  
   
