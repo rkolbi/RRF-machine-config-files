@@ -8,7 +8,9 @@
 
 *Note: The config.g file contains notes to facilitate easy adaptation to stock Prusa MK3s.*
 
-- Bondtech Mosquito Extruder  
+- Zaribo 220 MK3s Rel3 frame, 10mm movement with blocks  
+
+- Bondtech Mosquito Extruder, modified design to use BLTouch    
 
 - 0.9 X axis stepper motor, LDO-42STH48-MAC
 
