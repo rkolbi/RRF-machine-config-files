@@ -1,7 +1,8 @@
 ; 0:/sys/sleep.g
-; called when M1 (Sleep) is being processed
+; Called when M1 (Sleep) is being processed.
 
-M104 S-273                                                 ; turn off hotend
-M140 S-273                                                 ; turn off heatbed
-M107                                                       ; turn off fan
-M18 XEZY                                                   ; unlock all axis
+M104 S-273                                                 ; Turn off the hotend.
+M140 S-273                                                 ; Turn off the heatbed.
+M107                                                       ; Turn off the part cooling fan.
+M400                                                       ; Finish all moves, clear the buffer.
+M18 XEZY                                                   ; Unlock all axis.

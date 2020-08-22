@@ -1,11 +1,13 @@
 ; 0:/sys/cancel.g
-; called when a print is canceled after a pause.
+; Called when a print is canceled after a pause.
 
-M83                                                        ; Makes the extruder interpret extrusion values as relative positions
-M104 S-273                                                 ; turn off hotend
-M140 S-273                                                 ; turn off heatbed
-M107                                                       ; turn off fan
-G1 F1000.0                                                 ; set feed rate
-G1 E-2                                                     ; retract 2mm
-M98 P"current-sense-homing.g"                              ; Set current and sensitivity for homing routines
-M18 YXE                                                    ; unlock X, Y, E axis
+M83                                                        ; Set the extrusion values as relative.
+M104 S-273                                                 ; Turn off the hotend.
+M140 S-273                                                 ; Turn off the heatbed.
+M107                                                       ; Turn off part cooling fan.
+G1 F1000.0                                                 ; Set the feed rate.
+G1 E-2                                                     ; Retract 2mm of filament.
+M98 P"current-sense-homing.g"                              ; Set the current and sensitivity for homing, non-print, routines.
+M400                                                       ; Finish all moves, clear the buffer.
+M18 YXE                                                    ; Unlock the X, Y, and E axis.
+

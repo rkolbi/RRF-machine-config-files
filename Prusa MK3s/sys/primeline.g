@@ -2,7 +2,7 @@
 ; Print prime-line at a 'randomized' Y position from -1.1 to -2.9
  
 ; Charge! tune
-M400
+M400                                                       ; Finish all moves, clear the buffer.
 G4 S1
 M300 P200 S523.25
 G4 P200
@@ -19,10 +19,11 @@ G4 S1
 M400		
 	
 G1 X0 Z0.6 Y{-2+(0.1*(floor(10*(cos(sqrt(sensors.analog[0].lastReading * state.upTime))))))} F3000.0;
-G92 E0.0                                                   ; Reset extrusion distance
-G1 E8                                                      ; Purge Bubble
-G1 X60.0 E11.0 F1000.0                                     ; intro line
-G1 X120.0 E16.0 F1000.0                                    ; intro line
-G1 X122.0 F1000.0                                          ; wipe 2mm
-G92 E0.0                                                   ; Reset extrusion distance
-M400                                                       ; Finish all current moves / clear the buffer
+G92 E0.0                                                   ; Reset the extrusion distance.
+G1 E8                                                      ; Purge Bubble.
+G1 X60.0 E11.0 F1000.0                                     ; Intro line part 1.
+G1 X120.0 E16.0 F1000.0                                    ; Intro line part 2.
+G1 X122.0 F1000.0                                          ; Wipe 2mm of filament.
+G92 E0.0                                                   ; Reset the extrusion distance.
+M400                                                       ; Finish all moves, clear the buffer.
+
