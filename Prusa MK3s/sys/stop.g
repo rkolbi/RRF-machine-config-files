@@ -26,7 +26,7 @@ while iterations <=9                                       ; Perform 10 passes.
 
 G90                                                        ; Set to Absolute Positioning.
 
-G1 X220 Y205 Z205 F1000                                    ; Place nozzle to the right side, build plate to front, Z at top.
+G1 X220 Y205 Z205 F400                                     ; Place nozzle to the right side, build plate to front, Z at top.
 M400                                                       ; Finish all moves, clear the buffer.
 M107                                                       ; Turn off the part cooling fan.
 M18 YXE                                                    ; Unlock the X, Y, and E axis.
