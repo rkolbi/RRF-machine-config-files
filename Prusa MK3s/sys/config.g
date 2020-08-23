@@ -34,9 +34,9 @@ M569 P4 S1                                                 ; Drive 4 goes forwar
 ;
 M350 X16 Y16 E16 Z16 I1                                    ; Set X, Y, Z, and E microstepping with interpolation.
 M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
-M566 X480.00 Y480.00 Z24.00 E1500.00 P1                    ; Set maximum instantaneous speed changes (mm/min)
-M203 X12000.00 Y12000.00 Z750.00 E1500.00                  ; Set maximum speeds (mm/min)
-M201 X2500.00 Y2500.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
+M566 X480.00 Y480.00 Z24.00 E300.00 P1                     ; Set maximum instantaneous speed changes (mm/min)
+M203 X15000.00 Y15000.00 Z900.00 E2000.00                  ; Set maximum speeds (mm/min)
+M201 X4000.00 Y4000.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
 M906 X1340.00 Y1600.00 Z550.00 E550.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
 M84 S1000                                                  ; Set idle timeout before shifitng to idle-current  
 
@@ -49,14 +49,14 @@ M208 X0:250 Y-4:215 Z-0.1:205                              ; X carriage moves fr
 M564 H0                                                    ; Allow unhomed movement
 
 ; Endstops for each Axis
-M574 X1 S3                                                 ; Set endstops controlled by motor load detection
-M574 Y1 S3                                                 ; Set endstops controlled by motor load detection
+M574 X1 S3                                                 ; Set endstops controlled by the motor load detection
+M574 Y1 S3                                                 ; Set endstops controlled by the motor load detection
 
 ; Stallgaurd Sensitivity
 M98 P"current-sense-homing.g"                              ; Set the current and sensitivity for normal routine, per the macro
 
 ; Z-Probe Settings for BLTouch
-M558 P9 C"^zprobe.in" H6 F200 T10000                       ; BLTouch, connected to Z probe IN pin
+M558 P9 C"^zprobe.in" H4 F200 T10000                       ; BLTouch, connected to Z probe IN pin
 M950 S0 C"exp.heater3"                                     ; BLTouch, create servo/gpio 0 on heater 3 pin on expansion 
 G31 P1000 X22.8 Y3.8 Z1.32                                 ; BLTouch, Z offset with MICRO SWISS NOZZLE
 M574 Z1 S2                                                 ; Set Z axis endstop, controlled by probe

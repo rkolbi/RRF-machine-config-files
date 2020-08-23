@@ -26,4 +26,3 @@ G1 X120.0 E16.0 F1000.0                                    ; Intro line part 2.
 G1 X122.0 F1000.0                                          ; Wipe 2mm of filament.
 G92 E0.0                                                   ; Reset the extrusion distance.
 M400                                                       ; Finish all moves, clear the buffer.
-
