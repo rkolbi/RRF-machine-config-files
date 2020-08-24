@@ -181,7 +181,7 @@ if state.status != "processing"                            ; Printer is not curr
       T0 M702                                              ; Select tool 0, set filament is unloaded
       M104 S-273                                           ; Turn off hotend
       M140 S-273                                           ; Turn off heatbed
-      M98 P"0:/macros/Filament Handling"; run again        ; Now that filament is unloaded, lets ask to load filament
+      M98 P"0:/macros/Filament Handling"; run again        ; Now that filament is unloaded, let's ask to load filament
 
    else
 
@@ -339,14 +339,14 @@ M18                                                        ; Free all
 ; 0:/macros/Maintenance/Save-Z-Baby
 ; This macro subtracts the current babystep offset from the current Z trigger height and informs the user what offset
 ; value to change the G31 Z metric to in the 0:/sys/config.g. Additionally, the macro issues a G31 command with the new
-; calculated z-offset, clears the current babystepping, and then rehomes the machine to make the new z-offset effective. 
+; calculated z-offset, clears the current baby-stepping and then rehomes the machine to make the new z-offset effective. 
 ; If this is for a specific filament type, recommend placing this yielded information in the filament's config.g - not
 ; the 0:/sys/config.g.
 	 
  
-if state.status != "processing"                                     ; Printer is not currently printing!
+if state.status != "processing"                                      ; Printer is not currently printing!
  
-   if move.axes[2].babystep !=0                                     ; If no babysteps are currently adjusted - exit routine
+   if move.axes[2].babystep !=0                                      ; If no babysteps are currently adjusted - exit routine
       echo {"Previous Z probe trigger height: " ^ sensors.probes[0].triggerHeight ^ ", New: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       echo {"Edit the G31 command in your config.g with a new Z offset of: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       M291 P{"Set probe offset to " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep ^ ", clear babysteps, and REHOME ALL?"} R"!WARNING! Do not proceed if printing!" S3
@@ -436,7 +436,7 @@ M575 P1 S1 B38400                                          ; Enable support for 
 M569 P0 S1                                                 ; Drive 0 goes forwards: X Axis
 M569 P1 S1                                                 ; Drive 1 goes forwards: Y Axis
 M569 P2 S1                                                 ; Drive 2 goes forwards: Z Axis Left
-M569 P3 S0                                                 ; Drive 3 goes backwards: E Axis
+M569 P3 S0                                                 ; Drive 3 goes backward: E Axis
 M569 P4 S1                                                 ; Drive 4 goes forwards: Z Axis Right (using E1)
 
 ; Motor Configuration
@@ -706,7 +706,7 @@ M558 F200 A1                                               ; Set normal z-probe 
 ; 0:/sys/pause.g
 ; Called when a print from SD card is paused
 
-M120                                                       ; Push the state of the machine onto a memory stack.
+M120                                                       ; Push the state of the machine onto the memory stack.
 
 if sensors.filamentMonitors[0].filamentPresent = false
    G1 E-3 F1000                                            ; If the filament has run out, retract 6mm of filament.
@@ -796,12 +796,12 @@ M18 XEZY                                                   ; Unlock all axis.
 M122                                                       ; Clear diagnostic data to cleanly capture print evolution statistics. 
  
 T0                                                         ; Ensure the tool is selected.
-;M280 P0 S160                                              ; BLTouch, alarm release.
-;G4 P100                                                   ; BLTouch, delay for the release command.
+M280 P0 S160                                               ; BLTouch, alarm release.
+G4 P100                                                    ; BLTouch, delay for the release command.
 M572 D0 S0.0                                               ; Clear pressure advance.
 M220 S100                                                  ; Set speed factor back to 100% in case it was changed.
 M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed.
-M290 R0 S0                                                 ; Clear any babystepping.
+M290 R0 S0                                                 ; Clear any baby-stepping.
 M106 S0                                                    ; Turn part cooling blower off if it is on.
 M703                                                       ; Execute loaded filament's config.g.
 G28                                                        ; Home all.

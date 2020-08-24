@@ -20,7 +20,7 @@ M575 P1 S1 B38400                                          ; Enable support for 
 M569 P0 S1                                                 ; Drive 0 goes forwards: X Axis
 M569 P1 S1                                                 ; Drive 1 goes forwards: Y Axis
 M569 P2 S1                                                 ; Drive 2 goes forwards: Z Axis Left
-M569 P3 S0                                                 ; Drive 3 goes backwards: E Axis
+M569 P3 S0                                                 ; Drive 3 goes backward: E Axis
 M569 P4 S1                                                 ; Drive 4 goes forwards: Z Axis Right (using E1)
 
 ; Motor Configuration

@@ -14,7 +14,7 @@ if state.status != "processing"                            ; Printer is not curr
       T0 M702                                              ; Select tool 0, set filament is unloaded
       M104 S-273                                           ; Turn off hotend
       M140 S-273                                           ; Turn off heatbed
-      M98 P"0:/macros/Filament Handling"; run again        ; Now that filament is unloaded, lets ask to load filament
+      M98 P"0:/macros/Filament Handling"; run again        ; Now that filament is unloaded, let's ask to load filament
 
    else
 

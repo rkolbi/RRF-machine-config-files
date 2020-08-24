@@ -9,12 +9,12 @@
 M122                                                       ; Clear diagnostic data to cleanly capture print evolution statistics. 
  
 T0                                                         ; Ensure the tool is selected.
-;M280 P0 S160                                              ; BLTouch, alarm release.
-;G4 P100                                                   ; BLTouch, delay for the release command.
+M280 P0 S160                                               ; BLTouch, alarm release.
+G4 P100                                                    ; BLTouch, delay for the release command.
 M572 D0 S0.0                                               ; Clear pressure advance.
 M220 S100                                                  ; Set speed factor back to 100% in case it was changed.
 M221 S100                                                  ; Set extrusion factor back to 100% in case it was changed.
-M290 R0 S0                                                 ; Clear any babystepping.
+M290 R0 S0                                                 ; Clear any baby-stepping.
 M106 S0                                                    ; Turn part cooling blower off if it is on.
 M703                                                       ; Execute loaded filament's config.g.
 G28                                                        ; Home all.

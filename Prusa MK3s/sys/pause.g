@@ -1,7 +1,7 @@
 ; 0:/sys/pause.g
 ; Called when a print from SD card is paused
 
-M120                                                       ; Push the state of the machine onto a memory stack.
+M120                                                       ; Push the state of the machine onto the memory stack.
 
 if sensors.filamentMonitors[0].filamentPresent = false
    G1 E-3 F1000                                            ; If the filament has run out, retract 6mm of filament.

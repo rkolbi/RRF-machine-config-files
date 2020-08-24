@@ -1,14 +1,14 @@
 ; 0:/macros/Maintenance/Save-Z-Baby
 ; This macro subtracts the current babystep offset from the current Z trigger height and informs the user what offset
 ; value to change the G31 Z metric to in the 0:/sys/config.g. Additionally, the macro issues a G31 command with the new
-; calculated z-offset, clears the current babystepping, and then rehomes the machine to make the new z-offset effective. 
+; calculated z-offset, clears the current baby-stepping and then rehomes the machine to make the new z-offset effective. 
 ; If this is for a specific filament type, recommend placing this yielded information in the filament's config.g - not
 ; the 0:/sys/config.g.
 	 
  
-if state.status != "processing"                                     ; Printer is not currently printing!
+if state.status != "processing"                                      ; Printer is not currently printing!
  
-   if move.axes[2].babystep !=0                                     ; If no babysteps are currently adjusted - exit routine
+   if move.axes[2].babystep !=0                                      ; If no babysteps are currently adjusted - exit routine
       echo {"Previous Z probe trigger height: " ^ sensors.probes[0].triggerHeight ^ ", New: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       echo {"Edit the G31 command in your config.g with a new Z offset of: " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep}
       M291 P{"Set probe offset to " ^ sensors.probes[0].triggerHeight - move.axes[2].babystep ^ ", clear babysteps, and REHOME ALL?"} R"!WARNING! Do not proceed if printing!" S3
