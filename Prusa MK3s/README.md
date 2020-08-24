@@ -79,6 +79,8 @@ When initiating a print, the following sequence of events occurs in this order.
 ```g-code
 ; ideaMaker Start G-Code
 
+; Layer height={layer_height}
+
 ; Set nozzle and bed to the specific temperatures declared within this slicer
 M140 S{temperature_heatbed}                      ; set bed temp
 M104 S{temperature_extruder1}                    ; set extruder temp
