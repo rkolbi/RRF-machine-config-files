@@ -26,4 +26,4 @@ while move.calibration.initial.deviation >= 0.003          ; Perform additional 
 
 M558 F200 A1                                               ; Set normal z-probe speed.
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
-G1 Z8                                                      ; Raise head 8mm to ensure it is above the Z probe trigger height.
+G1 Z8                                                      ; Raise nozzle 8mm to ensure it is above the Z probe trigger height.

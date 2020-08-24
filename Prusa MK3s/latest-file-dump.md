@@ -393,7 +393,7 @@ while move.calibration.initial.deviation >= 0.003          ; Perform additional 
 
 M558 F200 A1                                               ; Set normal z-probe speed.
 echo "Gantry deviation of " ^ move.calibration.initial.deviation ^ "mm obtained."
-G1 Z8                                                      ; Raise head 8mm to ensure it is above the Z probe trigger height.
+G1 Z8                                                      ; Raise nozzle 8mm to ensure it is above the Z probe trigger height.
 ```
 ##### /sys/cancel.g
 ```g-code
@@ -450,7 +450,7 @@ M569 P4 S1                                                 ; Drive 4 goes forwar
 ;
 M350 X16 Y16 E16 Z16 I1                                    ; Set X, Y, Z, and E microstepping with interpolation.
 M92 X200.00 Y200.00 Z400.00 E415.00                        ; Set steps per mm
-M566 X480.00 Y480.00 Z24.00 E300.00 P1                     ; Set maximum instantaneous speed changes (mm/min)
+M566 X600.00 Y600.00 Z24.00 E300.00 P1                     ; Set maximum instantaneous speed changes (mm/min)
 M203 X15000.00 Y15000.00 Z900.00 E2000.00                  ; Set maximum speeds (mm/min)
 M201 X4000.00 Y4000.00 Z1000.00 E5000.00                   ; Set accelerations (mm/s^2)
 M906 X1340.00 Y1600.00 Z550.00 E550.00 I50                 ; Set initial motor currents (mA) and motor idle factor in percent
