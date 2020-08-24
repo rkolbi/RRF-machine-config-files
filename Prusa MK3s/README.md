@@ -79,18 +79,18 @@ When initiating a print, the following sequence of events occurs in this order.
 ```g-code
 ; ideaMaker Start G-Code
 
-; Layer height={layer_height}
+; Layer height={layer_height}                    ; Pass layer height information to DWC
 
 ; Set nozzle and bed to the specific temperatures declared within this slicer
-M140 S{temperature_heatbed}                      ; set bed temp
-M104 S{temperature_extruder1}                    ; set extruder temp
-M116                                             ; wait for all temperatures
+M140 S{temperature_heatbed}                      ; Set bed temp
+M104 S{temperature_extruder1}                    ; Set extruder temp
+M116                                             ; Wait for all temperatures
 
 ; Run macro to print primeline at a 'randomized' Y position from -1.1 to -2.9
-M98 P"0:/sys/primeLine.g"                        ; primeline macro
+M98 P"0:/sys/primeLine.g"                        ; Primeline macro
 
 ; Set pressure advance
-M572 D0 S0.07                                    ; set pressure advance
+M572 D0 S0.07                                    ; Set pressure advance
 ```
 
 ### **Example end gcode for ideaMaker Slicer:**  
