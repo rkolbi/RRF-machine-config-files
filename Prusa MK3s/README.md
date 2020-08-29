@@ -8,9 +8,9 @@
 
 *Note: The config.g file contains notes to facilitate easy adaptation to stock Prusa MK3s.*
 
-- Zaribo 220 MK3s Rel3 frame, 10mm movement with blocks  
+- Zaribo 220 MK3s Rel3 frame, 10mm movement with Y-blocks  
 
-- Bondtech Mosquito Extruder, modified design to use BLTouch    
+- Bondtech Mosquito Extruder (direct feed), modified design to use BLTouch    
 
 - 0.9 X axis stepper motor, LDO-42STH48-MAC
 
@@ -18,7 +18,7 @@
 
 - 1.8 Z axis stepper motors(2), Zaribo 220 teflon coated lead screws  
 
-- Duet 2, WiFi  
+- Duet 2, WiFi - RRF 3.11 
   
 - PanelDue 5i  
   
