@@ -11,5 +11,6 @@ G91                                                        ; set relaitive posti
 G1 H2 Z10                                                  ; lift z axis 10mm
 G90                                                        ; set absolute postitioning
 M98 P"current-sense-homing.g"                              ; Set the current and sensitivity for homing, non-print, routines.
+G1 X100 Y100 F400                                          ; Place nozzle about center.
 M400                                                       ; Finish all moves, clear the buffer.
 M18 YXE                                                    ; Unlock the X, Y, and E axis.
